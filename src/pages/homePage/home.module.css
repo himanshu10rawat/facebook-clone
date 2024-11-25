@@ -1,0 +1,8 @@
+.home-page {
+    display: flex;
+    justify-content: center;
+}
+
+.home-page main {
+    padding-block: 1rem;
+}

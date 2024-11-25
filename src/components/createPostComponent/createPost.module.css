@@ -1,0 +1,91 @@
+.post-section {
+    background-color: var(--whiteColor);
+    box-shadow: 0 0 2px 1px var(--mediumLightColor);
+    border-radius: 10px;
+    padding: 10px 15px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.only-post {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--lightColor);
+}
+
+.only-post .profile-picture {
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+    display: block;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: ease-in-out 0.3s;
+}
+
+.only-post .profile-picture:hover {
+    filter: brightness(0.9);
+}
+
+.only-post .profile-picture img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: top;
+}
+
+.write-post-button {
+    background-color: var(--lightColor);
+    color: var(--greyColor);
+    flex-grow: 1;
+    border-radius: 999px;
+    padding: 0.5rem 0.75rem;
+    transition: ease-in-out 0.3s;
+    cursor: pointer;
+}
+
+.write-post-button:hover {
+    background-color: var(--mediumLightColor);
+}
+
+.post-with-media {
+    display: flex;
+    padding-block: 0.5rem;
+}
+
+.post-with-media span {
+    font-size: 16px;
+    padding: 0.5rem 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--greyColor);
+    font-weight: 500;
+    cursor: pointer;
+    transition: ease-in-out 0.3s;
+}
+
+.post-with-media span:hover {
+    background-color: var(--lightColor);
+    border-radius: 8px;
+}
+
+.post-with-media span svg {
+    display: block;
+    font-size: 26px;
+}
+
+.post-with-media span:nth-child(1) svg {
+    color: var(--redColor);
+}
+
+.post-with-media span:nth-child(2) svg {
+    color: var(--greenColor);
+}
+
+.post-with-media span:nth-child(3) svg {
+    color: var(--yellowColor);
+}
