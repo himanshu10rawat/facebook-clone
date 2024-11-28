@@ -103,4 +103,236 @@
     align-items: center;
     justify-content: space-between;
     padding-block: 5px;
+    border-bottom: 1px solid var(--mediumLightColor);
+}
+
+.likes-view-part {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.like-emoji-section {
+    display: flex;
+    align-items: center;
+}
+
+.likes-view-part .likes-emoji {
+    color: var(--whiteColor);
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 14px;
+    border: 1px solid var(--whiteColor);
+    margin-left: -4px;
+}
+
+.likes-view-part .likes-emoji svg {
+    display: block;
+}
+
+.likes-view-part .likes-emoji:nth-child(1) {
+    background-color: var(--blueColor);
+}
+
+.likes-view-part .likes-emoji:nth-child(2) {
+    background-color: var(--redColor);
+    z-index: -1;
+}
+
+.likes-view-part .likes-emoji:nth-child(3) {
+    background-color: var(--greenColor);
+    z-index: -2;
+}
+
+.likes-view-part .likes-count,
+.comments-and-share-view-part {
+    color: var(--greyColor);
+}
+
+.comments-and-share-view-part {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.footer-actions .footer-action {
+    width: 25%;
+    text-align: center;
+    color: var(--greyColor);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding-block: 6px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: ease-in-out 0.3s;
+}
+
+.footer-actions .footer-action .comment-icon {
+    transform: scaleX(-1);
+}
+
+.footer-actions .footer-action:hover {
+    background-color: var(--lightColor);
+}
+
+.footer-actions .footer-action svg {
+    display: block;
+    font-size: 24px;
+}
+
+.comment-section {
+    padding-block: 0.75rem;
+}
+
+.comment-section .view-more-comment {
+    display: inline-block;
+    font-weight: 500;
+    color: var(--greyColor);
+    margin-bottom: 0.75rem;
+}
+
+.first-comment {
+    display: flex;
+    gap: 8px;
+    padding-bottom: 10px;
+}
+
+.profile-picture {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.profile-picture img {
+    object-fit: cover;
+    object-position: top;
+    width: 100%;
+    height: 100%;
+}
+
+.user-comment-section {
+    font-size: 14px;
+}
+
+.user-comment-box {
+    background-color: var(--lightColor);
+    display: flex;
+    flex-direction: column;
+    padding: 0.75rem;
+    border-radius: 1rem;
+}
+
+.user-name {
+    font-weight: 500;
+}
+
+.comment-other-option {
+    display: flex;
+    justify-content: space-evenly;
+    padding-top: 3px;
+    color: var(--greyColor);
+    max-width: 180px;
+}
+
+.reply-comments {
+    padding-left: 2.25rem;
+}
+
+.mention-comment-owner {
+    font-weight: 500;
+    font-size: 17px;
+}
+
+.reply-comments .profile-picture,
+.reply-comment-section .profile-picture {
+    width: 25px;
+    height: 25px;
+}
+
+.reply-comment-section {
+    padding-left: 2.25rem;
+    display: flex;
+    gap: 8px;
+}
+
+.reply-comment-box {
+    padding: 0.5rem 0.75rem;
+    border-radius: 1.5rem;
+    background-color: var(--lightColor);
+    width: 100%;
+}
+
+.reply-comment-box form textarea {
+    width: 100%;
+    resize: none;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    padding: 0 0.25rem 0.25rem;
+    font-size: 15px;
+}
+
+.reply-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--greyColor);
+}
+
+.reply-footer span,
+.reply-footer button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    color: inherit;
+    cursor: pointer;
+    font-size: 20px;
+    transition: ease-in-out 0.3s;
+}
+
+.reply-footer span:hover,
+.reply-footer button:hover {
+    background-color: var(--mediumLightColor);
+}
+
+.reply-footer span label {
+    display: block;
+    cursor: pointer;
+}
+
+.attachment-option input {
+    display: none;
+}
+
+.attachment-option label svg,
+.reply-footer button svg {
+    display: block;
+}
+
+.attachment-options {
+    display: flex;
+    align-items: center;
+}
+
+.write-comment {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.write-comment form {
+    display: flex;
+    align-items: center;
 }

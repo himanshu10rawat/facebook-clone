@@ -1,8 +1,12 @@
 .header-section {
+    background-color: var(--whiteColor);
+    position: sticky;
+    top: 0;
     display: flex;
     justify-content: space-between;
     padding-inline: 1rem;
     box-shadow: 0 0 4px 1px var(--mediumLightColor);
+    z-index: 9;
 }
 
 .left-side {
