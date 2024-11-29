@@ -19,9 +19,12 @@ a {
 
 :root {
     --greyColor: #666666;
+    --lightgreyColor: #cccccc;
     --mediumLightColor: #dddddd;
     --lightColor: #eeeeee;
+    --lowLightColor: #f9f9f9;
     --whiteColor: #ffffff;
+    --blackColor: #000000;
     --blueColor: #0866ff;
     --redColor: #f02849;
     --greenColor: #45bd62;

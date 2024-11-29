@@ -117,3 +117,210 @@
 .post-form {
     margin-top: 1rem;
 }
+
+.post-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.form-input-section {
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    /* scrollbar-width: none; */
+    max-height: calc(100vh - 400px);
+    padding-right: 3px;
+}
+
+.form-input-section::-webkit-scrollbar {
+    width: 8px;
+    scroll-behavior: smooth;
+}
+
+.form-input-section::-webkit-scrollbar-thumb {
+    background-color: var(--lightgreyColor);
+    border-radius: 8px;
+}
+
+.input-group {
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 1.5rem;
+}
+
+.input-group textarea {
+    width: 100%;
+    outline: none;
+    border: none;
+    padding: 0.25rem;
+    resize: none;
+    color: var(--blackColor);
+}
+
+.emoji-button {
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--greyColor);
+}
+
+.emoji-button svg {
+    display: block;
+}
+
+.image-section {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.image-remove-button {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 35px;
+    height: 35px;
+    background-color: var(--whiteColor);
+    border-radius: 50%;
+    border: 1px solid var(--mediumLightColor);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: var(--greyColor);
+    cursor: pointer;
+    transition: ease-in-out 0.3s;
+}
+
+.image-remove-button:hover {
+    background-color: var(--lightColor);
+}
+
+.dummy-image {
+    border: 1px solid var(--mediumLightColor);
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+}
+
+.dummy-image label {
+    background-color: var(--lowLightColor);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 250px;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: ease-in-out 0.3s;
+}
+
+.dummy-image label:hover {
+    background-color: var(--lightColor);
+}
+
+.dummy-image input {
+    display: none;
+}
+
+.add-images-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--mediumLightColor);
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dummy-image label h2 {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.dummy-image label p {
+    font-size: 12px;
+    color: var(--greyColor);
+}
+
+.add-more-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid var(--mediumLightColor);
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+}
+
+.add-more-section .add-more-text {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.add-more-options {
+    display: flex;
+    align-items: center;
+}
+
+.add-more-options .add-more-item {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    transition: ease-in-out 0.3s;
+}
+
+.add-more-options .add-more-item:nth-child(1) {
+    color: var(--greenColor);
+}
+
+.add-more-options .add-more-item:nth-child(2) {
+    color: var(--blueColor);
+}
+
+.add-more-options .add-more-item:nth-child(3) {
+    color: var(--yellowColor);
+}
+
+.add-more-options .add-more-item:nth-child(4) {
+    color: var(--redColor);
+}
+
+.add-more-options .add-more-item:hover {
+    background-color: var(--lightColor);
+}
+
+.post-button {
+    background-color: var(--blueColor);
+    color: var(--whiteColor);
+    border: none;
+    outline: none;
+    padding: 0.5rem;
+    font-weight: 500;
+    font-size: 16px;
+    border-radius: 0.5rem;
+}
+
+.image-list {
+    border: 1px solid var(--mediumLightColor);
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+}
+
+.image-list .image {
+    width: 100%;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.image-list .image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}

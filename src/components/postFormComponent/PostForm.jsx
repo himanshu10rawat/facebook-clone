@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import style from "./postForm.module.css";
 import { IoMdClose } from "react-icons/io";
 import { FaUserFriends, FaUserTag, FaRegSmile } from "react-icons/fa";
@@ -7,13 +7,56 @@ import { CiFaceSmile } from "react-icons/ci";
 import { MdAddToPhotos, MdPhotoLibrary } from "react-icons/md";
 import { FaLocationDot } from "react-icons/fa6";
 
-const PostForm = () => {
+const PostForm = ({ setOpenPostModal, mediaOpen, setMediaOpen }) => {
+  const [imageUrl, setImageUrl] = useState("");
+
+  const imageHandleChange = (e) => {
+    const imageFile = e.target.files[0];
+    const imageUrl = window.URL.createObjectURL(imageFile);
+    setImageUrl(imageUrl);
+  };
+
+  const handleRemoveImage = () => {
+    setImageUrl("");
+    setMediaOpen(false);
+  };
+
+  const handleCloseModal = () => {
+    setOpenPostModal(false);
+  };
+
+  const handleOpenMedia = () => {
+    setMediaOpen(true);
+  };
+
+  const [formData, setFormData] = useState({
+    postCaption: "",
+    media: "",
+  });
+
+  const handleInputChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
   return (
     <div className={style["modal-wrapper"]}>
       <div className={style["post-modal"]}>
         <div className={style["modal-header"]}>
           <h2>Create Post</h2>
-          <span className={style["modal-close"]}>
+          <span
+            role="button"
+            tabIndex={0}
+            aria-label="Close Modal"
+            className={style["modal-close"]}
+            onClick={handleCloseModal}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                handleCloseModal();
+              }
+            }}
+          >
             <IoMdClose />
           </span>
         </div>
@@ -22,7 +65,7 @@ const PostForm = () => {
             <div className={style["profile-image"]}>
               <img
                 src={
-                  "https://scontent.fdel32-1.fna.fbcdn.net/v/t39.30808-1/417380866_2065772103790903_7360360743510704365_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=104&ccb=1-7&_nc_sid=0ecb9b&_nc_ohc=zchevvPK9jkQ7kNvgGsHOtL&_nc_zt=24&_nc_ht=scontent.fdel32-1.fna&_nc_gid=Ak-Q4NoTLlwEzceOT4EUSoV&oh=00_AYCK7kDfo3nIyof3GW51Qx_P70ychjlnEXeTIx_emEi7RQ&oe=67487850"
+                  "https://cdn.pixabay.com/photo/2024/03/12/15/42/greylag-goose-8629040_1280.jpg"
                 }
                 alt="Himanshu Rawat profile picture"
               />
@@ -42,65 +85,102 @@ const PostForm = () => {
           </div>
           <div className={style["post-form"]}>
             <form>
-              <div className="input-group">
-                <textarea
-                  name="post-caption"
-                  id="post-caption"
-                  placeholder="What's on your mind, ${Himanshu}?"
-                  aria-label="Post caption"
-                ></textarea>
-                <span
-                  className="emoji-button"
-                  role="button"
-                  tabIndex={0}
-                  aria-label="Emoji"
-                >
-                  <CiFaceSmile />
-                </span>
-              </div>
-              <div className="image-section">
-                <span
-                  className="image-remove-button"
-                  role="button"
-                  tabIndex={0}
-                  aria-label="Remove image/images"
-                >
-                  <IoMdClose />
-                </span>
-                <div className="dummy-image">
-                  <label htmlFor="file">
-                    <span>
-                      <MdAddToPhotos />
-                    </span>
-                    <h2>Add Photos/Videos</h2>
-                    <p>or drag and drop</p>
-                  </label>
-                  <input type="file" name="file" id="file" />
+              <div className={style["form-input-section"]}>
+                <div className={style["input-group"]}>
+                  <textarea
+                    name="postCaption"
+                    id="post-caption"
+                    style={{ fontSize: `${!mediaOpen ? "24px" : "15px"}` }}
+                    rows={!mediaOpen ? 4 : 1}
+                    placeholder="What's on your mind, ${Himanshu}?"
+                    aria-label="Post caption"
+                    onChange={handleInputChange}
+                    value={formData.postCaption}
+                  ></textarea>
+                  <span
+                    className={style["emoji-button"]}
+                    role="button"
+                    tabIndex={0}
+                    aria-label="Emoji"
+                  >
+                    <CiFaceSmile />
+                  </span>
                 </div>
-                {/* <div className="image-list">
-                <div className="image">
-                  <img src="" alt="" />
-                </div>
-              </div> */}
-                <div className="add-more-section">
-                  <span>Add More</span>
-                  <div className="add-more-options">
-                    <span className="add-more-item">
-                      <MdPhotoLibrary />
+                {mediaOpen && (
+                  <div className={style["image-section"]}>
+                    <span
+                      className={style["image-remove-button"]}
+                      role="button"
+                      tabIndex={0}
+                      aria-label="Remove image/images"
+                      onClick={handleRemoveImage}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          handleRemoveImage();
+                        }
+                      }}
+                    >
+                      <IoMdClose />
                     </span>
-                    <span className="add-more-item">
-                      <FaUserTag />
-                    </span>
-                    <span className="add-more-item">
-                      <FaRegSmile />
-                    </span>
-                    <span className="add-more-item">
-                      <FaLocationDot />
-                    </span>
+                    {!imageUrl ? (
+                      <div className={style["dummy-image"]}>
+                        <label htmlFor="media">
+                          <span className={style["add-images-icon"]}>
+                            <MdAddToPhotos />
+                          </span>
+                          <h2>Add Photos/Videos</h2>
+                          <p>or drag and drop</p>
+                        </label>
+                        <input
+                          type="file"
+                          name="media"
+                          id="media"
+                          accept="image/*"
+                          onChange={() => {
+                            imageHandleChange();
+                            handleInputChange();
+                          }}
+                          value={formData.media}
+                        />
+                      </div>
+                    ) : (
+                      <div className={style["image-list"]}>
+                        <div className={style["image"]}>
+                          <img src={imageUrl} alt="" />
+                        </div>
+                      </div>
+                    )}
                   </div>
-                </div>
-                <button type="button">Post</button>
+                )}
               </div>
+              <div className={style["add-more-section"]}>
+                <span className={style["add-more-text"]}>Add More</span>
+                <div className={style["add-more-options"]}>
+                  <span
+                    className={style["add-more-item"]}
+                    onClick={handleOpenMedia}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        handleOpenMedia();
+                      }
+                    }}
+                  >
+                    <MdPhotoLibrary />
+                  </span>
+                  <span className={style["add-more-item"]}>
+                    <FaUserTag />
+                  </span>
+                  <span className={style["add-more-item"]}>
+                    <FaRegSmile />
+                  </span>
+                  <span className={style["add-more-item"]}>
+                    <FaLocationDot />
+                  </span>
+                </div>
+              </div>
+              <button type="button" className={style["post-button"]}>
+                Post
+              </button>
             </form>
           </div>
         </div>

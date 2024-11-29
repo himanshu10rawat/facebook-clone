@@ -1,11 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import style from "./createPost.module.css";
 import { RiLiveFill } from "react-icons/ri";
 import { MdPhotoLibrary } from "react-icons/md";
 import { FaRegSmile } from "react-icons/fa";
 import PostForm from "../postFormComponent/PostForm";
+import useDisableScroll from "../../hooks/useDisableScroll";
 
 const CreatePost = () => {
+  const [mediaOpen, setMediaOpen] = useState(false);
+  const [openPostModal, setOpenPostModal] = useState(false);
+  const handleClickCaption = () => {
+    setOpenPostModal(true);
+  };
+  const handleClickMedia = () => {
+    setOpenPostModal(true);
+    setMediaOpen(true);
+  };
+  useDisableScroll(openPostModal);
   return (
     <>
       <section className={style["post-section"]}>
@@ -21,6 +32,12 @@ const CreatePost = () => {
             role="button"
             tabIndex={0}
             aria-label="Post"
+            onClick={handleClickCaption}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                handleClickCaption();
+              }
+            }}
           >
             What's on your mind, Username?
           </span>
@@ -30,7 +47,17 @@ const CreatePost = () => {
             <RiLiveFill />
             Live video
           </span>
-          <span role="button" tabIndex={0} aria-label="Photo/Video">
+          <span
+            role="button"
+            tabIndex={0}
+            aria-label="Photo/Video"
+            onClick={handleClickMedia}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                handleClickMedia();
+              }
+            }}
+          >
             <MdPhotoLibrary />
             Photo/Video
           </span>
@@ -40,7 +67,13 @@ const CreatePost = () => {
           </span>
         </div>
       </section>
-      <PostForm />
+      {openPostModal && (
+        <PostForm
+          setOpenPostModal={setOpenPostModal}
+          mediaOpen={mediaOpen}
+          setMediaOpen={setMediaOpen}
+        />
+      )}
     </>
   );
 };
