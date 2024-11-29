@@ -1,7 +1,7 @@
 import React from "react";
 import style from "./home.module.css";
 import CreatePost from "../../components/createPostComponent/createPost";
-import Post from "../../components/PostComponent/Post";
+import PostList from "../../components/postListComponent/PostList";
 
 const Home = () => {
   return (
@@ -9,7 +9,7 @@ const Home = () => {
       <aside></aside>
       <main>
         <CreatePost />
-        <Post />
+        <PostList />
       </main>
       <aside></aside>
     </div>

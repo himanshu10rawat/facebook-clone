@@ -31,27 +31,27 @@ const Header = () => {
       <nav className={style["navbar-items"]}>
         <ul>
           <li>
-            <Link role="link" tabIndex={"0"} aria-label="Home">
+            <Link role="link" tabIndex={0} aria-label="Home">
               <BiHomeAlt />
             </Link>
           </li>
           <li>
-            <Link role="link" tabIndex={"0"} aria-label="Video">
+            <Link role="link" tabIndex={0} aria-label="Video">
               <MdOutlineOndemandVideo />
             </Link>
           </li>
           <li>
-            <Link role="link" tabIndex={"0"} aria-label="Marketplace">
+            <Link role="link" tabIndex={0} aria-label="Marketplace">
               <AiOutlineShop />
             </Link>
           </li>
           <li>
-            <Link role="link" tabIndex={"0"} aria-label="Groups">
+            <Link role="link" tabIndex={0} aria-label="Groups">
               <HiOutlineUserGroup />
             </Link>
           </li>
           <li>
-            <Link role="link" tabIndex={"0"} aria-label="Gamming">
+            <Link role="link" tabIndex={0} aria-label="Gamming">
               <RiGamepadLine />
             </Link>
           </li>
@@ -60,24 +60,24 @@ const Header = () => {
       <div className={style["right-side"]}>
         <ul>
           <li>
-            <div aria-label="Menu" role="button" tabIndex={"0"}>
+            <div aria-label="Menu" role="button" tabIndex={0}>
               <CgMenuGridR />
             </div>
           </li>
           <li>
-            <div aria-label="Messenger" role="button" tabIndex={"0"}>
+            <div aria-label="Messenger" role="button" tabIndex={0}>
               <FaFacebookMessenger />
             </div>
           </li>
           <li>
-            <Link aria-label="Notifications" role="link" tabIndex={"0"}>
+            <Link aria-label="Notifications" role="link" tabIndex={0}>
               <IoMdNotifications />
             </Link>
           </li>
           <li>
-            <div aria-label="Your profile" role="button" tabIndex={"0"}>
+            <div aria-label="Your profile" role="button" tabIndex={0}>
               <img
-                src="https://scontent.fdel32-1.fna.fbcdn.net/v/t39.30808-1/417380866_2065772103790903_7360360743510704365_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=104&ccb=1-7&_nc_sid=0ecb9b&_nc_ohc=zchevvPK9jkQ7kNvgGsHOtL&_nc_zt=24&_nc_ht=scontent.fdel32-1.fna&_nc_gid=A8BCCD8ZL5j5P3c0VcRUGpD&oh=00_AYAh5HRKy5NKurIGssOvATlT9jQ4qVlRy7mZ7Z7d5O0XeQ&oe=6747CF90"
+                src="https://scontent.fdel32-1.fna.fbcdn.net/v/t39.30808-1/417380866_2065772103790903_7360360743510704365_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=104&ccb=1-7&_nc_sid=0ecb9b&_nc_ohc=zchevvPK9jkQ7kNvgGsHOtL&_nc_zt=24&_nc_ht=scontent.fdel32-1.fna&_nc_gid=Ak-Q4NoTLlwEzceOT4EUSoV&oh=00_AYCK7kDfo3nIyof3GW51Qx_P70ychjlnEXeTIx_emEi7RQ&oe=67487850"
                 alt="user profile image"
               />
             </div>
