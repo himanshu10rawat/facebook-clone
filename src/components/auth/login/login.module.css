@@ -1,0 +1,64 @@
+.modal-body {
+    padding: 2rem 1rem 1rem;
+}
+
+.modal-body h2 {
+    text-align: center;
+    font-weight: 400;
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    color: var(--blackColor);
+}
+
+.modal-body form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.modal-body form .input-group input {
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid var(--lightColor);
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    color: var(--blackColor);
+    outline: none;
+}
+
+.modal-body form button {
+    background-color: var(--blueColor);
+    color: var(--whiteColor);
+    outline: none;
+    border: none;
+    padding: 0.6rem;
+    font-size: 1.25rem;
+    font-weight: 500;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all ease-in-out 0.3s;
+}
+
+.modal-footer {
+    border-top: 1px solid var(--lightColor);
+    text-align: center;
+    padding: 1rem;
+}
+
+.modal-footer button {
+    background-color: var(--greenColor);
+    color: var(--whiteColor);
+    border: none;
+    outline: none;
+    padding: 0.6rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all ease-in-out 0.3s;
+}
+
+.modal-body form button:hover,
+.modal-footer button:hover {
+    box-shadow: 0 1px 4px 0 var(--mediumGreyColor);
+}

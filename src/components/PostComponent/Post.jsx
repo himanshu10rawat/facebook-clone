@@ -15,8 +15,6 @@ import { AiFillLike } from "react-icons/ai";
 import { CiCamera, CiFaceSmile } from "react-icons/ci";
 
 const Post = ({ postlist }) => {
-  console.log("postlist", postlist);
-
   return (
     <div className={style["fb-post"]}>
       <div className={style["post-header"]}>

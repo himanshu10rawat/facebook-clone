@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useState } from "react";
 import style from "./postForm.module.css";
 import { IoMdClose } from "react-icons/io";
 import { FaUserFriends, FaUserTag, FaRegSmile } from "react-icons/fa";
@@ -6,19 +6,31 @@ import { TiArrowSortedDown } from "react-icons/ti";
 import { CiFaceSmile } from "react-icons/ci";
 import { MdAddToPhotos, MdPhotoLibrary } from "react-icons/md";
 import { FaLocationDot } from "react-icons/fa6";
+import { PostContext } from "../../context/postContext";
 
 const PostForm = ({ setOpenPostModal, mediaOpen, setMediaOpen }) => {
+  const { dispatch } = useContext(PostContext);
+  console.log("dispatch", dispatch);
+
+  const [formData, setFormData] = useState({
+    postCaption: "",
+    media: "",
+  });
   const [imageUrl, setImageUrl] = useState("");
 
   const imageHandleChange = (e) => {
     const imageFile = e.target.files[0];
     const imageUrl = window.URL.createObjectURL(imageFile);
     setImageUrl(imageUrl);
+    if (imageFile) {
+      setFormData((prev) => ({ ...prev, media: imageFile }));
+    }
   };
 
   const handleRemoveImage = () => {
     setImageUrl("");
     setMediaOpen(false);
+    setFormData((prev) => ({ ...prev, media: "" }));
   };
 
   const handleCloseModal = () => {
@@ -29,16 +41,29 @@ const PostForm = ({ setOpenPostModal, mediaOpen, setMediaOpen }) => {
     setMediaOpen(true);
   };
 
-  const [formData, setFormData] = useState({
-    postCaption: "",
-    media: "",
-  });
-
   const handleInputChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newPost = {
+      title: formData.postCaption,
+      postImage: formData.media,
+      date: new Date().toLocaleDateString(),
+    };
+
+    dispatch({
+      type: "ADD_POST",
+      payload: newPost,
+    });
+
+    setFormData({ postCaption: "", media: "" });
+    setImageUrl("");
+    setMediaOpen(false);
   };
   return (
     <div className={style["modal-wrapper"]}>
@@ -84,7 +109,7 @@ const PostForm = ({ setOpenPostModal, mediaOpen, setMediaOpen }) => {
             </div>
           </div>
           <div className={style["post-form"]}>
-            <form>
+            <form onSubmit={handleSubmit}>
               <div className={style["form-input-section"]}>
                 <div className={style["input-group"]}>
                   <textarea
@@ -136,11 +161,7 @@ const PostForm = ({ setOpenPostModal, mediaOpen, setMediaOpen }) => {
                           name="media"
                           id="media"
                           accept="image/*"
-                          onChange={() => {
-                            imageHandleChange();
-                            handleInputChange();
-                          }}
-                          value={formData.media}
+                          onChange={imageHandleChange}
                         />
                       </div>
                     ) : (
@@ -178,7 +199,11 @@ const PostForm = ({ setOpenPostModal, mediaOpen, setMediaOpen }) => {
                   </span>
                 </div>
               </div>
-              <button type="button" className={style["post-button"]}>
+              <button
+                disabled={formData.postCaption || formData.media ? false : true}
+                type="submit"
+                className={style["post-button"]}
+              >
                 Post
               </button>
             </form>

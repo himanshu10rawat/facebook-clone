@@ -1,0 +1,23 @@
+.auth-context {
+    background-color: var(--lightColor);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth-context h1 {
+    color: var(--blueColor);
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+}
+
+.auth-modal {
+    background-color: var(--whiteColor);
+    max-width: 400px;
+    width: 400px;
+    min-width: 400px;
+    box-shadow: 0 2px 8px 2px var(--lightgreyColor);
+    border-radius: 0.5rem;
+}

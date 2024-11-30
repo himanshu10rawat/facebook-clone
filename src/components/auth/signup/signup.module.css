@@ -1,0 +1,16 @@
+.modal-header {
+    padding: 1rem;
+    border-bottom: 1px solid var(--mediumLightColor);
+}
+
+.modal-header h2 {
+    text-align: center;
+    font-weight: 600;
+    font-size: 24px;
+}
+
+.modal-header p {
+    text-align: center;
+    color: var(--greyColor);
+    font-size: 14px;
+}
