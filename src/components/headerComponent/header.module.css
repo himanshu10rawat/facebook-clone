@@ -52,10 +52,6 @@
     font-size: 16px;
 }
 
-.left-side form input:focus-visible {
-    outline: none;
-}
-
 .navbar-items ul li a {
     padding: 0.75rem 3rem;
     font-size: 1.75rem;

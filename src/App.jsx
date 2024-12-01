@@ -1,17 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
 import Header from "./components/headerComponent/Header";
 import { Outlet } from "react-router";
-import { PostProvider } from "./context/postContext";
+import { PostContext } from "./context/postContext";
 import AuthContext from "./components/auth/AuthContext";
 
 const App = () => {
+  const { login } = useContext(PostContext);
   return (
     <>
-      {/* <PostProvider>
-        <Header />
-        <Outlet />
-      </PostProvider> */}
-      <AuthContext />
+      {login.isLogin ? (
+        <>
+          <Header />
+          <Outlet />
+        </>
+      ) : (
+        <AuthContext />
+      )}
     </>
   );
 };

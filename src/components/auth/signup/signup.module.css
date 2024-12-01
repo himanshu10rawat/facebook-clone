@@ -14,3 +14,94 @@
     color: var(--greyColor);
     font-size: 14px;
 }
+
+.modal-body {
+    padding: 1rem;
+}
+
+.modal-body form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.modal-body form input,
+.modal-body form select,
+.modal-body form button {
+    font-size: 1rem;
+}
+
+.modal-body form input,
+.modal-body form select,
+.modal-body form .radio-group .input-row label {
+    color: var(--blackColor);
+    padding: 0.5rem 0.6rem;
+    border: 1px solid var(--lightgreyColor);
+    border-radius: 0.25rem;
+}
+
+.modal-body form .nameInput-group,
+.modal-body form .select-group .input-row,
+.modal-body form .radio-group .input-row {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.modal-body form .nameInput-group input {
+    width: 50%;
+}
+
+.modal-body form .select-group .input-row select,
+.modal-body form .radio-group .input-row label {
+    width: 33.333%;
+}
+
+.modal-body form .select-group .input-title,
+.modal-body form .radio-group .input-title {
+    font-size: 14px;
+    margin-bottom: 0.25rem;
+    color: var(--greyColor);
+}
+
+.modal-body form .radio-group .input-row label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-body form .input-group input {
+    width: 100%;
+}
+
+.modal-body form button {
+    background-color: var(--greenColor);
+    border: none;
+    color: var(--whiteColor);
+    padding: 0.5rem;
+    font-weight: 600;
+    font-size: 1.15rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: all ease-in-out 0.3s;
+}
+
+.modal-body form button:hover {
+    box-shadow: 0 1px 4px 0 var(--mediumGreyColor);
+}
+
+.modal-footer {
+    text-align: center;
+    padding: 1rem;
+    border: 1px solid var(--mediumLightColor);
+}
+
+.modal-footer span {
+    color: var(--blueColor);
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all ease-in-out 0.3s;
+}
+
+.modal-footer span:hover {
+    color: blue;
+}

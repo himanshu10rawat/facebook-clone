@@ -1,4 +1,4 @@
-import { createContext, useReducer } from "react";
+import { createContext, useReducer, useState } from "react";
 import { postData } from "../database/postData";
 import postReducer from "./postReducer";
 
@@ -10,9 +10,12 @@ export const PostContext = createContext();
 // Provider Component
 export const PostProvider = ({ children }) => {
   const [state, dispatch] = useReducer(postReducer, initialState);
+  const [isLogin, setIsLogin] = useState(false);
 
   return (
-    <PostContext.Provider value={{ state, dispatch }}>
+    <PostContext.Provider
+      value={{ post: { state, dispatch }, login: { isLogin, setIsLogin } }}
+    >
       {children}
     </PostContext.Provider>
   );

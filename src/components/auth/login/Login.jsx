@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import style from "./login.module.css";
+import { PostContext } from "../../../context/postContext";
 
-const Login = () => {
+const Login = ({ setIsRegistered }) => {
+  const { login } = useContext(PostContext);
+  const { isLogin, setIsLogin } = login;
   const [loginData, setLoginData] = useState({
     mobileEmailInput: "",
     password: "",
@@ -10,6 +13,7 @@ const Login = () => {
   const [error, setError] = useState("");
 
   const handleChangeInput = (e) => {
+    setError("");
     const { name, value } = e.target;
     setLoginData({
       ...loginData,
@@ -22,8 +26,30 @@ const Login = () => {
     const loginFormData = {
       ...loginData,
     };
+
+    const registeredUsers = JSON.parse(localStorage.getItem("users"));
+    const userExists = registeredUsers.find(
+      (user) =>
+        user.mobileEmail === loginData.mobileEmailInput &&
+        user.password === loginData.password
+    );
+
+    console.log("userExists", userExists);
+
+    if (userExists) {
+      setIsLogin(true);
+      console.log("Login successful");
+    } else {
+      setIsLogin(false);
+      console.log("invalid detail");
+      setError("Please enter valid email address and password");
+    }
     console.log("loginFormData", loginFormData);
   };
+
+  useEffect(() => {
+    console.log("isLogin state updated:", isLogin);
+  }, [isLogin]);
   return (
     <>
       <div className={style["modal-body"]}>
@@ -40,7 +66,6 @@ const Login = () => {
               value={loginData.mobileEmailInput}
               required
             />
-            {error && <p style={{ color: "red", fontSize: "14px" }}>{error}</p>}
           </div>
           <div className={style["input-group"]}>
             <input
@@ -55,10 +80,13 @@ const Login = () => {
             />
           </div>
           <button type="submit">Log in</button>
+          {error && <p style={{ color: "red", fontSize: "14px" }}>{error}</p>}
         </form>
       </div>
       <div className={style["modal-footer"]}>
-        <button type="button">Create new account</button>
+        <button type="button" onClick={() => setIsRegistered(false)}>
+          Create new account
+        </button>
       </div>
     </>
   );

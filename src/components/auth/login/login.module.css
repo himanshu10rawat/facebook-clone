@@ -23,13 +23,11 @@
     border-radius: 0.5rem;
     font-size: 1rem;
     color: var(--blackColor);
-    outline: none;
 }
 
 .modal-body form button {
     background-color: var(--blueColor);
     color: var(--whiteColor);
-    outline: none;
     border: none;
     padding: 0.6rem;
     font-size: 1.25rem;
@@ -49,7 +47,6 @@
     background-color: var(--greenColor);
     color: var(--whiteColor);
     border: none;
-    outline: none;
     padding: 0.6rem;
     border-radius: 0.5rem;
     font-size: 1rem;
