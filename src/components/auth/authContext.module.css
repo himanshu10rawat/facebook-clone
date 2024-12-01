@@ -15,9 +15,18 @@
 
 .auth-modal {
     background-color: var(--whiteColor);
+    box-shadow: 0 2px 8px 2px var(--lightgreyColor);
+    border-radius: 0.5rem;
+}
+
+.auth-modal.login {
     max-width: 400px;
     width: 400px;
     min-width: 400px;
-    box-shadow: 0 2px 8px 2px var(--lightgreyColor);
-    border-radius: 0.5rem;
+}
+
+.auth-modal.signup {
+    max-width: 500px;
+    width: 500px;
+    min-width: 500px;
 }

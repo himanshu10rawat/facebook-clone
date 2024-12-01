@@ -8,7 +8,11 @@ const AuthContext = () => {
   return (
     <div className={style["auth-context"]}>
       <h1>facebook</h1>
-      <div className={style["auth-modal"]}>
+      <div
+        className={`${style["auth-modal"]} ${
+          style[isRegistered ? "login" : "signup"]
+        }`}
+      >
         {isRegistered ? (
           <Login setIsRegistered={setIsRegistered} />
         ) : (

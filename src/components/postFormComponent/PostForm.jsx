@@ -6,11 +6,12 @@ import { TiArrowSortedDown } from "react-icons/ti";
 import { CiFaceSmile } from "react-icons/ci";
 import { MdAddToPhotos, MdPhotoLibrary } from "react-icons/md";
 import { FaLocationDot } from "react-icons/fa6";
-import { PostContext } from "../../context/postContext";
+import { context } from "../../context/postContext";
 
 const PostForm = ({ setOpenPostModal, mediaOpen, setMediaOpen }) => {
-  const { dispatch } = useContext(PostContext);
-  console.log("dispatch", dispatch);
+  const { postContext } = context();
+  const { dispatch } = postContext;
+  console.log("postContext", postContext);
 
   const [formData, setFormData] = useState({
     postCaption: "",

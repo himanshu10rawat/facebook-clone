@@ -8,8 +8,10 @@ import {
   monthsList,
   yearList,
 } from "../../dateComponent/Date";
+import useLocalStorage from "../../../hooks/useLocalStorage";
 
 const Signup = ({ setIsRegistered }) => {
+  const [users, setUsers] = useLocalStorage("users", []);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -35,14 +37,10 @@ const Signup = ({ setIsRegistered }) => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
-    const existingUsers = JSON.parse(localStorage.getItem("users")) || [];
-
-    const updatedUsers = [...existingUsers, formData];
-
-    localStorage.setItem("users", JSON.stringify(updatedUsers));
+    const updatedUsers = [...users, formData];
+    setUsers(updatedUsers);
 
     console.log("User saved successfully", formData);
-    console.log("All users", updatedUsers);
 
     setFormData({
       firstName: "",
@@ -198,6 +196,7 @@ const Signup = ({ setIsRegistered }) => {
               required
               onChange={handleInputChange}
               value={formData.password}
+              autoComplete={formData.password}
             />
           </div>
           <button type="submit">Sign Up</button>

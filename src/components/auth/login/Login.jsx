@@ -1,10 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import style from "./login.module.css";
-import { PostContext } from "../../../context/postContext";
+import { context } from "../../../context/postContext";
 
 const Login = ({ setIsRegistered }) => {
-  const { login } = useContext(PostContext);
-  const { isLogin, setIsLogin } = login;
+  const { userContext } = context();
+  const { setUser } = userContext;
+
   const [loginData, setLoginData] = useState({
     mobileEmailInput: "",
     password: "",
@@ -23,33 +24,28 @@ const Login = ({ setIsRegistered }) => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    const loginFormData = {
-      ...loginData,
-    };
 
     const registeredUsers = JSON.parse(localStorage.getItem("users"));
+    if (!registeredUsers) {
+      setError("Please create an account first before logging in.");
+      return;
+    }
     const userExists = registeredUsers.find(
       (user) =>
         user.mobileEmail === loginData.mobileEmailInput &&
         user.password === loginData.password
     );
 
-    console.log("userExists", userExists);
-
     if (userExists) {
-      setIsLogin(true);
+      setUser(userExists);
       console.log("Login successful");
     } else {
-      setIsLogin(false);
-      console.log("invalid detail");
+      console.log("invalid login detail");
       setError("Please enter valid email address and password");
     }
-    console.log("loginFormData", loginFormData);
-  };
 
-  useEffect(() => {
-    console.log("isLogin state updated:", isLogin);
-  }, [isLogin]);
+    console.log("loginData", loginData);
+  };
   return (
     <>
       <div className={style["modal-body"]}>
@@ -64,6 +60,7 @@ const Login = ({ setIsRegistered }) => {
               placeholder="Enter address or phone number"
               aria-label="Mobile or Email Input"
               value={loginData.mobileEmailInput}
+              autoComplete={loginData.mobileEmailInput}
               required
             />
           </div>
@@ -76,6 +73,7 @@ const Login = ({ setIsRegistered }) => {
               placeholder="Password"
               aria-label="password"
               value={loginData.password}
+              autoComplete={loginData.password}
               required
             />
           </div>
