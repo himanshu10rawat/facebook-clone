@@ -230,17 +230,21 @@ const Post = ({ postlist }) => {
               <form>
                 <textarea
                   rows="1"
-                  name="message-reply"
-                  id="message-reply"
+                  name="public-comment"
+                  id="public-comment"
                   placeholder="Write a public comment..."
                 ></textarea>
                 <div className={style["reply-footer"]}>
                   <div className={style["attachment-options"]}>
                     <span className={style["attachment-option"]}>
-                      <label htmlFor="camera">
+                      <label htmlFor="commentcamera">
                         <CiCamera />
                       </label>
-                      <input type="file" name="camera" id="camera" />
+                      <input
+                        type="file"
+                        name="commentcamera"
+                        id="commentcamera"
+                      />
                     </span>
                     <span className={style["attachment-option"]}>
                       <CiFaceSmile />

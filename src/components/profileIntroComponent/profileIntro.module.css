@@ -1,0 +1,62 @@
+.profile-intro {
+    background-color: var(--whiteColor);
+    box-shadow: 0 0 2px 1px var(--mediumLightColor);
+    border-radius: 10px;
+    padding: 1rem;
+}
+
+.profile-intro h2 {
+    font-size: 19px;
+    color: var(--blackColor);
+}
+
+.bio-details p {
+    text-align: center;
+    font-size: 15px;
+    color: var(--blackColor);
+}
+
+.edit-button {
+    background-color: var(--lightColor);
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--blackColor);
+    margin-top: 0.75rem;
+    cursor: pointer;
+    transition: background-color ease-in-out 0.3s;
+}
+
+.edit-button:hover {
+    background-color: var(--mediumLightColor);
+}
+
+.bio-details,
+.personal-details {
+    padding-top: 1rem;
+}
+
+.personal-details ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.personal-details ul li {
+    color: var(--blackColor);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.personal-details ul li svg {
+    color: var(--mediumGreyColor);
+    font-size: 24px;
+}
+
+.personal-details ul li a {
+    font-weight: 600;
+}

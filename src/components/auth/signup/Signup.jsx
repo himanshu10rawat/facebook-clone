@@ -9,9 +9,13 @@ import {
   yearList,
 } from "../../dateComponent/Date";
 import useLocalStorage from "../../../hooks/useLocalStorage";
+import { context } from "../../../context/postContext";
 
 const Signup = ({ setIsRegistered }) => {
+  const [error, setError] = useState("");
   const [users, setUsers] = useLocalStorage("users", []);
+  const { userContext } = context();
+  const { setUser } = userContext;
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -27,6 +31,7 @@ const Signup = ({ setIsRegistered }) => {
   };
 
   const handleInputChange = (e) => {
+    setError("");
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -37,8 +42,19 @@ const Signup = ({ setIsRegistered }) => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
+    const userExists = users.find(
+      (user) => user.mobileEmail === formData.mobileEmail
+    );
+
+    if (userExists) {
+      setError(
+        "You have already registered with this email address or phone number."
+      );
+      return;
+    }
     const updatedUsers = [...users, formData];
     setUsers(updatedUsers);
+    setUser(formData);
 
     console.log("User saved successfully", formData);
 
@@ -56,6 +72,7 @@ const Signup = ({ setIsRegistered }) => {
   return (
     <>
       <div className={style["modal-header"]}>
+        {error && <p style={{ color: "red", fontSize: "14px" }}>{error}</p>}
         <h2>Create a new account</h2>
         <p>It's quick and easy.</p>
       </div>

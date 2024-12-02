@@ -1,0 +1,187 @@
+.profile-section {
+    background-color: var(--whiteColor);
+    box-shadow: 0 1px 2px 1px var(--lightColor);
+}
+
+.profile-body {
+    max-width: 1100px;
+    margin-inline: auto;
+}
+
+.cover-photo {
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+    border-radius: 0 0 0.5rem 0.5rem;
+    position: relative;
+}
+
+.cover-photo::after {
+    content: "";
+    position: absolute;
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 70%, rgba(0, 0, 0, 0.3));
+    inset: 0;
+}
+
+.cover-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+}
+
+.other-details {
+    padding-inline: 2rem;
+}
+
+.profile-edit-and-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 1px solid var(--lightgreyColor);
+    padding-bottom: 1rem;
+}
+
+.profile-details {
+    display: flex;
+    align-items: flex-end;
+    margin-top: -30px;
+    z-index: 1;
+    gap: 1rem;
+}
+
+.profile-picture {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    border: 5px solid var(--whiteColor);
+    position: relative;
+}
+
+.profile-change-icon {
+    position: absolute;
+    width: 38px;
+    height: 38px;
+    background-color: var(--mediumLightColor);
+    border-radius: 50%;
+    right: 12px;
+    bottom: 5px;
+    color: var(--blackColor);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-change-icon svg {
+    font-size: 1.25rem;
+}
+
+.friends-profile {
+    display: flex;
+}
+
+.friends-profile a {
+    display: block;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid var(--whiteColor);
+    margin-right: -5px;
+    z-index: 1;
+}
+
+.friends-profile a img,
+.profile-picture img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 50%;
+}
+
+.name-and-friends {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding-bottom: 1rem;
+}
+
+.name-and-friends h2 {
+    font-size: 32px;
+    color: var(--blackColor);
+}
+
+.name-and-friends p {
+    font-size: 15px;
+    color: var(--greyColor);
+    font-weight: 500;
+}
+
+.profile-edit {
+    padding-bottom: 1rem;
+}
+
+.profile-edit .button {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    background-color: var(--lightColor);
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    border-radius: 0.4rem;
+    color: var(--blackColor);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: ease-in-out 0.3s;
+}
+
+.profile-edit .button:hover {
+    background-color: var(--mediumLightColor);
+}
+
+.profile-edit .button svg {
+    font-size: 22px;
+}
+
+.profile-tabs ul {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    padding-block: 4px;
+}
+
+.profile-tabs ul li a {
+    padding: 1rem;
+    font-size: 1rem;
+    color: var(--greyColor);
+    font-weight: 500;
+    display: block;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all ease-in-out 0.3s;
+    position: relative;
+}
+
+.profile-tabs ul li a::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    background-color: transparent;
+    width: 100%;
+    height: 4px;
+}
+
+.profile-tabs ul li a:hover {
+    background-color: var(--lightColor);
+}
+
+.profile-tabs ul li a.active-tab {
+    color: var(--blueColor);
+}
+
+.profile-tabs ul li a.active-tab::after {
+    background-color: var(--blueColor);
+}

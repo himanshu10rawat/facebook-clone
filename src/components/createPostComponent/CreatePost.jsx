@@ -19,7 +19,7 @@ const CreatePost = () => {
   useDisableScroll(openPostModal);
   return (
     <>
-      <section className={style["post-section"]}>
+      <div className={style["post-section"]}>
         <div className={style["only-post"]}>
           <span className={style["profile-picture"]}>
             <img
@@ -66,7 +66,7 @@ const CreatePost = () => {
             Feeling/Activity
           </span>
         </div>
-      </section>
+      </div>
       {openPostModal && (
         <PostForm
           setOpenPostModal={setOpenPostModal}

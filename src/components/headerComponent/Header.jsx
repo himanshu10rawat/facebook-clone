@@ -8,6 +8,7 @@ import { BiHomeAlt } from "react-icons/bi";
 import { AiOutlineShop } from "react-icons/ai";
 import { HiOutlineUserGroup } from "react-icons/hi";
 import { RiGamepadLine } from "react-icons/ri";
+import { FaUserCircle } from "react-icons/fa";
 import style from "./header.module.css";
 import { IoLogOut } from "react-icons/io5";
 import { context } from "../../context/postContext";
@@ -85,10 +86,7 @@ const Header = () => {
             </li>
             <li>
               <div aria-label="Your profile" role="button" tabIndex={0}>
-                <img
-                  src="https://scontent.fdel32-1.fna.fbcdn.net/v/t39.30808-1/417380866_2065772103790903_7360360743510704365_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=104&ccb=1-7&_nc_sid=0ecb9b&_nc_ohc=zchevvPK9jkQ7kNvgGsHOtL&_nc_zt=24&_nc_ht=scontent.fdel32-1.fna&_nc_gid=Ak-Q4NoTLlwEzceOT4EUSoV&oh=00_AYCK7kDfo3nIyof3GW51Qx_P70ychjlnEXeTIx_emEi7RQ&oe=67487850"
-                  alt="user profile image"
-                />
+                <img src="/dummy-profile-image.webp" alt="user profile image" />
               </div>
             </li>
           </ul>
@@ -97,10 +95,14 @@ const Header = () => {
       <div className={style["header-modal"]}>
         <div className={style["user-profile"]}>
           <div className={style["user-image"]}>
-            <img
-              src="https://scontent.fdel32-1.fna.fbcdn.net/v/t39.30808-1/417380866_2065772103790903_7360360743510704365_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=104&ccb=1-7&_nc_sid=0ecb9b&_nc_ohc=1Fjr4zImhdsQ7kNvgH8TKoC&_nc_zt=24&_nc_ht=scontent.fdel32-1.fna&_nc_gid=A2cPlbcfMd2DwZw_-DHUuSJ&oh=00_AYDVnbjzZKesOwzMuzqXmST29n3XySyno-EOc5v2dnf1mA&oe=67525B90"
-              alt=""
-            />
+            {user.profilePic ? (
+              <img
+                src="/dummy-profile-image.webp"
+                alt={user.firstName + " " + user.lastName + " " + "profile pic"}
+              />
+            ) : (
+              <FaUserCircle />
+            )}
           </div>
           <div className={style["user-name"]}>
             {user.firstName + " " + user.lastName}

@@ -7,6 +7,10 @@
     font-family: var(--fontFamily);
 }
 
+body {
+    background-color: var(--lowLightColor);
+}
+
 img {
     max-width: 100%;
     height: auto;
