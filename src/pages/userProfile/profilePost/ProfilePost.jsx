@@ -3,12 +3,14 @@ import style from "./profilePost.module.css";
 import CreatePost from "../../../components/createPostComponent/createPost";
 import PostList from "../../../components/postListComponent/PostList";
 import ProfileIntro from "../../../components/profileIntroComponent/ProfileIntro";
+import ProfilePhotos from "../../../components/profilePhotosComponent/ProfilePhotos";
 
 const ProfilePost = () => {
   return (
     <div className={style["profile-post"]}>
       <div className={style["user-info"]}>
         <ProfileIntro />
+        <ProfilePhotos />
       </div>
       <div className={style["user-post"]}>
         <CreatePost />
