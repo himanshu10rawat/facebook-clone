@@ -1,8 +1,8 @@
 import React from "react";
-import style from "./profilePhotos.module.css";
+import style from "./postGallery.module.css";
 import { Link } from "react-router";
 
-const ProfilePhotos = () => {
+const PostGallery = () => {
   return (
     <div className={style["profile-photos"]}>
       <div className={style["photos-header"]}>
@@ -46,4 +46,4 @@ const ProfilePhotos = () => {
   );
 };
 
-export default ProfilePhotos;
+export default PostGallery;

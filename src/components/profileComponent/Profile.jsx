@@ -1,15 +1,18 @@
 import React from "react";
 import style from "./profile.module.css";
-import { Link } from "react-router";
+import { Link, NavLink, useLocation } from "react-router";
 import { MdEdit } from "react-icons/md";
 import { FaCamera } from "react-icons/fa";
 
 const Profile = () => {
+  const locationUrl = useLocation();
+  const currentUrl = locationUrl.pathname;
+
   return (
     <div className={style["profile-section"]}>
       <div className={style["profile-body"]}>
         <div className={style["cover-photo"]}>
-          <img src="./dummy-cover-image.jpg" alt="Cover Image" />
+          <img src="/dummy-cover-image.jpg" alt="Cover Image" />
         </div>
         <div className={style["other-details"]}>
           <div className={style["profile-edit-and-details"]}>
@@ -71,19 +74,64 @@ const Profile = () => {
           <div className={style["profile-tabs"]}>
             <ul>
               <li>
-                <Link className={style["active-tab"]}>Posts</Link>
+                <NavLink
+                  to={""}
+                  end // Ensures the exact match for the home path
+                  className={({ isActive }) =>
+                    isActive ? style["active-tab"] : ""
+                  }
+                >
+                  Posts
+                </NavLink>
               </li>
               <li>
-                <Link>About</Link>
+                <NavLink
+                  to="about"
+                  className={({ isActive }) =>
+                    isActive ||
+                    currentUrl === "/profile/about_overview" ||
+                    currentUrl === "/profile/about_work_and_education" ||
+                    currentUrl === "/profile/about_places" ||
+                    currentUrl === "/profile/about_contact_and_basic_info" ||
+                    currentUrl === "/profile/about_family_and_relationships" ||
+                    currentUrl === "/profile/about_details" ||
+                    currentUrl === "/profile/about_life_events"
+                      ? style["active-tab"]
+                      : ""
+                  }
+                >
+                  About
+                </NavLink>
               </li>
               <li>
-                <Link>Friends</Link>
+                <NavLink
+                  to={"friends"}
+                  className={({ isActive }) =>
+                    isActive ? style["active-tab"] : ""
+                  }
+                >
+                  Friends
+                </NavLink>
               </li>
               <li>
-                <Link>Photos</Link>
+                <NavLink
+                  to={"photos"}
+                  className={({ isActive }) =>
+                    isActive ? style["active-tab"] : ""
+                  }
+                >
+                  Photos
+                </NavLink>
               </li>
               <li>
-                <Link>Videos</Link>
+                <NavLink
+                  to={"videos"}
+                  className={({ isActive }) =>
+                    isActive ? style["active-tab"] : ""
+                  }
+                >
+                  Videos
+                </NavLink>
               </li>
             </ul>
           </div>

@@ -24,7 +24,7 @@ const Header = () => {
     <>
       <header className={style["header-section"]}>
         <div className={style["left-side"]}>
-          <Link>
+          <Link to={"/"}>
             <FaFacebook />
           </Link>
           <form>

@@ -1,0 +1,230 @@
+/* Overview section */
+.overview-section ul {
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    gap: 1.25rem;
+}
+
+.overview-section ul li {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+
+.overview-section ul li .overview-detail {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+}
+
+.overview-section ul li .overview-detail .icon {
+    font-size: 26px;
+    color: var(--greyColor);
+}
+
+.overview-section ul li .overview-detail .icon svg {
+    display: block;
+}
+
+.overview-section ul li .overview-detail .details {
+    display: flex;
+    flex-direction: column;
+}
+
+.overview-section ul li .overview-detail .details .title {
+    color: var(--darkGreyColor);
+    font-size: 15px;
+}
+
+.overview-section ul li .overview-detail .details .title strong {
+    font-weight: 600;
+}
+
+.overview-section ul li .overview-detail .details .subTitle {
+    font-size: 13px;
+    color: var(--greyColor);
+}
+
+.overview-section ul li .overview-edit {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.overview-section ul li .overview-edit span {
+    color: var(--greyColor);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all ease-in-out 0.3ms;
+}
+
+.overview-section ul li .overview-edit span svg {
+    display: block;
+}
+
+.overview-section ul li .overview-edit .privacy {
+    font-size: 18px;
+    width: 30px;
+    height: 30px;
+}
+
+.overview-section ul li .overview-edit .edit-option {
+    background-color: var(--lightColor);
+    font-size: 21px;
+    width: 35px;
+    height: 35px;
+}
+
+.overview-section ul li .overview-edit .privacy:hover {
+    background-color: var(--lightColor);
+}
+
+.overview-section ul li .overview-edit .edit-option:hover {
+    background-color: var(--mediumLightColor);
+}
+
+/* Work and Education */
+/* Placed lived */
+
+.work-and-education-list,
+.contact-basic-info,
+.family-and-relationships,
+.details-about-you,
+.life-events {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+}
+
+.list-item {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.list-item h3 {
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--blackColor);
+}
+
+.add-button {
+    display: flex;
+    align-items: center;
+    color: var(--blueColor);
+    font-weight: 500;
+    gap: 0.75rem;
+    cursor: pointer;
+    width: max-content;
+}
+
+.add-button .icon {
+    width: 25px;
+    height: 25px;
+    font-size: 21px;
+    border-radius: 50%;
+    border: 2px solid var(--blueColor);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.add-button .text {
+    font-size: 15px;
+    transition: all ease-in-out 0.3s;
+}
+
+.add-button .text:hover {
+    text-decoration-line: underline;
+}
+
+.work {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+}
+
+.work-details,
+.work-edit {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.work-details .icon {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--lightgreyColor);
+    color: var(--whiteColor);
+    border: 1px solid var(--mediumGreyColor);
+}
+
+.work-details .icon .flag-icon {
+    display: block;
+    transform: scaleX(-1);
+}
+
+.work-details .text {
+    display: flex;
+    flex-direction: column;
+}
+
+.work-details .text .title {
+    color: var(--darkGreyColor);
+    font-size: 15px;
+}
+
+.work-details .text .title strong {
+    font-weight: 600;
+}
+
+.work-details .text .subtitle {
+    font-size: 13px;
+    color: var(--greyColor);
+}
+
+.work-edit span {
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all ease-in-out 0.3s;
+    cursor: pointer;
+}
+
+.work-edit span.privacy {
+    width: 30px;
+    height: 30px;
+}
+
+.work-edit span.privacy svg {
+    font-size: 18px;
+}
+
+.work-edit span.privacy:hover {
+    background-color: var(--lightColor);
+}
+
+.work-edit span.edit-option {
+    width: 38px;
+    height: 38px;
+    background-color: var(--lightColor);
+}
+
+.work-edit span.edit-option svg {
+    font-size: 21px;
+}
+
+.work-edit span.edit-option:hover {
+    background-color: var(--mediumLightColor);
+}

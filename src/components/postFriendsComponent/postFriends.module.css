@@ -1,0 +1,86 @@
+.post-friends {
+    background-color: var(--whiteColor);
+    box-shadow: 0 0 2px 1px var(--mediumLightColor);
+    border-radius: 10px;
+    padding: 1rem;
+}
+
+.friends-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.friends-header .left-side-header h2 {
+    font-size: 19px;
+    color: var(--blackColor);
+    transition: all ease-in-out 0.3s;
+}
+
+.friends-header .left-side-header h2:hover {
+    text-decoration: underline 2px;
+}
+
+.friends-header .left-side-header p {
+    color: var(--greyColor);
+}
+
+.friends-header .right-side-header {
+    padding: 0.5rem;
+    color: var(--blueColor);
+    border-radius: 0.25rem;
+    transition: all ease-in-out 0.3s;
+}
+
+.friends-header .right-side-header:hover {
+    background-color: var(--lightColor);
+}
+
+.friends-body {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    grid-auto-rows: minmax(100px, auto);
+}
+
+.friends-body a {
+    display: block;
+}
+
+.friends-body .userimage {
+    position: relative;
+    display: block;
+}
+
+.friends-body .userimage::after {
+    content: "";
+    position: absolute;
+    background-color: var(--blackColor);
+    inset: 0;
+    opacity: 0;
+    transition: opacity ease-in-out 0.3s;
+}
+
+.friends-body .userimage:hover::after {
+    opacity: 0.2;
+}
+
+.friends-body img {
+    display: block;
+    width: 100%;
+    object-fit: cover;
+    object-position: top;
+    aspect-ratio: 1/1;
+    border-radius: 0.5rem;
+}
+
+.friends-body .username {
+    font-size: 13px;
+    font-weight: 500;
+    transition: text-decoration ease-in-out 0.3s;
+}
+
+.friends-body .username:hover {
+    text-decoration: underline;
+}

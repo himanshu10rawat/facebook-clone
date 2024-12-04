@@ -1,14 +1,14 @@
 import React from "react";
 import Profile from "../../components/profileComponent/Profile";
-import ProfilePost from "./profilePost/ProfilePost";
 import style from "./userProfile.module.css";
+import { Outlet } from "react-router";
 
 const UserProfile = () => {
   return (
     <>
       <Profile />
       <div className={style["profile-tab-items"]}>
-        <ProfilePost />
+        <Outlet />
       </div>
     </>
   );

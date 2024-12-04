@@ -22,6 +22,7 @@ a {
 }
 
 :root {
+    --darkGreyColor: #333333;
     --greyColor: #666666;
     --mediumGreyColor: #999999;
     --lightgreyColor: #cccccc;

@@ -1,11 +1,11 @@
 import React from "react";
-import style from "./profileIntro.module.css";
+import style from "./postIntro.module.css";
 import { Link } from "react-router";
 import { FaHeart, FaHome } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import { MdAccessTimeFilled } from "react-icons/md";
 
-const ProfileIntro = () => {
+const PostIntro = () => {
   return (
     <div className={style["profile-intro"]}>
       <h2>Intro</h2>
@@ -52,4 +52,4 @@ const ProfileIntro = () => {
   );
 };
 
-export default ProfileIntro;
+export default PostIntro;
