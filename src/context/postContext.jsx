@@ -12,12 +12,14 @@ const PostContext = createContext();
 export const PostProvider = ({ children }) => {
   const [state, dispatch] = useReducer(postReducer, initialState);
   const [user, setUser] = useLocalStorage("user", {});
+  const [users, setUsers] = useLocalStorage("users", []);
 
   return (
     <PostContext.Provider
       value={{
         postContext: { state, dispatch },
         userContext: { user, setUser },
+        usersContext: { users, setUsers },
       }}
     >
       {children}

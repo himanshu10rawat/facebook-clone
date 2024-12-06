@@ -91,7 +91,7 @@ const Header = () => {
               >
                 {user.profilePic ? (
                   <img
-                    src="/dummy-profile-image.webp"
+                    src={user.profilePic}
                     alt={
                       user.firstName + " " + user.lastName + " " + "profile pic"
                     }

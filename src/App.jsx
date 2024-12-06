@@ -10,7 +10,7 @@ const App = () => {
 
   return (
     <>
-      {user.firstName ? (
+      {user.userId ? (
         <>
           <Header />
           <Outlet />

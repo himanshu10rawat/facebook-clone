@@ -1,10 +1,18 @@
 import React from "react";
 import style from "./profile.module.css";
-import { Link, NavLink, useLocation } from "react-router";
+import { Link, NavLink, useLocation, useParams } from "react-router";
 import { MdEdit } from "react-icons/md";
-import { FaCamera } from "react-icons/fa";
+import { FaCamera, FaUser } from "react-icons/fa";
+import { context } from "../../context/postContext";
 
 const Profile = () => {
+  const { usersContext } = context();
+  const { users } = usersContext;
+
+  const { userId } = useParams();
+
+  const user = users.find((user) => user.userId === userId);
+
   const locationUrl = useLocation();
   const currentUrl = locationUrl.pathname;
 
@@ -12,13 +20,33 @@ const Profile = () => {
     <div className={style["profile-section"]}>
       <div className={style["profile-body"]}>
         <div className={style["cover-photo"]}>
-          <img src="/dummy-cover-image.jpg" alt="Cover Image" />
+          {user.bgImage ? (
+            <img
+              src={user.bgImage}
+              alt={user.firstName + " " + user.lastName + " " + "cover image"}
+            />
+          ) : (
+            <img src="/banner-placeholder.webp" alt="Placeholder cover image" />
+          )}
         </div>
         <div className={style["other-details"]}>
           <div className={style["profile-edit-and-details"]}>
             <div className={style["profile-details"]}>
               <div className={style["profile-picture"]}>
-                <img src="/dummy-profile-image.webp" alt="profile image" />
+                {user.profilePic ? (
+                  <img
+                    src={user.profilePic}
+                    alt={
+                      loginUser.firstName +
+                      " " +
+                      loginUser.lastName +
+                      " " +
+                      "profile pic"
+                    }
+                  />
+                ) : (
+                  <FaUser className={style["profile-pic-placeholder"]} />
+                )}
                 <span
                   className={style["profile-change-icon"]}
                   role="button"
@@ -29,34 +57,33 @@ const Profile = () => {
                 </span>
               </div>
               <div className={style["name-and-friends"]}>
-                <h2>Himanshu Rawat</h2>
-                <p>363 friends</p>
-                <div className={style["friends-profile"]}>
-                  <Link>
-                    <img
-                      src="/dummy-profile-image.webp"
-                      alt="friends profile"
-                    />
-                  </Link>
-                  <Link>
-                    <img
-                      src="/dummy-profile-image.webp"
-                      alt="friends profile"
-                    />
-                  </Link>
-                  <Link>
-                    <img
-                      src="/dummy-profile-image.webp"
-                      alt="friends profile"
-                    />
-                  </Link>
-                  <Link>
-                    <img
-                      src="/dummy-profile-image.webp"
-                      alt="friends profile"
-                    />
-                  </Link>
-                </div>
+                <h2>{user.firstName + " " + user.lastName}</h2>
+                <p>
+                  {user.friendsList?.length ? user.friendsList?.length : 0}{" "}
+                  friends
+                </p>
+                {user.friendsList && (
+                  <div className={style["friends-profile"]}>
+                    <Link>
+                      <img
+                        src="/dummy-profile-image.webp"
+                        alt="friends profile"
+                      />
+                    </Link>
+                    <Link>
+                      <img
+                        src="/dummy-profile-image.webp"
+                        alt="friends profile"
+                      />
+                    </Link>
+                    <Link>
+                      <img
+                        src="/dummy-profile-image.webp"
+                        alt="friends profile"
+                      />
+                    </Link>
+                  </div>
+                )}
               </div>
             </div>
             <div className={style["profile-edit"]}>

@@ -26,7 +26,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <Routes>
         <Route path="/" element={<App />}>
           <Route index element={<Home />} />
-          <Route path="profile" element={<UserProfile />}>
+          <Route path=":userId" element={<UserProfile />}>
             <Route index element={<PostTab />} />
             <Route path="about" element={<AboutTab />}>
               <Route path="" element={<Overview />} />

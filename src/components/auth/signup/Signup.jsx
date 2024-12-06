@@ -8,14 +8,13 @@ import {
   monthsList,
   yearList,
 } from "../../dateComponent/Date";
-import useLocalStorage from "../../../hooks/useLocalStorage";
 import { context } from "../../../context/postContext";
 
 const Signup = ({ setIsRegistered }) => {
   const [error, setError] = useState("");
-  const [users, setUsers] = useLocalStorage("users", []);
-  const { userContext } = context();
+  const { userContext, usersContext } = context();
   const { setUser } = userContext;
+  const { users, setUsers } = usersContext;
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -41,7 +40,6 @@ const Signup = ({ setIsRegistered }) => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-
     const userExists = users.find(
       (user) => user.mobileEmail === formData.mobileEmail
     );
@@ -52,11 +50,18 @@ const Signup = ({ setIsRegistered }) => {
       );
       return;
     }
-    const updatedUsers = [...users, formData];
+    const updatedformData = {
+      ...formData,
+      userId:
+        formData.firstName.toLocaleLowerCase() +
+        Math.floor(Math.random() * 1234),
+    };
+    const updatedUsers = [...users, updatedformData];
     setUsers(updatedUsers);
-    setUser(formData);
+    const { mobileEmail, userId, password } = updatedformData;
+    setUser({ mobileEmail, userId, password });
 
-    console.log("User saved successfully", formData);
+    console.log("User saved successfully", updatedformData);
 
     setFormData({
       firstName: "",

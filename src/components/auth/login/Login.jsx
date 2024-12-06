@@ -3,8 +3,9 @@ import style from "./login.module.css";
 import { context } from "../../../context/postContext";
 
 const Login = ({ setIsRegistered }) => {
-  const { userContext } = context();
+  const { userContext, usersContext } = context();
   const { setUser } = userContext;
+  const { users } = usersContext;
 
   const [loginData, setLoginData] = useState({
     mobileEmailInput: "",
@@ -25,19 +26,19 @@ const Login = ({ setIsRegistered }) => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
-    const registeredUsers = JSON.parse(localStorage.getItem("users"));
-    if (!registeredUsers) {
+    if (!users.length) {
       setError("Please create an account first before logging in.");
       return;
     }
-    const userExists = registeredUsers.find(
+    const userExists = users.find(
       (user) =>
         user.mobileEmail === loginData.mobileEmailInput &&
         user.password === loginData.password
     );
 
     if (userExists) {
-      setUser(userExists);
+      const { mobileEmail, userId, password } = userExists;
+      setUser({ mobileEmail, userId, password });
       console.log("Login successful");
     } else {
       console.log("invalid login detail");

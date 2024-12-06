@@ -3,34 +3,55 @@ import style from "./headerModal.module.css";
 import { IoLogOut } from "react-icons/io5";
 import { context } from "../../context/postContext";
 import { FaUserCircle } from "react-icons/fa";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 const HeaderModal = ({ setHeadModal }) => {
-  const { userContext } = context();
+  const navigate = useNavigate();
+  const { userContext, usersContext } = context();
   const { user, setUser } = userContext;
+  const { users } = usersContext;
+
+  const loginUser = users.find((userData) => userData.userId === user.userId);
 
   const handleLogout = () => {
     setUser({});
+    localStorage.removeItem("user");
+    navigate("/");
   };
   return (
-    <div className={style["header-modal"]}>
+    <div
+      onBlur={(e) => {
+        // Check if the blur event is due to losing focus outside the modal
+        if (!e.currentTarget.contains(e.relatedTarget)) {
+          setHeadModal(false);
+        }
+      }}
+      tabIndex={0} // Makes the div focusable
+      className={style["header-modal"]}
+    >
       <Link
-        to={"profile"}
+        to={loginUser.userId}
         className={style["user-profile"]}
         onClick={() => setHeadModal(false)}
       >
         <div className={style["user-image"]}>
-          {user.profilePic ? (
+          {loginUser.profilePic ? (
             <img
-              src="/dummy-profile-image.webp"
-              alt={user.firstName + " " + user.lastName + " " + "profile pic"}
+              src={loginUser.profilePic}
+              alt={
+                loginUser.firstName +
+                " " +
+                loginUser.lastName +
+                " " +
+                "profile pic"
+              }
             />
           ) : (
             <FaUserCircle />
           )}
         </div>
         <div className={style["user-name"]}>
-          {user.firstName + " " + user.lastName}
+          {loginUser.firstName + " " + loginUser.lastName}
         </div>
       </Link>
       <div
