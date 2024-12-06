@@ -81,6 +81,12 @@
     justify-content: center;
     border-radius: 50%;
     overflow: hidden;
+    cursor: pointer;
+    transition: all ease-in-out 0.3s;
+}
+
+.right-side ul li:hover {
+    background-color: var(--mediumLightColor);
 }
 
 .right-side ul li svg {
@@ -110,86 +116,4 @@
     display: block;
     object-fit: cover;
     object-position: top;
-}
-
-/* Header Modal */
-
-.header-modal {
-    position: fixed;
-    right: 1rem;
-    background-color: var(--whiteColor);
-    box-shadow: 0 1px 4px 2px var(--lightgreyColor);
-    padding: 0.25rem;
-    border-radius: 0.25rem;
-    z-index: 9;
-    display: flex;
-    flex-direction: column;
-}
-
-.user-profile {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.5rem 0.6rem;
-    cursor: pointer;
-    transition: background-color ease-in-out 0.3s;
-}
-
-.user-profile:hover {
-    background-color: var(--lightColor);
-}
-
-.user-profile .user-image {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    overflow: hidden;
-    background-color: var(--mediumLightColor);
-}
-
-.user-profile .user-image img,
-.user-profile .user-image svg {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top;
-}
-
-.user-profile .user-name {
-    font-weight: 500;
-    color: var(--blackColor);
-}
-
-.header-modal .button {
-    padding: 0.5rem 0.6rem;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    border-radius: 0.25rem;
-    color: var(--blackColor);
-    cursor: pointer;
-    transition: background-color ease-in-out 0.3s;
-}
-
-.header-modal .button:hover {
-    background-color: var(--lightColor);
-}
-
-.header-modal .button .icon {
-    width: 40px;
-    height: 40px;
-    background-color: var(--lightgreyColor);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.header-modal .button .icon svg {
-    font-size: 1.5rem;
-}
-
-.header-modal .button .text {
-    font-size: 14px;
-    font-weight: 500;
 }

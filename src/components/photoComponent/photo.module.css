@@ -1,0 +1,48 @@
+.photo {
+    width: 100%;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+    background-color: var(--ligthColor);
+}
+
+.photo::after {
+    position: absolute;
+    content: "";
+    background-color: rgba(0, 0, 0, 0.2);
+    inset: 0;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.photo:hover::after {
+    visibility: visible;
+    opacity: 1;
+}
+
+.photo img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    object-position: top;
+}
+
+.edit-button {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.3);
+    position: absolute;
+    color: var(--whiteColor);
+    top: 0.5rem;
+    right: 0.5rem;
+    border-radius: 50%;
+}
+
+.edit-button svg {
+    font-size: 18px;
+}

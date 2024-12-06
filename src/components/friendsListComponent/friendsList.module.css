@@ -1,0 +1,77 @@
+.friends-section {
+    background-color: var(--whiteColor);
+    box-shadow: 0 0 2px 1px var(--mediumLightColor);
+    border-radius: 10px;
+    padding: 1rem;
+}
+
+.friends-section h2 {
+    font-size: 19px;
+    color: var(--blackColor);
+    margin-bottom: 0.75rem;
+}
+
+.shorting {
+    display: flex;
+    list-style-type: none;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.shorting li {
+    position: relative;
+    padding: 1rem;
+    color: var(--greyColor);
+    font-weight: 500;
+    border-radius: 0.5rem;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all ease-in-out 0.3s;
+}
+
+.shorting li::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    bottom: -4px;
+    left: 0;
+    height: 4px;
+    background-color: transparent;
+}
+
+.shorting li:hover {
+    background-color: var(--lightColor);
+}
+
+.shorting li.activeBtn {
+    border-radius: 0;
+    background-color: transparent;
+    color: var(--blueColor);
+}
+
+.shorting li.activeBtn::after {
+    background-color: var(--blueColor);
+}
+
+.friends-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+}
+
+.see-all-link {
+    display: block;
+    text-align: center;
+    background-color: var(--lightColor);
+    color: var(--blackColor);
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    margin-top: 1rem;
+    transition: all ease-in-out 0.3s;
+}
+
+.see-all-link:hover {
+    background-color: var(--mediumLightColor);
+}

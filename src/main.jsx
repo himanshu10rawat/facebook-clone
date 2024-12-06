@@ -16,6 +16,9 @@ import {
   PlacedLived,
   WorkAndEducation,
 } from "./components/aboutDetailsComponent/AboutDetails";
+import FriendsTab from "./pages/userProfile/friendsTab/FriendsTab";
+import VideosTab from "./pages/userProfile/videosTab/videosTab";
+import PhotosTab from "./pages/userProfile/photosTab/PhotosTab";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
@@ -49,6 +52,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             <Route path="about_life_events" element={<AboutTab />}>
               <Route path="" element={<LifeEventa />} />
             </Route>
+            <Route path="friends" element={<FriendsTab />}></Route>
+            <Route path="videos" element={<VideosTab />}></Route>
+            <Route path="Photos" element={<PhotosTab />}></Route>
           </Route>
         </Route>
       </Routes>

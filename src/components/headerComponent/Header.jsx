@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router";
 import { FaFacebook, FaFacebookMessenger, FaUser } from "react-icons/fa";
 import { MdOutlineOndemandVideo, MdGroups } from "react-icons/md";
@@ -10,16 +10,14 @@ import { HiOutlineUserGroup } from "react-icons/hi";
 import { RiGamepadLine } from "react-icons/ri";
 import { FaUserCircle } from "react-icons/fa";
 import style from "./header.module.css";
-import { IoLogOut } from "react-icons/io5";
 import { context } from "../../context/postContext";
+import HeaderModal from "../headerModalComponent/HeaderModal";
 
 const Header = () => {
   const { userContext } = context();
-  const { user, setUser } = userContext;
+  const { user } = userContext;
 
-  const handleLogout = () => {
-    setUser({});
-  };
+  const [headModal, setHeadModal] = useState(false);
   return (
     <>
       <header className={style["header-section"]}>
@@ -85,44 +83,28 @@ const Header = () => {
               </Link>
             </li>
             <li>
-              <div aria-label="Your profile" role="button" tabIndex={0}>
-                <img src="/dummy-profile-image.webp" alt="user profile image" />
+              <div
+                aria-label="Your profile"
+                role="button"
+                tabIndex={0}
+                onClick={() => setHeadModal((prev) => !prev)}
+              >
+                {user.profilePic ? (
+                  <img
+                    src="/dummy-profile-image.webp"
+                    alt={
+                      user.firstName + " " + user.lastName + " " + "profile pic"
+                    }
+                  />
+                ) : (
+                  <FaUserCircle />
+                )}
               </div>
             </li>
           </ul>
         </div>
       </header>
-      <div className={style["header-modal"]}>
-        <div className={style["user-profile"]}>
-          <div className={style["user-image"]}>
-            {user.profilePic ? (
-              <img
-                src="/dummy-profile-image.webp"
-                alt={user.firstName + " " + user.lastName + " " + "profile pic"}
-              />
-            ) : (
-              <FaUserCircle />
-            )}
-          </div>
-          <div className={style["user-name"]}>
-            {user.firstName + " " + user.lastName}
-          </div>
-        </div>
-        <div
-          className={style["button"]}
-          role="button"
-          tabIndex={0}
-          onClick={handleLogout}
-          onKeyDown={(e) =>
-            (e.key === "Enter" || e.key === " ") && handleLogout()
-          }
-        >
-          <span className={style["icon"]}>
-            <IoLogOut />
-          </span>
-          <span className={style["text"]}>Log out</span>
-        </div>
-      </div>
+      {headModal && <HeaderModal setHeadModal={setHeadModal} />}
     </>
   );
 };

@@ -1,0 +1,61 @@
+.video {
+    width: 100%;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+    background-color: var(--ligthColor);
+    position: relative;
+    transition: ease-in-out 0.3s;
+}
+
+.video::after {
+    position: absolute;
+    content: "";
+    background-color: rgba(0, 0, 0, 0.2);
+    inset: 0;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.video:hover::after {
+    visibility: visible;
+    opacity: 1;
+}
+
+.video img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    object-position: top;
+}
+
+.edit-button {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.3);
+    position: absolute;
+    color: var(--whiteColor);
+    top: 0.5rem;
+    right: 0.5rem;
+    border-radius: 50%;
+}
+
+.edit-button svg {
+    font-size: 18px;
+}
+
+.video-duration {
+    position: absolute;
+    bottom: 0.5rem;
+    right: 0.5rem;
+    font-size: 14px;
+    color: var(--whiteColor);
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 0.15rem 0.5rem;
+    border-radius: 0.25rem;
+}
