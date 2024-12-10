@@ -152,6 +152,7 @@
 .input-group textarea {
     width: 100%;
     border: none;
+    outline: none;
     padding: 0.25rem;
     resize: none;
     color: var(--blackColor);

@@ -1,7 +1,7 @@
 import React from "react";
-import { postData } from "../../database/postData";
 import Post from "../PostComponent/Post";
 import style from "./postList.module.css";
+import { postData } from "../../database/postData";
 
 const PostList = () => {
   return (

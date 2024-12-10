@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router";
-import { FaFacebook, FaFacebookMessenger, FaUser } from "react-icons/fa";
-import { MdOutlineOndemandVideo, MdGroups } from "react-icons/md";
+import { FaFacebook, FaFacebookMessenger } from "react-icons/fa";
+import { MdOutlineOndemandVideo } from "react-icons/md";
 import { IoMdNotifications, IoIosSearch } from "react-icons/io";
 import { CgMenuGridR } from "react-icons/cg";
 import { BiHomeAlt } from "react-icons/bi";
@@ -10,12 +10,14 @@ import { HiOutlineUserGroup } from "react-icons/hi";
 import { RiGamepadLine } from "react-icons/ri";
 import { FaUserCircle } from "react-icons/fa";
 import style from "./header.module.css";
-import { context } from "../../context/postContext";
+import { usePostContext } from "../../context/postContext";
 import HeaderModal from "../headerModalComponent/HeaderModal";
 
 const Header = () => {
-  const { userContext } = context();
-  const { user } = userContext;
+  const { state } = usePostContext();
+  const loginUser = state.users.find(
+    (singleUser) => singleUser.userId === state.user.userId
+  );
 
   const [headModal, setHeadModal] = useState(false);
   return (
@@ -25,7 +27,12 @@ const Header = () => {
           <Link to={"/"}>
             <FaFacebook />
           </Link>
-          <form>
+          <div
+            role="button"
+            tabIndex={0}
+            aria-label="Search Facebook"
+            className={style["search-button"]}
+          >
             <IoIosSearch />
             <input
               type="search"
@@ -34,7 +41,7 @@ const Header = () => {
               placeholder="Search Facebook"
               aria-label="Search option on facebook"
             />
-          </form>
+          </div>
         </div>
         <nav className={style["navbar-items"]}>
           <ul>
@@ -84,16 +91,22 @@ const Header = () => {
             </li>
             <li>
               <div
+                id="headerProfilePic"
                 aria-label="Your profile"
                 role="button"
                 tabIndex={0}
                 onClick={() => setHeadModal((prev) => !prev)}
               >
-                {user.profilePic ? (
+                {loginUser.profilePic ? (
                   <img
-                    src={user.profilePic}
+                    id="headerProfilePic"
+                    src={loginUser.profilePic}
                     alt={
-                      user.firstName + " " + user.lastName + " " + "profile pic"
+                      loginUser.firstName +
+                      " " +
+                      loginUser.lastName +
+                      " " +
+                      "profile pic"
                     }
                   />
                 ) : (

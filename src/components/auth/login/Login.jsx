@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import style from "./login.module.css";
-import { context } from "../../../context/postContext";
+import { usePostContext } from "../../../context/postContext";
 
 const Login = ({ setIsRegistered }) => {
-  const { userContext, usersContext } = context();
-  const { setUser } = userContext;
-  const { users } = usersContext;
+  const { state, dispatch } = usePostContext();
 
   const [loginData, setLoginData] = useState({
     mobileEmailInput: "",
@@ -26,11 +24,11 @@ const Login = ({ setIsRegistered }) => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
-    if (!users.length) {
+    if (!state.users.length) {
       setError("Please create an account first before logging in.");
       return;
     }
-    const userExists = users.find(
+    const userExists = state.users.find(
       (user) =>
         user.mobileEmail === loginData.mobileEmailInput &&
         user.password === loginData.password
@@ -38,7 +36,10 @@ const Login = ({ setIsRegistered }) => {
 
     if (userExists) {
       const { mobileEmail, userId, password } = userExists;
-      setUser({ mobileEmail, userId, password });
+      dispatch({
+        type: "LOG_IN",
+        payload: { mobileEmail, userId, password },
+      });
       console.log("Login successful");
     } else {
       console.log("invalid login detail");

@@ -1,11 +1,13 @@
 import React from "react";
 import style from "./about.module.css";
-import { NavLink, Outlet, useLocation } from "react-router";
+import { NavLink, Outlet, useLocation, useParams } from "react-router";
 
 const About = () => {
   const locationUrl = useLocation();
   const currentUrl = locationUrl.pathname;
-  console.log("currentUrl", currentUrl);
+
+  const params = useParams();
+  const userId = params.userId;
 
   return (
     <div className={style["about"]}>
@@ -15,11 +17,11 @@ const About = () => {
           <li>
             <NavLink
               className={({ isActive }) =>
-                isActive || currentUrl === "/profile/about"
+                isActive || currentUrl === `/${userId}/about`
                   ? style["active-tab"]
                   : ""
               }
-              to={"/profile/about_overview"}
+              to={`/${userId}/about_overview`}
             >
               Overview
             </NavLink>
@@ -29,7 +31,7 @@ const About = () => {
               className={({ isActive }) =>
                 isActive ? style["active-tab"] : ""
               }
-              to={"/profile/about_work_and_education"}
+              to={`/${userId}/about_work_and_education`}
             >
               Work and education
             </NavLink>
@@ -39,7 +41,7 @@ const About = () => {
               className={({ isActive }) =>
                 isActive ? style["active-tab"] : ""
               }
-              to={"/profile/about_places"}
+              to={`/${userId}/about_places`}
             >
               Placed lived
             </NavLink>
@@ -49,7 +51,7 @@ const About = () => {
               className={({ isActive }) =>
                 isActive ? style["active-tab"] : ""
               }
-              to={"/profile/about_contact_and_basic_info"}
+              to={`/${userId}/about_contact_and_basic_info`}
             >
               Contact and basic info
             </NavLink>
@@ -59,7 +61,7 @@ const About = () => {
               className={({ isActive }) =>
                 isActive ? style["active-tab"] : ""
               }
-              to={"/profile/about_family_and_relationships"}
+              to={`/${userId}/about_family_and_relationships`}
             >
               Family and relationships
             </NavLink>
@@ -69,7 +71,7 @@ const About = () => {
               className={({ isActive }) =>
                 isActive ? style["active-tab"] : ""
               }
-              to={"/profile/about_details"}
+              to={`/${userId}/about_details`}
             >
               Details about you
             </NavLink>
@@ -79,7 +81,7 @@ const About = () => {
               className={({ isActive }) =>
                 isActive ? style["active-tab"] : ""
               }
-              to={"/profile/about_life_events"}
+              to={`/${userId}/about_life_events`}
             >
               Life events
             </NavLink>

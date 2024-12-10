@@ -19,6 +19,7 @@ import {
 import FriendsTab from "./pages/userProfile/friendsTab/FriendsTab";
 import VideosTab from "./pages/userProfile/videosTab/videosTab";
 import PhotosTab from "./pages/userProfile/photosTab/PhotosTab";
+import NotFound404 from "./components/notFound404Component/NotFound404";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
@@ -52,10 +53,11 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             <Route path="about_life_events" element={<AboutTab />}>
               <Route path="" element={<LifeEventa />} />
             </Route>
-            <Route path="friends" element={<FriendsTab />}></Route>
-            <Route path="videos" element={<VideosTab />}></Route>
-            <Route path="Photos" element={<PhotosTab />}></Route>
+            <Route path="friends" element={<FriendsTab />} />
+            <Route path="videos" element={<VideosTab />} />
+            <Route path="photos" element={<PhotosTab />} />
           </Route>
+          <Route path="*" element={<NotFound404 />} />
         </Route>
       </Routes>
     </PostProvider>

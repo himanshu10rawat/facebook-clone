@@ -6,12 +6,10 @@ import { TiArrowSortedDown } from "react-icons/ti";
 import { CiFaceSmile } from "react-icons/ci";
 import { MdAddToPhotos, MdPhotoLibrary } from "react-icons/md";
 import { FaLocationDot } from "react-icons/fa6";
-import { context } from "../../context/postContext";
+import { usePostContext } from "../../context/postContext";
 
 const PostForm = ({ setOpenPostModal, mediaOpen, setMediaOpen }) => {
-  const { postContext } = context();
-  const { dispatch } = postContext;
-  console.log("postContext", postContext);
+  const { state, dispatch } = usePostContext();
 
   const [formData, setFormData] = useState({
     postCaption: "",
@@ -19,12 +17,16 @@ const PostForm = ({ setOpenPostModal, mediaOpen, setMediaOpen }) => {
   });
   const [imageUrl, setImageUrl] = useState("");
 
+  const loginUser = state.users.find(
+    (user) => user.userId === state.user.userId
+  );
+
   const imageHandleChange = (e) => {
     const imageFile = e.target.files[0];
     const imageUrl = window.URL.createObjectURL(imageFile);
     setImageUrl(imageUrl);
-    if (imageFile) {
-      setFormData((prev) => ({ ...prev, media: imageFile }));
+    if (imageUrl) {
+      setFormData((prev) => ({ ...prev, media: imageUrl }));
     }
   };
 
@@ -51,7 +53,7 @@ const PostForm = ({ setOpenPostModal, mediaOpen, setMediaOpen }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newPost = {
+    const post = {
       title: formData.postCaption,
       postImage: formData.media,
       date: new Date().toLocaleDateString(),
@@ -59,7 +61,10 @@ const PostForm = ({ setOpenPostModal, mediaOpen, setMediaOpen }) => {
 
     dispatch({
       type: "ADD_POST",
-      payload: newPost,
+      payload: {
+        userId: loginUser.userId, // User identify karne ke liye
+        posts: [...(loginUser.posts || []), post], // Updated posts array
+      },
     });
 
     setFormData({ postCaption: "", media: "" });

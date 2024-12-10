@@ -8,13 +8,11 @@ import {
   monthsList,
   yearList,
 } from "../../dateComponent/Date";
-import { context } from "../../../context/postContext";
+import { usePostContext } from "../../../context/postContext";
 
 const Signup = ({ setIsRegistered }) => {
   const [error, setError] = useState("");
-  const { userContext, usersContext } = context();
-  const { setUser } = userContext;
-  const { users, setUsers } = usersContext;
+  const { state, dispatch } = usePostContext();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -40,7 +38,7 @@ const Signup = ({ setIsRegistered }) => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    const userExists = users.find(
+    const userExists = state.users.find(
       (user) => user.mobileEmail === formData.mobileEmail
     );
 
@@ -52,16 +50,20 @@ const Signup = ({ setIsRegistered }) => {
     }
     const updatedformData = {
       ...formData,
+      posts: [],
       userId:
         formData.firstName.toLocaleLowerCase() +
-        Math.floor(Math.random() * 1234),
+        Math.floor(Math.random() * 12345),
     };
-    const updatedUsers = [...users, updatedformData];
-    setUsers(updatedUsers);
+    dispatch({
+      type: "SIGN_UP",
+      payload: updatedformData,
+    });
     const { mobileEmail, userId, password } = updatedformData;
-    setUser({ mobileEmail, userId, password });
-
-    console.log("User saved successfully", updatedformData);
+    dispatch({
+      type: "LOG_IN",
+      payload: { mobileEmail, userId, password },
+    });
 
     setFormData({
       firstName: "",

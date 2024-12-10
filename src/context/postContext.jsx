@@ -1,30 +1,43 @@
-import { createContext, useContext, useReducer } from "react";
-import { postData } from "../database/postData";
+import { createContext, useContext, useEffect, useReducer } from "react";
 import postReducer from "./postReducer";
 import useLocalStorage from "../hooks/useLocalStorage";
-
-const initialState = { postData };
 
 //Create Context
 const PostContext = createContext();
 
 // Provider Component
 export const PostProvider = ({ children }) => {
+  const [storedUser, setStoredUser] = useLocalStorage("user", null);
+  const [storedUsers, setStoredUsers] = useLocalStorage("users", []);
+
+  const initialState = {
+    user: storedUser || {}, // Fallback to empty object if null
+    users: storedUsers || [], // Fallback to empty array if null
+  };
+
   const [state, dispatch] = useReducer(postReducer, initialState);
-  const [user, setUser] = useLocalStorage("user", {});
-  const [users, setUsers] = useLocalStorage("users", []);
+
+  // Sync with local storage
+  useEffect(() => {
+    setStoredUsers(state.users);
+  }, [state.users]);
+
+  useEffect(() => {
+    setStoredUser(state.user);
+  }, [state.user]);
 
   return (
-    <PostContext.Provider
-      value={{
-        postContext: { state, dispatch },
-        userContext: { user, setUser },
-        usersContext: { users, setUsers },
-      }}
-    >
+    <PostContext.Provider value={{ state, dispatch }}>
       {children}
     </PostContext.Provider>
   );
 };
 
-export const context = () => useContext(PostContext);
+// Custom Hook to Use Context
+export const usePostContext = () => {
+  const context = useContext(PostContext);
+  if (!context) {
+    throw new Error("usePostContext must be used within a PostProvider");
+  }
+  return context;
+};
