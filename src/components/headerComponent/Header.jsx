@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router";
+import { Link, NavLink } from "react-router";
 import { FaFacebook, FaFacebookMessenger } from "react-icons/fa";
 import { MdOutlineOndemandVideo } from "react-icons/md";
 import { IoMdNotifications, IoIosSearch } from "react-icons/io";
@@ -46,29 +46,29 @@ const Header = () => {
         <nav className={style["navbar-items"]}>
           <ul>
             <li>
-              <Link role="link" tabIndex={0} aria-label="Home">
+              <NavLink to={"/"} role="link" tabIndex={0} aria-label="Home">
                 <BiHomeAlt />
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link role="link" tabIndex={0} aria-label="Video">
+              <NavLink role="link" tabIndex={0} aria-label="Video">
                 <MdOutlineOndemandVideo />
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link role="link" tabIndex={0} aria-label="Marketplace">
+              <NavLink role="link" tabIndex={0} aria-label="Marketplace">
                 <AiOutlineShop />
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link role="link" tabIndex={0} aria-label="Groups">
+              <NavLink role="link" tabIndex={0} aria-label="Groups">
                 <HiOutlineUserGroup />
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link role="link" tabIndex={0} aria-label="Gamming">
+              <NavLink role="link" tabIndex={0} aria-label="Gamming">
                 <RiGamepadLine />
-              </Link>
+              </NavLink>
             </li>
           </ul>
         </nav>
@@ -99,7 +99,6 @@ const Header = () => {
               >
                 {loginUser.profilePic ? (
                   <img
-                    id="headerProfilePic"
                     src={loginUser.profilePic}
                     alt={
                       loginUser.firstName +

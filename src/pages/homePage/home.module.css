@@ -5,4 +5,6 @@
 
 .home-page main {
     padding-block: 1rem;
+    max-width: 700px;
+    width: 700px;
 }

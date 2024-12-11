@@ -35,18 +35,15 @@ const Login = ({ setIsRegistered }) => {
     );
 
     if (userExists) {
-      const { mobileEmail, userId, password } = userExists;
       dispatch({
         type: "LOG_IN",
-        payload: { mobileEmail, userId, password },
+        payload: userExists,
       });
       console.log("Login successful");
     } else {
       console.log("invalid login detail");
       setError("Please enter valid email address and password");
     }
-
-    console.log("loginData", loginData);
   };
   return (
     <>

@@ -59,10 +59,9 @@ const Signup = ({ setIsRegistered }) => {
       type: "SIGN_UP",
       payload: updatedformData,
     });
-    const { mobileEmail, userId, password } = updatedformData;
     dispatch({
       type: "LOG_IN",
-      payload: { mobileEmail, userId, password },
+      payload: updatedformData,
     });
 
     setFormData({

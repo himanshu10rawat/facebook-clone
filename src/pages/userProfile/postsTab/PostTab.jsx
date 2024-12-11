@@ -5,10 +5,17 @@ import PostList from "../../../components/postListComponent/PostList";
 import PostGallery from "../../../components/postGalleryComponent/PostGallery";
 import PostIntro from "../../../components/postIntroComponent/PostIntro";
 import PostFriends from "../../../components/postFriendsComponent/PostFriends";
+import { usePostContext } from "../../../context/postContext";
+import { useParams } from "react-router";
 
 const PostTab = () => {
   const userInfo = useRef();
   const [userHeight, setUserHeight] = useState(0);
+  const { userId } = useParams();
+  const { state } = usePostContext();
+  const { users } = state;
+
+  const currentUser = users.find((user) => user.userId === userId);
 
   useEffect(() => {
     const updateHeight = () => {
@@ -49,7 +56,7 @@ const PostTab = () => {
         className={style["user-post"]}
       >
         <CreatePost />
-        <PostList />
+        <PostList data={currentUser} />
       </div>
     </div>
   );

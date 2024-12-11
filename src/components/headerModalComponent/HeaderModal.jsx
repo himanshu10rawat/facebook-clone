@@ -25,9 +25,10 @@ const HeaderModal = ({ setHeadModal }) => {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      const objectId = event.target.id;
+      const targetElement = event.target.closest("#headerProfilePic");
+      console.log("targetElement", targetElement);
 
-      if (objectId === "headerProfilePic") {
+      if (targetElement) {
         return;
       }
 

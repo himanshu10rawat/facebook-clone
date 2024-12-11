@@ -15,6 +15,8 @@ const Profile = ({ user }) => {
 
   const { state, dispatch } = usePostContext();
 
+  const isLoginUser = state.user.userId === user.userId;
+
   const handleChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -33,9 +35,8 @@ const Profile = ({ user }) => {
 
     if (previewBgImage) {
       const loginUser = state.users.find(
-        (singleUser) => singleUser.userId === user.userId
+        (singleUser) => singleUser.userId === state.user.userId
       );
-
       const updatedLoginUser = { ...loginUser, bgImage: previewBgImage };
 
       dispatch({
@@ -51,26 +52,31 @@ const Profile = ({ user }) => {
       <div className={style["profile-section"]}>
         <div className={style["profile-body"]}>
           <div className={style["cover-photo"]}>
-            <form onSubmit={handleSubmit}>
-              <label htmlFor="bgImage" className={style["edit-cover-photo"]}>
-                <FaCamera /> Edit cover photo
-                <input
-                  type="file"
-                  name="bgImage"
-                  id="bgImage"
-                  accept="image/*"
-                  onChange={handleChange}
-                />
-              </label>
-              {previewBgImage && (
-                <div className={style["action-buttons"]}>
-                  <button type="reset" onClick={() => setPreviewBgImage(null)}>
-                    Cancel
-                  </button>
-                  <button type="submit">Save</button>
-                </div>
-              )}
-            </form>
+            {isLoginUser && (
+              <form onSubmit={handleSubmit}>
+                <label htmlFor="bgImage" className={style["edit-cover-photo"]}>
+                  <FaCamera /> Edit cover photo
+                  <input
+                    type="file"
+                    name="bgImage"
+                    id="bgImage"
+                    accept="image/*"
+                    onChange={handleChange}
+                  />
+                </label>
+                {previewBgImage && (
+                  <div className={style["action-buttons"]}>
+                    <button
+                      type="reset"
+                      onClick={() => setPreviewBgImage(null)}
+                    >
+                      Cancel
+                    </button>
+                    <button type="submit">Save</button>
+                  </div>
+                )}
+              </form>
+            )}
             {isImageLoading && <h2 className={style["loader"]}>Loading...</h2>}
             <img
               src={previewBgImage || user.bgImage || "/banner-placeholder.webp"}
@@ -92,10 +98,10 @@ const Profile = ({ user }) => {
                   tabIndex={0}
                   aria-label="Edit profile image"
                   className={style["profile-picture"]}
-                  onClick={() => setEditProfile(true)}
+                  onClick={() => isLoginUser && setEditProfile(true)}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" || e.key === " ") {
-                      setEditProfile(true);
+                      isLoginUser && setEditProfile(true);
                     }
                   }}
                 >
@@ -113,14 +119,16 @@ const Profile = ({ user }) => {
                   ) : (
                     <FaUser className={style["profile-pic-placeholder"]} />
                   )}
-                  <span
-                    className={style["profile-change-icon"]}
-                    role="button"
-                    tabIndex={0}
-                    aria-label="Change your profile picture"
-                  >
-                    <FaCamera />
-                  </span>
+                  {isLoginUser && (
+                    <span
+                      className={style["profile-change-icon"]}
+                      role="button"
+                      tabIndex={0}
+                      aria-label="Change your profile picture"
+                    >
+                      <FaCamera />
+                    </span>
+                  )}
                 </div>
                 <div className={style["name-and-friends"]}>
                   <h2>{user.firstName + " " + user.lastName}</h2>
@@ -152,17 +160,19 @@ const Profile = ({ user }) => {
                   )}
                 </div>
               </div>
-              <div className={style["profile-edit"]}>
-                <span
-                  role="button"
-                  tabIndex={0}
-                  aria-label="Edit profile"
-                  className={style["button"]}
-                >
-                  <MdEdit />
-                  Edit profile
-                </span>
-              </div>
+              {isLoginUser && (
+                <div className={style["profile-edit"]}>
+                  <span
+                    role="button"
+                    tabIndex={0}
+                    aria-label="Edit profile"
+                    className={style["button"]}
+                  >
+                    <MdEdit />
+                    Edit profile
+                  </span>
+                </div>
+              )}
             </div>
             <div className={style["profile-tabs"]}>
               <ul>

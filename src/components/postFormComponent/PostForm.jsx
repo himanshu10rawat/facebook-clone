@@ -1,39 +1,45 @@
 import React, { useContext, useState } from "react";
 import style from "./postForm.module.css";
 import { IoMdClose } from "react-icons/io";
-import { FaUserFriends, FaUserTag, FaRegSmile } from "react-icons/fa";
+import {
+  FaUserFriends,
+  FaUserTag,
+  FaRegSmile,
+  FaUserCircle,
+} from "react-icons/fa";
 import { TiArrowSortedDown } from "react-icons/ti";
 import { CiFaceSmile } from "react-icons/ci";
 import { MdAddToPhotos, MdPhotoLibrary } from "react-icons/md";
 import { FaLocationDot } from "react-icons/fa6";
 import { usePostContext } from "../../context/postContext";
+import { Link } from "react-router";
 
 const PostForm = ({ setOpenPostModal, mediaOpen, setMediaOpen }) => {
   const { state, dispatch } = usePostContext();
 
   const [formData, setFormData] = useState({
     postCaption: "",
-    media: "",
   });
-  const [imageUrl, setImageUrl] = useState("");
+  const [previewImage, setPreviewImage] = useState("");
 
   const loginUser = state.users.find(
     (user) => user.userId === state.user.userId
   );
 
   const imageHandleChange = (e) => {
-    const imageFile = e.target.files[0];
-    const imageUrl = window.URL.createObjectURL(imageFile);
-    setImageUrl(imageUrl);
-    if (imageUrl) {
-      setFormData((prev) => ({ ...prev, media: imageUrl }));
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewImage(reader.result);
+      };
+      reader.readAsDataURL(file);
     }
   };
 
   const handleRemoveImage = () => {
-    setImageUrl("");
+    setPreviewImage("");
     setMediaOpen(false);
-    setFormData((prev) => ({ ...prev, media: "" }));
   };
 
   const handleCloseModal = () => {
@@ -55,7 +61,7 @@ const PostForm = ({ setOpenPostModal, mediaOpen, setMediaOpen }) => {
     e.preventDefault();
     const post = {
       title: formData.postCaption,
-      postImage: formData.media,
+      postImage: previewImage && previewImage,
       date: new Date().toLocaleDateString(),
     };
 
@@ -67,9 +73,11 @@ const PostForm = ({ setOpenPostModal, mediaOpen, setMediaOpen }) => {
       },
     });
 
-    setFormData({ postCaption: "", media: "" });
-    setImageUrl("");
+    setFormData({ postCaption: "" });
+    setPreviewImage("");
     setMediaOpen(false);
+    setOpenPostModal(false);
+    console.log("post", post);
   };
   return (
     <div className={style["modal-wrapper"]}>
@@ -93,16 +101,20 @@ const PostForm = ({ setOpenPostModal, mediaOpen, setMediaOpen }) => {
         </div>
         <div className={style["modal-body"]}>
           <div className={style["profile-section"]}>
-            <div className={style["profile-image"]}>
-              <img
-                src={
-                  "https://cdn.pixabay.com/photo/2024/03/12/15/42/greylag-goose-8629040_1280.jpg"
-                }
-                alt="Himanshu Rawat profile picture"
-              />
-            </div>
+            <Link to={state.user.userId} className={style["profile-image"]}>
+              {state.user.profilePic ? (
+                <img
+                  src={state.user.profilePic}
+                  alt={`${state.user.firstName} profile picture`}
+                />
+              ) : (
+                <FaUserCircle />
+              )}
+            </Link>
             <div className={style["profile-details"]}>
-              <span className={style["username"]}>Himanshu Rawat</span>
+              <span className={style["username"]}>
+                {state.user.firstName + " " + state.user.lastName}
+              </span>
               <span
                 className={style["share-with"]}
                 role="button"
@@ -123,7 +135,7 @@ const PostForm = ({ setOpenPostModal, mediaOpen, setMediaOpen }) => {
                     id="post-caption"
                     style={{ fontSize: `${!mediaOpen ? "24px" : "15px"}` }}
                     rows={!mediaOpen ? 4 : 1}
-                    placeholder="What's on your mind, ${Himanshu}?"
+                    placeholder={`What's on your mind, ${state.user.firstName}?`}
                     aria-label="Post caption"
                     onChange={handleInputChange}
                     value={formData.postCaption}
@@ -153,7 +165,7 @@ const PostForm = ({ setOpenPostModal, mediaOpen, setMediaOpen }) => {
                     >
                       <IoMdClose />
                     </span>
-                    {!imageUrl ? (
+                    {!previewImage ? (
                       <div className={style["dummy-image"]}>
                         <label htmlFor="media">
                           <span className={style["add-images-icon"]}>
@@ -173,7 +185,7 @@ const PostForm = ({ setOpenPostModal, mediaOpen, setMediaOpen }) => {
                     ) : (
                       <div className={style["image-list"]}>
                         <div className={style["image"]}>
-                          <img src={imageUrl} alt="" />
+                          <img src={previewImage} alt="" />
                         </div>
                       </div>
                     )}

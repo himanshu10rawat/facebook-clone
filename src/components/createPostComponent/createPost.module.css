@@ -16,10 +16,13 @@
 }
 
 .only-post .profile-picture {
+    background-color: var(--lightColor);
     width: 40px;
     height: 40px;
     overflow: hidden;
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 50%;
     cursor: pointer;
     transition: ease-in-out 0.3s;
@@ -35,6 +38,10 @@
     display: block;
     object-fit: cover;
     object-position: top;
+}
+
+.only-post .profile-picture svg {
+    font-size: 21px;
 }
 
 .write-post-button {
@@ -57,10 +64,12 @@
 }
 
 .post-with-media span {
+    width: 33.333%;
     font-size: 16px;
-    padding: 0.5rem 2.5rem;
+    padding-block: 0.5rem;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 5px;
     color: var(--greyColor);
     font-weight: 500;

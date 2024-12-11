@@ -25,6 +25,10 @@
     height: 40px;
     border-radius: 50%;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--lightColor);
 }
 
 .profile-image img {
@@ -32,6 +36,10 @@
     height: 100%;
     object-fit: cover;
     object-position: top;
+}
+
+.profile-image svg {
+    font-size: 21px;
 }
 
 .profile-other-details {
@@ -72,6 +80,12 @@
 
 .post-quotes {
     font-size: 16px;
+    padding-top: 0.85rem;
+}
+
+.post-quotes-single {
+    font-size: 28px;
+    font-weight: 500;
     padding-top: 0.85rem;
 }
 
@@ -197,7 +211,6 @@
     display: inline-block;
     font-weight: 500;
     color: var(--greyColor);
-    margin-bottom: 0.75rem;
 }
 
 .first-comment {
@@ -209,15 +222,26 @@
 .profile-picture {
     width: 35px;
     height: 35px;
+    flex-shrink: 0;
     border-radius: 50%;
     overflow: hidden;
+    background-color: var(--lightColor);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
 }
 
 .profile-picture img {
+    display: block;
     object-fit: cover;
     object-position: top;
     width: 100%;
     height: 100%;
+}
+
+.profile-picture svg {
+    font-size: 21px;
 }
 
 .comment-list {
@@ -272,7 +296,7 @@
 }
 
 .reply-comment-box {
-    padding: 0.5rem 0.75rem;
+    padding: 0 0 0 0.75rem;
     border-radius: 1.5rem;
     background-color: var(--lightColor);
     width: 100%;
@@ -282,8 +306,8 @@
     width: 100%;
     resize: none;
     border: none;
+    outline: none;
     background-color: transparent;
-    padding: 0 0.25rem 0.25rem;
     font-size: 15px;
 }
 

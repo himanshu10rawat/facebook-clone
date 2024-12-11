@@ -6,6 +6,7 @@ import {
   FaRegComment,
   FaWhatsapp,
   FaHeart,
+  FaUserCircle,
 } from "react-icons/fa";
 import { BsThreeDots, BsFillEmojiHeartEyesFill } from "react-icons/bs";
 import { IoMdClose, IoMdSend } from "react-icons/io";
@@ -13,18 +14,33 @@ import { AiOutlineLike } from "react-icons/ai";
 import { PiShareFatLight } from "react-icons/pi";
 import { AiFillLike } from "react-icons/ai";
 import { CiCamera, CiFaceSmile } from "react-icons/ci";
+import { Link } from "react-router";
+import { usePostContext } from "../../context/postContext";
 
-const Post = ({ postlist }) => {
+const Post = ({ postlist, user }) => {
+  const { state } = usePostContext();
+  const loginUser = state.users.find(
+    (singleUser) => singleUser.userId === state.user.userId
+  );
   return (
     <div className={style["fb-post"]}>
       <div className={style["post-header"]}>
         <div className={style["profile-details-and-controls"]}>
           <div className={style["profile-details"]}>
-            <div className={style["profile-image"]}>
-              <img src={postlist.userProfile} alt="User profile picture" />
-            </div>
+            <Link to={`/${user.userId}`} className={style["profile-image"]}>
+              {user.profilePic ? (
+                <img
+                  src={user.profilePic}
+                  alt={`${user.firstName} profile picture`}
+                />
+              ) : (
+                <FaUserCircle />
+              )}
+            </Link>
             <div className={style["profile-other-details"]}>
-              <span className={style["profile-name"]}>{postlist.username}</span>
+              <span className={style["profile-name"]}>
+                {user.firstName + " " + user.lastName}
+              </span>
               <span className={style["profile-date"]}>
                 {postlist.date} &#x2022;{" "}
                 <span>
@@ -38,16 +54,27 @@ const Post = ({ postlist }) => {
             <IoMdClose role="button" tabIndex={0} aria-label="Close" />
           </div>
         </div>
-        <div
-          className={style["post-quotes"]}
-          dangerouslySetInnerHTML={{
-            __html: DOMPurify.sanitize(postlist.title),
-          }}
-        ></div>
+        {!postlist.postImage ? (
+          <div
+            className={style["post-quotes-single"]}
+            dangerouslySetInnerHTML={{
+              __html: DOMPurify.sanitize(postlist.title),
+            }}
+          ></div>
+        ) : (
+          <div
+            className={style["post-quotes"]}
+            dangerouslySetInnerHTML={{
+              __html: DOMPurify.sanitize(postlist.title),
+            }}
+          ></div>
+        )}
       </div>
-      <div className={style["post-body"]}>
-        <img src={postlist.postImage} alt="User uploaded photo" />
-      </div>
+      {postlist.postImage && (
+        <div className={style["post-body"]}>
+          <img src={postlist.postImage} alt={postlist.title} />
+        </div>
+      )}
       <div className={style["post-footer"]}>
         <div className={style["total-likes-comments-shares-view"]}>
           <div className={style["likes-view-part"]}>
@@ -118,12 +145,19 @@ const Post = ({ postlist }) => {
                 return (
                   <div className={style["comment"]} key={index}>
                     <div className={style["first-comment"]}>
-                      <div className={style["profile-picture"]}>
-                        <img
-                          src={postComment.userProfile}
-                          alt="User profile picture"
-                        />
-                      </div>
+                      <Link
+                        to={user.userId}
+                        className={style["profile-picture"]}
+                      >
+                        {user.profilePic ? (
+                          <img
+                            src={user.profilePic}
+                            alt={`${user.firstName} profile picture`}
+                          />
+                        ) : (
+                          <FaUserCircle />
+                        )}
+                      </Link>
                       <div className={style["user-comment-section"]}>
                         <div className={style["user-comment-box"]}>
                           <span className={style["user-name"]}>
@@ -146,12 +180,19 @@ const Post = ({ postlist }) => {
                       {postComment.replies.map((reply, index) => (
                         <div key={index} className={style["comment"]}>
                           <div className={style["first-comment"]}>
-                            <div className={style["profile-picture"]}>
-                              <img
-                                src={reply.userProfile}
-                                alt={`${reply.userProfile} profile picture`}
-                              />
-                            </div>
+                            <Link
+                              to={user.userId}
+                              className={style["profile-picture"]}
+                            >
+                              {user.profilePic ? (
+                                <img
+                                  src={user.profilePic}
+                                  alt={`${user.firstName} profile picture`}
+                                />
+                              ) : (
+                                <FaUserCircle />
+                              )}
+                            </Link>
                             <div className={style["user-comment-section"]}>
                               <div className={style["user-comment-box"]}>
                                 <span className={style["user-name"]}>
@@ -179,12 +220,19 @@ const Post = ({ postlist }) => {
                       ))}
                     </div>
                     <div className={style["reply-comment-section"]}>
-                      <div className={style["profile-picture"]}>
-                        <img
-                          src="https://scontent.fdel32-1.fna.fbcdn.net/v/t39.30808-1/417380866_2065772103790903_7360360743510704365_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=104&ccb=1-7&_nc_sid=0ecb9b&_nc_ohc=N3ICKu3yqQwQ7kNvgEL-_bw&_nc_zt=24&_nc_ht=scontent.fdel32-1.fna&_nc_gid=AhWO1t03gxw_Bbj_l73i7d1&oh=00_AYCBQ2pzjouTCfcaoTexVl8oz5FSFhYO-P5NgOayoDdCTA&oe=674B5390"
-                          alt="User profile picture"
-                        />
-                      </div>
+                      <Link
+                        to={user.userId}
+                        className={style["profile-picture"]}
+                      >
+                        {user.profilePic ? (
+                          <img
+                            src={user.profilePic}
+                            alt={`${user.firstName} profile picture`}
+                          />
+                        ) : (
+                          <FaUserCircle />
+                        )}
+                      </Link>
                       <div className={style["reply-comment-box"]}>
                         <form>
                           <textarea
@@ -221,12 +269,19 @@ const Post = ({ postlist }) => {
               })}
           </div>
           <div className={style["write-comment"]}>
-            <div className={style["profile-picture"]}>
-              <img
-                src="https://scontent.fdel32-1.fna.fbcdn.net/v/t39.30808-1/417380866_2065772103790903_7360360743510704365_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=104&ccb=1-7&_nc_sid=0ecb9b&_nc_ohc=N3ICKu3yqQwQ7kNvgEL-_bw&_nc_zt=24&_nc_ht=scontent.fdel32-1.fna&_nc_gid=AYzHj2eUyVj-irlFmn1mk5h&oh=00_AYBdPa90a0P4kRxQ8OmfwPUw1bqQZe2ZL7LeVaYFTdXYGQ&oe=674B5390"
-                alt="User profile image"
-              />
-            </div>
+            <Link
+              to={`/${loginUser.userId}`}
+              className={style["profile-picture"]}
+            >
+              {loginUser.profilePic ? (
+                <img
+                  src={loginUser.profilePic}
+                  alt={`${loginUser.firstName} profile picture`}
+                />
+              ) : (
+                <FaUserCircle />
+              )}
+            </Link>
             <div className={style["reply-comment-box"]}>
               <form>
                 <textarea
@@ -238,7 +293,11 @@ const Post = ({ postlist }) => {
                 <div className={style["reply-footer"]}>
                   <div className={style["attachment-options"]}>
                     <span className={style["attachment-option"]}>
-                      <label htmlFor="commentcamera">
+                      <label
+                        htmlFor="commentcamera"
+                        tabIndex={0}
+                        aria-label="Camera"
+                      >
                         <CiCamera />
                       </label>
                       <input
@@ -247,7 +306,11 @@ const Post = ({ postlist }) => {
                         id="commentcamera"
                       />
                     </span>
-                    <span className={style["attachment-option"]}>
+                    <span
+                      className={style["attachment-option"]}
+                      tabIndex={0}
+                      aria-label="Emoji"
+                    >
                       <CiFaceSmile />
                     </span>
                   </div>
