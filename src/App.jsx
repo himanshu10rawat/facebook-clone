@@ -14,14 +14,11 @@ const App = () => {
         user.password === state.user.password
     );
 
-    console.log("userExists", userExists);
-
     if (userExists) {
       dispatch({
         type: "LOG_IN",
         payload: userExists,
       });
-      console.log("User update successfully");
     } else {
       console.log("Error in updating user data");
     }

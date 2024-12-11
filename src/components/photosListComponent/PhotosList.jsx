@@ -1,10 +1,16 @@
 import React, { useState } from "react";
 import style from "./photosList.module.css";
-import { Link } from "react-router";
+import { Link, useParams } from "react-router";
 import Photos from "../photoComponent/Photo";
+import { usePostContext } from "../../context/postContext";
 
 const PhotosList = () => {
   const [activeTab, setActiveTab] = useState(0);
+
+  const { state } = usePostContext();
+  const { userId } = useParams();
+
+  const user = state.users.find((user) => user.userId === userId);
 
   return (
     <div className={style["photos-section"]}>
@@ -30,7 +36,9 @@ const PhotosList = () => {
         </li>
       </ul>
       <div className={style["photos-list"]}>
-        <Photos />
+        {user.posts.map((post, index) => (
+          <Photos key={index} post={post} />
+        ))}
       </div>
       <Link className={style["see-all-link"]}>See All</Link>
     </div>

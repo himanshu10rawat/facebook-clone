@@ -1,6 +1,4 @@
 const postReducer = (state, action) => {
-  console.log("action.payload", action.payload);
-
   const { userId, posts, profilePic, bgImage } = action.payload;
   switch (action.type) {
     case "SIGN_UP":

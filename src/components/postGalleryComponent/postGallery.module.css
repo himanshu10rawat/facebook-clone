@@ -38,13 +38,14 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 5px;
     grid-auto-rows: minmax(100px, auto);
-    border-radius: 0.5rem;
     overflow: hidden;
 }
 
 .photos-body a {
     display: block;
     position: relative;
+    border-radius: 0.5rem;
+    overflow: hidden;
 }
 
 .photos-body a::after {

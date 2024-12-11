@@ -1,46 +1,34 @@
 import React from "react";
 import style from "./postGallery.module.css";
-import { Link } from "react-router";
+import { Link, useParams } from "react-router";
+import { usePostContext } from "../../context/postContext";
 
 const PostGallery = () => {
+  const { state } = usePostContext();
+  const { userId } = useParams();
+
+  const user = state.users.find((user) => user.userId === userId);
+
   return (
     <div className={style["profile-photos"]}>
       <div className={style["photos-header"]}>
         <h2>
-          <Link>Photos</Link>
+          <Link to={"photos"}>Photos</Link>
         </h2>
         <p>
-          <Link>See All Photos</Link>
+          <Link to={"photos"}>See All Photos</Link>
         </p>
       </div>
       <div className={style["photos-body"]}>
-        <Link>
-          <img src="/dummy-profile-image.webp" alt="photos" />
-        </Link>
-        <Link>
-          <img src="/dummy-profile-image.webp" alt="photos" />
-        </Link>
-        <Link>
-          <img src="/dummy-profile-image.webp" alt="photos" />
-        </Link>
-        <Link>
-          <img src="/dummy-profile-image.webp" alt="photos" />
-        </Link>
-        <Link>
-          <img src="/dummy-profile-image.webp" alt="photos" />
-        </Link>
-        <Link>
-          <img src="/dummy-profile-image.webp" alt="photos" />
-        </Link>
-        <Link>
-          <img src="/dummy-profile-image.webp" alt="photos" />
-        </Link>
-        <Link>
-          <img src="/dummy-profile-image.webp" alt="photos" />
-        </Link>
-        <Link>
-          <img src="/dummy-profile-image.webp" alt="photos" />
-        </Link>
+        {user.posts.map((post, index) => {
+          return (
+            post.postImage && (
+              <Link key={index}>
+                <img src={post.postImage} alt={post.title} />
+              </Link>
+            )
+          );
+        })}
       </div>
     </div>
   );
