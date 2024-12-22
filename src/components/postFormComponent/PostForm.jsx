@@ -218,7 +218,7 @@ const PostForm = ({ setOpenPostModal, mediaOpen, setMediaOpen }) => {
                 </div>
               </div>
               <button
-                disabled={formData.postCaption || formData.media ? false : true}
+                disabled={formData.postCaption || previewImage ? false : true}
                 type="submit"
                 className={style["post-button"]}
               >

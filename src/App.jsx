@@ -6,14 +6,12 @@ import { usePostContext } from "./context/postContext";
 
 const App = () => {
   const { state, dispatch } = usePostContext();
-  const { user } = state;
-  console.log("user", user);
 
   useEffect(() => {
     const userExists = state.users.find(
       (user) =>
-        user.mobileEmail === state.user.mobileEmail &&
-        user.password === state.user.password
+        user.mobileEmail === state.user?.mobileEmail &&
+        user.password === state.user?.password
     );
 
     if (userExists) {

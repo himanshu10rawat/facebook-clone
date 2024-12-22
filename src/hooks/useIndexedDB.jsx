@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 const useIndexedDB = (storeName, initialValue) => {
   const [value, setValue] = useState(initialValue);
+  const [userObjectStoreUserId, setUserObjectStoreUserId] = useState(null);
 
   const initializeDatabase = () => {
     return new Promise((resolve, reject) => {
@@ -60,11 +61,23 @@ const useIndexedDB = (storeName, initialValue) => {
       const transaction = database.transaction(storeName, "readwrite");
       const store = transaction.objectStore(storeName);
 
-      if (newValue.userId || newValue.length) {
+      if (newValue?.userId || newValue?.length) {
         if (Array.isArray(newValue)) {
           newValue.forEach((item) => store.put(item));
         } else {
           store.put(newValue);
+        }
+      } else {
+        if (userObjectStoreUserId) {
+          const deleteRequest = store.delete(userObjectStoreUserId);
+
+          deleteRequest.onsuccess = function () {
+            console.log("Record deleted successfully!");
+          };
+
+          deleteRequest.onerror = function () {
+            console.error("Error deleting record:", deleteRequest.error);
+          };
         }
       }
 
@@ -94,18 +107,9 @@ const useIndexedDB = (storeName, initialValue) => {
           if (e.target.source.name === "user") {
             const [userData] = e.target.result;
             setValue(userData);
-            console.log(
-              "Data fetched successfully:",
-              e.target.source.name,
-              userData
-            );
+            setUserObjectStoreUserId(userData?.userId);
           } else {
             setValue(e.target.result);
-            console.log(
-              "Data fetched successfully:",
-              e.target.source.name,
-              e.target.result
-            );
           }
         };
 

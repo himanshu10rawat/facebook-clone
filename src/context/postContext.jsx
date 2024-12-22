@@ -50,7 +50,7 @@ export const PostProvider = ({ children }) => {
 
   // Show a loading state until IndexedDB is ready
   if (!isInitialized) {
-    return <div>Loading...</div>;
+    return <div>Load ho rha hai!...</div>;
   }
 
   return (
