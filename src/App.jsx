@@ -19,8 +19,6 @@ const App = () => {
         type: "LOG_IN",
         payload: userExists,
       });
-    } else {
-      console.log("Error in updating user data");
     }
   }, [state.users]);
 

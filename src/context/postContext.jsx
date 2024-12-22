@@ -1,14 +1,15 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
 import postReducer from "./postReducer";
 import useLocalStorage from "../hooks/useLocalStorage";
+import useIndexedDB from "../hooks/useIndexedDB";
 
 //Create Context
 const PostContext = createContext();
 
 // Provider Component
 export const PostProvider = ({ children }) => {
-  const [storedUser, setStoredUser] = useLocalStorage("user", null);
-  const [storedUsers, setStoredUsers] = useLocalStorage("users", []);
+  const [storedUser, setStoredUser] = useIndexedDB("user", {});
+  const [storedUsers, setStoredUsers] = useIndexedDB("users", []);
 
   const initialState = {
     user: storedUser || {}, // Fallback to empty object if null
