@@ -1,6 +1,12 @@
 const postReducer = (state, action) => {
   const { userId, posts, profilePic, bgImage } = action.payload;
   switch (action.type) {
+    case "SET_INITIAL_STATE":
+      return {
+        ...state,
+        user: action.payload.user,
+        users: action.payload.users,
+      };
     case "SIGN_UP":
       return { ...state, users: [...state.users, action.payload] };
     case "LOG_IN":

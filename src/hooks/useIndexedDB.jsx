@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 
 const useIndexedDB = (storeName, initialValue) => {
-  console.log("storeName", storeName);
-
   const [value, setValue] = useState(initialValue);
 
   const initializeDatabase = () => {
@@ -64,9 +62,9 @@ const useIndexedDB = (storeName, initialValue) => {
 
       if (newValue.userId || newValue.length) {
         if (Array.isArray(newValue)) {
-          newValue.forEach((item) => store.add(item));
+          newValue.forEach((item) => store.put(item));
         } else {
-          store.add(newValue);
+          store.put(newValue);
         }
       }
 
@@ -90,22 +88,34 @@ const useIndexedDB = (storeName, initialValue) => {
         const transaction = database.transaction(storeName, "readonly");
         const store = transaction.objectStore(storeName);
 
-        if (storeName.length) {
-          const getAllRequest = store.getAll();
+        const getAllRequest = store.getAll();
 
-          getAllRequest.onsuccess = (e) => {
+        getAllRequest.onsuccess = (e) => {
+          if (e.target.source.name === "user") {
+            const [userData] = e.target.result;
+            setValue(userData);
+            console.log(
+              "Data fetched successfully:",
+              e.target.source.name,
+              userData
+            );
+          } else {
             setValue(e.target.result);
-            console.log("Data fetched successfully:", e.target.result);
-          };
+            console.log(
+              "Data fetched successfully:",
+              e.target.source.name,
+              e.target.result
+            );
+          }
+        };
 
-          getAllRequest.onerror = (e) => {
-            console.error("Error fetching data:", e.target.error);
-          };
+        getAllRequest.onerror = (e) => {
+          console.error("Error fetching data:", e.target.error);
+        };
 
-          transaction.oncomplete = () => {
-            console.log("Transaction completed successfully!");
-          };
-        }
+        transaction.oncomplete = () => {
+          console.log("Transaction completed successfully!");
+        };
       } catch (error) {
         console.error("Error initializing database:", error);
       }

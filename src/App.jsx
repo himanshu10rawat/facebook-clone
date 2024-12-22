@@ -6,6 +6,8 @@ import { usePostContext } from "./context/postContext";
 
 const App = () => {
   const { state, dispatch } = usePostContext();
+  const { user } = state;
+  console.log("user", user);
 
   useEffect(() => {
     const userExists = state.users.find(
@@ -24,7 +26,7 @@ const App = () => {
 
   return (
     <>
-      {state.user.userId ? (
+      {state.user?.userId ? (
         <>
           <Header />
           <Outlet />

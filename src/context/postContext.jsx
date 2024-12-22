@@ -1,31 +1,57 @@
-import { createContext, useContext, useEffect, useReducer } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useReducer,
+  useState,
+} from "react";
 import postReducer from "./postReducer";
-import useLocalStorage from "../hooks/useLocalStorage";
 import useIndexedDB from "../hooks/useIndexedDB";
 
-//Create Context
+// Create Context
 const PostContext = createContext();
 
 // Provider Component
 export const PostProvider = ({ children }) => {
-  const [storedUser, setStoredUser] = useIndexedDB("user", {});
-  const [storedUsers, setStoredUsers] = useIndexedDB("users", []);
+  const [storedUser, setStoredUser] = useIndexedDB("user", null); // Start with null
+  const [storedUsers, setStoredUsers] = useIndexedDB("users", null); // Start with null
+  const [isInitialized, setIsInitialized] = useState(false);
 
   const initialState = {
-    user: storedUser || {}, // Fallback to empty object if null
-    users: storedUsers || [], // Fallback to empty array if null
+    user: {},
+    users: [],
   };
 
   const [state, dispatch] = useReducer(postReducer, initialState);
 
-  // Sync with local storage
+  // Effect to initialize state after IndexedDB data is ready
   useEffect(() => {
-    setStoredUsers(state.users);
-  }, [state.users]);
+    if (storedUser !== null && storedUsers !== null) {
+      dispatch({
+        type: "SET_INITIAL_STATE",
+        payload: { user: storedUser, users: storedUsers },
+      });
+      setIsInitialized(true);
+    }
+  }, [storedUser, storedUsers]);
+
+  // Sync with IndexedDB when state changes
+  useEffect(() => {
+    if (isInitialized) {
+      setStoredUsers(state.users);
+    }
+  }, [state.users, isInitialized]);
 
   useEffect(() => {
-    setStoredUser(state.user);
-  }, [state.user]);
+    if (isInitialized) {
+      setStoredUser(state.user);
+    }
+  }, [state.user, isInitialized]);
+
+  // Show a loading state until IndexedDB is ready
+  if (!isInitialized) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <PostContext.Provider value={{ state, dispatch }}>
