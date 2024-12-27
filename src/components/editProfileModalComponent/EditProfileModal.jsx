@@ -32,7 +32,6 @@ const EditProfileModal = ({ setEditProfile, profilePic }) => {
       type: "ADD_PROFILE_PIC",
       payload: updatedUserData,
     });
-    console.log("updatedUserData", updatedUserData);
     setEditProfile(false);
     setPreviewImage(null);
   };

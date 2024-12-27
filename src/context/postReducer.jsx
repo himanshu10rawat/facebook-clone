@@ -1,5 +1,5 @@
 const postReducer = (state, action) => {
-  const { userId, posts, profilePic, bgImage } = action.payload;
+  const { userId, posts, profilePic, bgImage, bio } = action.payload;
   switch (action.type) {
     case "SET_INITIAL_STATE":
       return {
@@ -22,14 +22,21 @@ const postReducer = (state, action) => {
       return {
         ...state,
         users: state.users.map((user) =>
-          user.userId === userId ? { ...user, profilePic: profilePic } : user
+          user.userId === userId ? { ...user, profilePic } : user
         ),
       };
     case "ADD_BG_IMAGE":
       return {
         ...state,
         users: state.users.map((user) =>
-          user.userId === userId ? { ...user, bgImage: bgImage } : user
+          user.userId === userId ? { ...user, bgImage } : user
+        ),
+      };
+    case "BIO_ADD":
+      return {
+        ...state,
+        users: state.users.map((user) =>
+          user.userId === userId ? { ...user, bio: bio } : user
         ),
       };
     default:

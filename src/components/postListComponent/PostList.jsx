@@ -2,13 +2,15 @@ import React from "react";
 import Post from "../PostComponent/Post";
 import style from "./postList.module.css";
 
-const PostList = ({ data }) => {
+const PostList = ({ user }) => {
   return (
     <>
       <div className={style["post-list"]}>
-        {data.posts.map((list, index) => (
-          <Post postlist={list} key={index} user={data} />
-        ))}
+        {user.posts
+          .map((list, index) => (
+            <Post postlist={list} key={index} user={user} />
+          ))
+          .reverse()}
       </div>
     </>
   );

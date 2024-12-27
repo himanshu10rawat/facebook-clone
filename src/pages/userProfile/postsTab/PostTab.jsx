@@ -47,7 +47,7 @@ const PostTab = () => {
   return (
     <div className={style["profile-post"]}>
       <div ref={userInfo} className={style["user-info"]}>
-        <PostIntro />
+        <PostIntro user={currentUser} />
         <PostGallery />
         <PostFriends />
       </div>
@@ -56,7 +56,7 @@ const PostTab = () => {
         className={style["user-post"]}
       >
         <CreatePost />
-        <PostList data={currentUser} />
+        <PostList user={currentUser} />
       </div>
     </div>
   );

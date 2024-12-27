@@ -40,6 +40,11 @@ const Post = ({ postlist, user }) => {
             <div className={style["profile-other-details"]}>
               <span className={style["profile-name"]}>
                 {user.firstName + " " + user.lastName}
+                {postlist.coverPhoto && (
+                  <span className={style["cover-image-title"]}>
+                    {postlist.coverPhoto}
+                  </span>
+                )}
               </span>
               <span className={style["profile-date"]}>
                 {postlist.date} &#x2022;{" "}

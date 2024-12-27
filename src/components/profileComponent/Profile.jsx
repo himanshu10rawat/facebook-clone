@@ -38,10 +38,24 @@ const Profile = ({ user }) => {
         (singleUser) => singleUser.userId === state.user.userId
       );
       const updatedLoginUser = { ...loginUser, bgImage: previewBgImage };
+      const post = {
+        coverPhoto: "updated his cover photo.",
+        title: "",
+        postImage: previewBgImage && previewBgImage,
+        date: new Date().toLocaleDateString(),
+      };
 
       dispatch({
         type: "ADD_BG_IMAGE",
         payload: updatedLoginUser,
+      });
+
+      dispatch({
+        type: "ADD_POST",
+        payload: {
+          userId: loginUser.userId, // User identify karne ke liye
+          posts: [...(loginUser.posts || []), post], // Updated posts array
+        },
       });
       setPreviewBgImage(null);
     }

@@ -52,6 +52,13 @@
     font-size: 16px;
 }
 
+.cover-image-title {
+    font-weight: normal;
+    margin-left: 5px;
+    color: var(--greyColor);
+    font-size: 14px;
+}
+
 .profile-date {
     color: var(--greyColor);
     display: flex;
