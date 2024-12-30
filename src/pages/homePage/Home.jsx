@@ -14,7 +14,7 @@ const Home = () => {
       <main>
         <CreatePost />
         {users.map((singleUser, index) => (
-          <PostList key={index} data={singleUser} />
+          <PostList key={index} user={singleUser} />
         ))}
       </main>
       <aside></aside>

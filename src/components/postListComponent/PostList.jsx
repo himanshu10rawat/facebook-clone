@@ -6,7 +6,7 @@ const PostList = ({ user }) => {
   return (
     <>
       <div className={style["post-list"]}>
-        {user.posts
+        {user?.posts
           .map((list, index) => (
             <Post postlist={list} key={index} user={user} />
           ))
