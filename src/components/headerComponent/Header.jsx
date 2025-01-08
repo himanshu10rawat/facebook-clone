@@ -30,7 +30,7 @@ const Header = () => {
           <div
             role="button"
             tabIndex={0}
-            aria-label="Search Facebook"
+            aria-label="Search Fakebook"
             className={style["search-button"]}
           >
             <IoIosSearch />
@@ -38,7 +38,7 @@ const Header = () => {
               type="search"
               name="search"
               id="search"
-              placeholder="Search Facebook"
+              placeholder="Search Fakebook"
               aria-label="Search option on facebook"
             />
           </div>
