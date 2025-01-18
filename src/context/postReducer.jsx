@@ -1,5 +1,6 @@
 const postReducer = (state, action) => {
-  const { userId, posts, profilePic, bgImage, bio } = action.payload;
+  const { userId, posts, profilePic, bgImage, bio, friendRequest } =
+    action.payload;
   switch (action.type) {
     case "SET_INITIAL_STATE":
       return {
@@ -37,6 +38,16 @@ const postReducer = (state, action) => {
         ...state,
         users: state.users.map((user) =>
           user.userId === userId ? { ...user, bio: bio } : user
+        ),
+      };
+    case "FRIEND_REQUEST":
+      {
+        console.log("friendRequest", friendRequest, "userId", userId);
+      }
+      return {
+        ...state,
+        users: state.users.map((user) =>
+          user.userId === userId ? { ...user, friendRequest } : user
         ),
       };
     default:

@@ -53,7 +53,7 @@ const Signup = ({ setIsRegistered }) => {
       posts: [],
       userId:
         formData.firstName.toLocaleLowerCase() +
-        Math.floor(Math.random() * 12345),
+        Math.floor(Math.random() * 90000 + 10000),
     };
     dispatch({
       type: "SIGN_UP",
@@ -118,8 +118,8 @@ const Signup = ({ setIsRegistered }) => {
                 value={formData.birthDate}
               >
                 {dateList &&
-                  dateList.map((date, index) => (
-                    <option key={index} value={date}>
+                  dateList.map((date) => (
+                    <option key={date} value={date}>
                       {date}
                     </option>
                   ))}
@@ -133,8 +133,8 @@ const Signup = ({ setIsRegistered }) => {
                 value={formData.birthMonth}
               >
                 {monthsList &&
-                  monthsList.map((month, index) => (
-                    <option key={index} value={month}>
+                  monthsList.map((month) => (
+                    <option key={month} value={month}>
                       {month}
                     </option>
                   ))}
@@ -148,8 +148,8 @@ const Signup = ({ setIsRegistered }) => {
                 value={formData.birthYear}
               >
                 {yearList &&
-                  yearList.map((year, index) => (
-                    <option key={index} value={year}>
+                  yearList.map((year) => (
+                    <option key={year} value={year}>
                       {year}
                     </option>
                   ))}

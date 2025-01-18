@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, NavLink } from "react-router";
 import { FaFacebook, FaFacebookMessenger } from "react-icons/fa";
 import { MdKeyboardBackspace, MdOutlineOndemandVideo } from "react-icons/md";
@@ -22,17 +22,23 @@ const Header = () => {
 
   const [searchBarActive, setSearchBarActive] = useState(false);
 
-  const [searchListStyle, setSearchListStyle] = useState({
-    borderRadius: "0 0 1rem 1rem",
-    position: "absolute",
-    left: "0",
-    paddingInline: "1rem",
-    top: "50%",
-    transform: "translateY(-50%)",
-  });
-
   const [searchUsersList, setSearchUsersList] = useState([]);
   const [searchValue, setSearchValue] = useState("");
+
+  const searchModal = useRef(null);
+
+  const handleClickOutside = (event) => {
+    if (searchModal.current && !searchModal.current.contains(event.target)) {
+      setSearchBarActive(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const handleSearchChange = (event) => {
     const searchInput = event.target.value;
@@ -56,32 +62,15 @@ const Header = () => {
     setSearchUsersList(searchUsers);
   };
 
-  useEffect(() => {
-    if (searchBarActive) {
-      setSearchListStyle({
-        ...searchListStyle,
-        boxShadow: "0 10px 5px 5px rgba(221, 221, 221, 0.5)",
-        backgroundColor: "#ffffff",
-        paddingBottom: "0.5rem",
-        top: "0",
-        transform: "unset",
-      });
-    } else {
-      setSearchListStyle({
-        ...searchListStyle,
-        boxShadow: "none",
-        backgroundColor: "transparent",
-        paddingBottom: "0",
-        top: "50%",
-        transform: "translateY(-50%)",
-      });
-    }
-  }, [searchBarActive]);
-
   return (
     <>
       <header className={style["header-section"]}>
-        <div style={searchListStyle}>
+        <div
+          ref={searchModal}
+          className={`${style["searchListStyle"]} ${
+            searchBarActive && style["searchListStyleOpen"]
+          }`}
+        >
           <div className={style["left-side"]}>
             {searchBarActive ? (
               <div

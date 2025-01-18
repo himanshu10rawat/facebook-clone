@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Header from "./components/headerComponent/Header";
 import { Outlet } from "react-router";
 import AuthContext from "./components/auth/AuthContext";
@@ -20,7 +20,7 @@ const App = () => {
         payload: userExists,
       });
     }
-  }, [state.users]);
+  }, [state.users, dispatch, state.user?.mobileEmail, state.user?.password]);
 
   return (
     <>

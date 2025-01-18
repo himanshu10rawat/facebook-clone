@@ -7,9 +7,9 @@ const PostList = ({ user }) => {
     <>
       <div className={style["post-list"]}>
         {user?.posts
-          .map((list, index) => (
-            <Post postlist={list} key={index} user={user} />
-          ))
+          .map((list, index) => {
+            return <Post postList={list} key={index} user={user} />;
+          })
           .reverse()}
       </div>
     </>

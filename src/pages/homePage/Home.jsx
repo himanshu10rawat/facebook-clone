@@ -13,9 +13,10 @@ const Home = () => {
       <aside></aside>
       <main>
         <CreatePost />
-        {users.map((singleUser, index) => (
-          <PostList key={index} user={singleUser} />
-        ))}
+        {users.map((singleUser) => {
+          if (singleUser.posts.length)
+            return <PostList key={singleUser.userId} user={singleUser} />;
+        })}
       </main>
       <aside></aside>
     </div>

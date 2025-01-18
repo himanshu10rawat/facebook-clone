@@ -1,21 +1,44 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import style from "./profile.module.css";
 import { Link, NavLink, useLocation } from "react-router";
 import { MdEdit } from "react-icons/md";
-import { FaCamera, FaUser } from "react-icons/fa";
+import { FaCamera, FaFacebookMessenger, FaUser } from "react-icons/fa";
 import EditProfileModal from "../editProfileModalComponent/EditProfileModal";
 import { usePostContext } from "../../context/postContext";
+import { IoPersonAdd, IoPersonRemove } from "react-icons/io5";
 
 const Profile = ({ user }) => {
   const [editProfile, setEditProfile] = useState(false);
   const [previewBgImage, setPreviewBgImage] = useState(null);
   const [isImageLoading, setIsImageLoading] = useState(false);
+  const [isRequestSend, setIsRequestSend] = useState(false);
+  const [loginUser, setLoginUser] = useState({});
   const locationUrl = useLocation();
   const currentUrl = locationUrl.pathname;
 
   const { state, dispatch } = usePostContext();
 
   const isLoginUser = state.user.userId === user.userId;
+
+  useEffect(() => {
+    const loginUserFind = state.users.find(
+      (singleUser) => singleUser.userId === state.user.userId
+    );
+
+    setLoginUser(loginUserFind);
+  }, []);
+
+  useEffect(() => {
+    const friendRequestSend = user.friendRequest?.find(
+      (singleUser) => singleUser.userId === loginUser.userId
+    );
+
+    if (friendRequestSend?.userId) {
+      setIsRequestSend(true);
+    } else {
+      setIsRequestSend(false);
+    }
+  }, [loginUser, user.userId]);
 
   const handleChange = (e) => {
     const file = e.target.files[0];
@@ -34,9 +57,6 @@ const Profile = ({ user }) => {
     e.preventDefault();
 
     if (previewBgImage) {
-      const loginUser = state.users.find(
-        (singleUser) => singleUser.userId === state.user.userId
-      );
       const updatedLoginUser = { ...loginUser, bgImage: previewBgImage };
       const post = {
         coverPhoto: "updated his cover photo.",
@@ -59,6 +79,41 @@ const Profile = ({ user }) => {
       });
       setPreviewBgImage(null);
     }
+  };
+
+  const handleRequestSend = (requestId) => {
+    const currentProfileUser = state.users.find(
+      (singleUser) => singleUser.userId === requestId
+    );
+
+    dispatch({
+      type: "FRIEND_REQUEST",
+      payload: {
+        userId: currentProfileUser.userId,
+        friendRequest: [...(currentProfileUser.friendRequest || []), loginUser],
+      },
+    });
+
+    setIsRequestSend(true);
+  };
+
+  const handleRequestCancel = (requestId) => {
+    const currentProfileUser = state.users.find(
+      (singleUser) => singleUser.userId === requestId
+    );
+
+    const remainingRequest = currentProfileUser.friendRequest.filter(
+      (singleRequest) => singleRequest.userId !== loginUser.userId
+    );
+
+    dispatch({
+      type: "FRIEND_REQUEST",
+      payload: {
+        userId: currentProfileUser.userId,
+        friendRequest: remainingRequest,
+      },
+    });
+    setIsRequestSend(false);
   };
 
   return (
@@ -174,7 +229,7 @@ const Profile = ({ user }) => {
                   )}
                 </div>
               </div>
-              {isLoginUser && (
+              {isLoginUser ? (
                 <div className={style["profile-edit"]}>
                   <span
                     role="button"
@@ -185,6 +240,30 @@ const Profile = ({ user }) => {
                     <MdEdit />
                     Edit profile
                   </span>
+                </div>
+              ) : (
+                <div className={style["connecting-with-others"]}>
+                  {isRequestSend ? (
+                    <button
+                      type="button"
+                      className={style["add-friend-btn"]}
+                      onClick={() => handleRequestCancel(user.userId)}
+                    >
+                      <IoPersonRemove /> Cancel request
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      className={style["add-friend-btn"]}
+                      onClick={() => handleRequestSend(user.userId)}
+                    >
+                      <IoPersonAdd />
+                      Add friend
+                    </button>
+                  )}
+                  <button type="button" className={style["message-btn"]}>
+                    <FaFacebookMessenger /> Message
+                  </button>
                 </div>
               )}
             </div>
