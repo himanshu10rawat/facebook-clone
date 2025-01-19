@@ -14,16 +14,16 @@ import { usePostContext } from "../../context/postContext";
 import HeaderModal from "../headerModalComponent/HeaderModal";
 
 const Header = () => {
-  const [headModal, setHeadModal] = useState(false);
+  const [headerModal, setHeaderModal] = useState(false);
+  const [searchBarActive, setSearchBarActive] = useState(false);
+  const [searchUsersList, setSearchUsersList] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
+  const [openModalFor, setOpenModalFor] = useState("");
+
   const { state } = usePostContext();
   const loginUser = state.users.find(
     (singleUser) => singleUser.userId === state.user.userId
   );
-
-  const [searchBarActive, setSearchBarActive] = useState(false);
-
-  const [searchUsersList, setSearchUsersList] = useState([]);
-  const [searchValue, setSearchValue] = useState("");
 
   const searchModal = useRef(null);
 
@@ -217,17 +217,32 @@ const Header = () => {
               </div>
             </li>
             <li>
-              <Link aria-label="Notifications" role="link" tabIndex={0}>
-                <IoMdNotifications />
-              </Link>
-            </li>
-            <li>
               <div
-                id="headerProfilePic"
+                id="notifications"
+                aria-label="Notifications"
+                role="button"
+                tabIndex={0}
+                onClick={() => {
+                  setHeaderModal((prev) => !prev);
+                  setOpenModalFor("notifications");
+                }}
+              >
+                <span className={style["notification-count"]}>
+                  {loginUser.friendRequest.length}
+                </span>
+                <IoMdNotifications />
+              </div>
+            </li>
+            <li className={style["profile-icon"]}>
+              <div
+                id="profile"
                 aria-label="Your profile"
                 role="button"
                 tabIndex={0}
-                onClick={() => setHeadModal((prev) => !prev)}
+                onClick={() => {
+                  setHeaderModal((prev) => !prev);
+                  setOpenModalFor("userProfile");
+                }}
               >
                 {loginUser.profilePic ? (
                   <img
@@ -248,7 +263,12 @@ const Header = () => {
           </ul>
         </div>
       </header>
-      {headModal && <HeaderModal setHeadModal={setHeadModal} />}
+      {headerModal && (
+        <HeaderModal
+          setHeaderModal={setHeaderModal}
+          openModalFor={openModalFor}
+        />
+      )}
     </>
   );
 };
