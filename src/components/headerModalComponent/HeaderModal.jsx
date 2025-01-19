@@ -4,6 +4,7 @@ import { IoLogOut } from "react-icons/io5";
 import { usePostContext } from "../../context/postContext";
 import { FaUserCircle } from "react-icons/fa";
 import { Link, useNavigate } from "react-router";
+import FriendRequestList from "../friendRequestListComponent/friendRequestList";
 
 const HeaderModal = ({ setHeaderModal, openModalFor }) => {
   const navigate = useNavigate();
@@ -23,50 +24,37 @@ const HeaderModal = ({ setHeaderModal, openModalFor }) => {
     navigate("/");
   };
 
-  // useEffect(() => {
-  //   const handleClickOutside = (event) => {
-  //     const targetElement = event.target.closest("#profile");
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      const targetElement = event.target.closest(`#${openModalFor}`);
+      if (targetElement) {
+        return;
+      }
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        setHeaderModal(false);
+      }
+    };
 
-  //     if (targetElement) {
-  //       return;
-  //     }
-
-  //     if (modalRef.current && !modalRef.current.contains(event.target)) {
-  //       setHeaderModal(false);
-  //     }
-  //   };
-
-  //   document.addEventListener("mousedown", handleClickOutside);
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleClickOutside);
-  //   };
-  // }, [setHeaderModal]);
-
-  // useEffect(() => {
-  //   const handleClickOutside = (event) => {
-  //     const targetElement = event.target.closest("#notifications");
-
-  //     if (targetElement) {
-  //       return;
-  //     }
-
-  //     if (modalRef.current && !modalRef.current.contains(event.target)) {
-  //       setHeadNotificationModal(false);
-  //     }
-  //   };
-
-  //   document.addEventListener("mousedown", handleClickOutside);
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleClickOutside);
-  //   };
-  // }, [setHeadNotificationModal]);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [setHeaderModal]);
 
   return (
     <div ref={modalRef} className={style["header-modal"]}>
       {openModalFor === "notifications" ? (
-        <h1>Notifications</h1>
+        <div className={style["user-notifications"]}>
+          <h1>Notifications</h1>
+          {state.user.friendRequest.length > 0 && (
+            <>
+              <h2>Friend requests</h2>
+              <FriendRequestList setHeaderModal={setHeaderModal} />
+            </>
+          )}
+        </div>
       ) : (
-        <div className="user-profile">
+        <div className={style["user-profile-section"]}>
           <Link
             to={loginUser.userId}
             className={style["user-profile"]}

@@ -1,0 +1,79 @@
+.friend-request-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.friend-request-item {
+    display: flex;
+    gap: 0.5rem;
+    color: var(--darkGreyColor);
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 5px;
+    transition: ease-in-out 0.3s;
+}
+
+.friend-request-item:hover {
+    background-color: var(--lightColor);
+}
+
+.friend-request-item .profile-pic {
+    flex-shrink: 0;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.friend-request-item .profile-pic img,
+.friend-request-item .profile-pic svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+}
+
+.friend-request-item .requested-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.friend-request-item .requested-details .request-title {
+    font-size: 1rem;
+    font-weight: 300;
+}
+
+.friend-request-item .requested-details .request-title strong {
+    font-weight: 500;
+}
+
+.friend-request-item .requested-details .request-time {
+    font-size: 13px;
+    color: var(--greyColor);
+    margin-bottom: 0.25rem;
+}
+
+.friend-request-item .requested-details .action-button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.friend-request-item .requested-details .action-button button {
+    padding: 0.5rem 1.5rem;
+    font-weight: 500;
+    border: none;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.friend-request-item .requested-details .action-button button.confirm {
+    background-color: var(--blueColor);
+    color: var(--whiteColor);
+}
+
+.friend-request-item .requested-details .action-button button.delete {
+    background-color: var(--mediumLightColor);
+}

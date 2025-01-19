@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link, NavLink } from "react-router";
+import { Link, NavLink, useParams } from "react-router";
 import { FaFacebook, FaFacebookMessenger } from "react-icons/fa";
 import { MdKeyboardBackspace, MdOutlineOndemandVideo } from "react-icons/md";
 import { IoMdNotifications, IoIosSearch, IoMdClose } from "react-icons/io";
@@ -20,7 +20,7 @@ const Header = () => {
   const [searchValue, setSearchValue] = useState("");
   const [openModalFor, setOpenModalFor] = useState("");
 
-  const { state } = usePostContext();
+  const { state, dispatch } = usePostContext();
   const loginUser = state.users.find(
     (singleUser) => singleUser.userId === state.user.userId
   );
@@ -60,6 +60,16 @@ const Header = () => {
         .startsWith(searchValue.length !== 0 && searchValue.toLowerCase())
     );
     setSearchUsersList(searchUsers);
+  };
+
+  const handleNotificationSeen = () => {
+    dispatch({
+      type: "NOTIFICATION",
+      payload: {
+        userId: state.user.userId,
+        notifications: 0,
+      },
+    });
   };
 
   return (
@@ -225,11 +235,14 @@ const Header = () => {
                 onClick={() => {
                   setHeaderModal((prev) => !prev);
                   setOpenModalFor("notifications");
+                  handleNotificationSeen();
                 }}
               >
-                <span className={style["notification-count"]}>
-                  {loginUser.friendRequest.length}
-                </span>
+                {loginUser?.notifications > 0 && (
+                  <span className={style["notification-count"]}>
+                    {loginUser.notifications}
+                  </span>
+                )}
                 <IoMdNotifications />
               </div>
             </li>
@@ -241,10 +254,10 @@ const Header = () => {
                 tabIndex={0}
                 onClick={() => {
                   setHeaderModal((prev) => !prev);
-                  setOpenModalFor("userProfile");
+                  setOpenModalFor("profile");
                 }}
               >
-                {loginUser.profilePic ? (
+                {loginUser?.profilePic ? (
                   <img
                     src={loginUser.profilePic}
                     alt={

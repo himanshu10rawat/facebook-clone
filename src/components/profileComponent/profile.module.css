@@ -284,13 +284,17 @@
     cursor: pointer;
 }
 
-.connecting-with-others button.add-friend-btn {
+.connecting-with-others button.friend-request-btn {
     background-color: var(--blueColor);
     color: var(--whiteColor);
 }
 
-.connecting-with-others button.add-friend-btn svg {
+.connecting-with-others button.friend-request-btn svg {
     transform: scaleX(-1);
+}
+
+.connecting-with-others button.friend-request-respond svg {
+    transform: scaleX(1);
 }
 
 .connecting-with-others button.message-btn {

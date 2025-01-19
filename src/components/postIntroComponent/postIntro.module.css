@@ -101,7 +101,7 @@
 }
 
 .action-button button[type="submit"]:hover {
-    background-color: var(--darBlueColor);
+    background-color: var(--darkBlueColor);
 }
 
 .action-button button[type="submit"]:disabled {

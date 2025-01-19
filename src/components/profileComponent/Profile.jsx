@@ -6,6 +6,7 @@ import { FaCamera, FaFacebookMessenger, FaUser } from "react-icons/fa";
 import EditProfileModal from "../editProfileModalComponent/EditProfileModal";
 import { usePostContext } from "../../context/postContext";
 import { IoPersonAdd, IoPersonRemove } from "react-icons/io5";
+import { FaUserCheck } from "react-icons/fa6";
 
 const Profile = ({ user }) => {
   const [editProfile, setEditProfile] = useState(false);
@@ -17,6 +18,10 @@ const Profile = ({ user }) => {
   const currentUrl = locationUrl.pathname;
 
   const { state, dispatch } = usePostContext();
+
+  const isRequestedSent = state.user.friendRequest?.some(
+    (singleRequest) => singleRequest.userId === user.userId
+  );
 
   const isLoginUser = state.user.userId === user.userId;
 
@@ -94,6 +99,16 @@ const Profile = ({ user }) => {
       },
     });
 
+    dispatch({
+      type: "NOTIFICATION",
+      payload: {
+        userId: currentProfileUser.userId,
+        notifications: currentProfileUser.notifications
+          ? currentProfileUser.notifications + 1
+          : 1,
+      },
+    });
+
     setIsRequestSend(true);
   };
 
@@ -111,6 +126,16 @@ const Profile = ({ user }) => {
       payload: {
         userId: currentProfileUser.userId,
         friendRequest: remainingRequest,
+      },
+    });
+
+    dispatch({
+      type: "NOTIFICATION",
+      payload: {
+        userId: currentProfileUser.userId,
+        notifications: currentProfileUser.notifications
+          ? currentProfileUser.notifications - 1
+          : 0,
       },
     });
     setIsRequestSend(false);
@@ -243,23 +268,35 @@ const Profile = ({ user }) => {
                 </div>
               ) : (
                 <div className={style["connecting-with-others"]}>
-                  {isRequestSend ? (
+                  {isRequestedSent ? (
                     <button
                       type="button"
-                      className={style["add-friend-btn"]}
-                      onClick={() => handleRequestCancel(user.userId)}
+                      className={`${style["friend-request-btn"]} ${style["friend-request-respond"]}`}
                     >
-                      <IoPersonRemove /> Cancel request
+                      <FaUserCheck />
+                      Respond
                     </button>
                   ) : (
-                    <button
-                      type="button"
-                      className={style["add-friend-btn"]}
-                      onClick={() => handleRequestSend(user.userId)}
-                    >
-                      <IoPersonAdd />
-                      Add friend
-                    </button>
+                    <>
+                      {isRequestSend ? (
+                        <button
+                          type="button"
+                          className={style["friend-request-btn"]}
+                          onClick={() => handleRequestCancel(user.userId)}
+                        >
+                          <IoPersonRemove /> Cancel request
+                        </button>
+                      ) : (
+                        <button
+                          type="button"
+                          className={style["friend-request-btn"]}
+                          onClick={() => handleRequestSend(user.userId)}
+                        >
+                          <IoPersonAdd />
+                          Add friend
+                        </button>
+                      )}
+                    </>
                   )}
                   <button type="button" className={style["message-btn"]}>
                     <FaFacebookMessenger /> Message
