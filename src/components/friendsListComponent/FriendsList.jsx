@@ -12,7 +12,7 @@ const FriendsList = () => {
   const currentProfileUser = state.users.find((user) => user.userId === userId);
 
   const friendList = state.users.filter((singleUser) => {
-    return currentProfileUser.friendList.some(
+    return currentProfileUser.friendList?.some(
       (eachFriendId) => eachFriendId === singleUser.userId
     );
   });

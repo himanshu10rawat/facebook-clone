@@ -12,7 +12,7 @@ const FriendRequestList = ({ setHeaderModal }) => {
   );
 
   const friendRequest = state.users.filter((singleUser) => {
-    return loginUser.friendRequest.some((eachRequestId) => {
+    return loginUser.friendRequest?.some((eachRequestId) => {
       return singleUser.userId === eachRequestId;
     });
   });
