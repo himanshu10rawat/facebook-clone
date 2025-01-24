@@ -23,7 +23,8 @@
     overflow: hidden;
 }
 
-.profile .profile-picture img {
+.profile .profile-picture img,
+.profile .profile-picture svg {
     width: 100%;
     height: 100%;
     object-fit: cover;

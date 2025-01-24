@@ -48,27 +48,31 @@
     display: block;
 }
 
-.friends-body .userimage {
+.friends-body .user-image {
     position: relative;
     display: block;
+    border-radius: 0.5rem;
 }
 
-.friends-body .userimage::after {
+.friends-body .user-image::after {
     content: "";
     position: absolute;
     background-color: var(--blackColor);
     inset: 0;
     opacity: 0;
+    border-radius: 0.5rem;
     transition: opacity ease-in-out 0.3s;
 }
 
-.friends-body .userimage:hover::after {
+.friends-body .user-image:hover::after {
     opacity: 0.2;
 }
 
-.friends-body img {
+.friends-body .user-image img,
+.friends-body .user-image svg {
     display: block;
     width: 100%;
+    height: 100%;
     object-fit: cover;
     object-position: top;
     aspect-ratio: 1/1;

@@ -2,7 +2,12 @@ import React, { useEffect, useState } from "react";
 import style from "./profile.module.css";
 import { Link, NavLink, useLocation } from "react-router";
 import { MdEdit } from "react-icons/md";
-import { FaCamera, FaFacebookMessenger, FaUser } from "react-icons/fa";
+import {
+  FaCamera,
+  FaFacebookMessenger,
+  FaUser,
+  FaUserCircle,
+} from "react-icons/fa";
 import EditProfileModal from "../editProfileModalComponent/EditProfileModal";
 import { usePostContext } from "../../context/postContext";
 import { IoPersonAdd, IoPersonRemove } from "react-icons/io5";
@@ -227,29 +232,23 @@ const Profile = ({ user }) => {
                 <div className={style["name-and-friends"]}>
                   <h2>{user.firstName + " " + user.lastName}</h2>
                   <p>
-                    {user.friendsList?.length ? user.friendsList?.length : 0}{" "}
+                    {user.friendList?.length ? user.friendList.length : 0}{" "}
                     friends
                   </p>
-                  {user.friendsList && (
+                  {user.friendList && (
                     <div className={style["friends-profile"]}>
-                      <Link>
-                        <img
-                          src="/dummy-profile-image.webp"
-                          alt="friends profile"
-                        />
-                      </Link>
-                      <Link>
-                        <img
-                          src="/dummy-profile-image.webp"
-                          alt="friends profile"
-                        />
-                      </Link>
-                      <Link>
-                        <img
-                          src="/dummy-profile-image.webp"
-                          alt="friends profile"
-                        />
-                      </Link>
+                      {user.friendList.map((friend) => (
+                        <Link key={friend.userId} to={`/${friend.userId}`}>
+                          {friend.profilePic ? (
+                            <img
+                              src={friend.profilePic}
+                              alt={friend.firstName + " " + friend.lastName}
+                            />
+                          ) : (
+                            <FaUserCircle />
+                          )}
+                        </Link>
+                      ))}
                     </div>
                   )}
                 </div>

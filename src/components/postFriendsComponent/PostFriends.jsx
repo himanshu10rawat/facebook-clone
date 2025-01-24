@@ -1,58 +1,54 @@
 import React from "react";
 import style from "./postFriends.module.css";
-import { Link } from "react-router";
+import { Link, useParams } from "react-router";
+import { usePostContext } from "../../context/postContext";
+import { FaUser } from "react-icons/fa";
 
 const PostFriends = () => {
+  const { userId } = useParams();
+
+  const { state } = usePostContext();
+
+  const currentProfileUser = state.users.find((user) => user.userId === userId);
+
   return (
     <div className={style["post-friends"]}>
       <div className={style["friends-header"]}>
         <div className={style["left-side-header"]}>
           <h2>
-            <Link>Friends</Link>
+            <Link to={`/${currentProfileUser.userId}/friends`}>Friends</Link>
           </h2>
-          <p>363 friends</p>
+          <p>
+            {currentProfileUser.friendList?.length
+              ? currentProfileUser.friendList.length
+              : 0}{" "}
+            friends
+          </p>
         </div>
         <p className={style["right-side-header"]}>
-          <Link>See all friends</Link>
+          <Link to={`/${currentProfileUser.userId}/friends`}>
+            See all friends
+          </Link>
         </p>
       </div>
       <div className={style["friends-body"]}>
-        <Link>
-          <span className={style["userimage"]}>
-            <img src="/dummy-profile-image.webp" alt="Radha Rawat" />
-          </span>
-          <span className={style["username"]}>Hemant Singh Rawat</span>
-        </Link>
-        <Link>
-          <span className={style["userimage"]}>
-            <img src="/dummy-profile-image.webp" alt="Radha Rawat" />
-          </span>
-          <span className={style["username"]}>Radha Rawat</span>
-        </Link>
-        <Link>
-          <span className={style["userimage"]}>
-            <img src="/dummy-profile-image.webp" alt="Radha Rawat" />
-          </span>
-          <span className={style["username"]}>Radha Rawat</span>
-        </Link>
-        <Link>
-          <span className={style["userimage"]}>
-            <img src="/dummy-profile-image.webp" alt="Radha Rawat" />
-          </span>
-          <span className={style["username"]}>Radha Rawat</span>
-        </Link>
-        <Link>
-          <span className={style["userimage"]}>
-            <img src="/dummy-profile-image.webp" alt="Radha Rawat" />
-          </span>
-          <span className={style["username"]}>Radha Rawat</span>
-        </Link>
-        <Link>
-          <span className={style["userimage"]}>
-            <img src="/dummy-profile-image.webp" alt="Radha Rawat" />
-          </span>
-          <span className={style["username"]}>Radha Rawat</span>
-        </Link>
+        {currentProfileUser.friendList?.map((friend) => (
+          <Link to={`/${friend.userId}`} key={friend.userId}>
+            <span className={style["user-image"]}>
+              {friend.profilePic ? (
+                <img
+                  src={friend.profilePic}
+                  alt={friend.firstName + " " + friend.lastName}
+                />
+              ) : (
+                <FaUser />
+              )}
+            </span>
+            <span className={style["username"]}>
+              {friend.firstName + " " + friend.lastName}
+            </span>
+          </Link>
+        ))}
       </div>
     </div>
   );

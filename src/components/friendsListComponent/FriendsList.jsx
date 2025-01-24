@@ -1,10 +1,17 @@
 import React, { useState } from "react";
 import style from "./friendsList.module.css";
 import Friend from "../friendComponent/Friend";
-import { Link } from "react-router";
+import { Link, useParams } from "react-router";
+import { usePostContext } from "../../context/postContext";
 
 const FriendsList = () => {
   const [activeTab, setActiveTab] = useState(0);
+  const { userId } = useParams();
+  const { state } = usePostContext();
+
+  const currentProfileUser = state.users.find((user) => user.userId === userId);
+  const { friendList } = currentProfileUser;
+
   return (
     <div className={style["friends-section"]}>
       <h2>Friends</h2>
@@ -59,7 +66,9 @@ const FriendsList = () => {
         </li>
       </ul>
       <div className={style["friends-list"]}>
-        <Friend />
+        {friendList?.map((friend) => (
+          <Friend singleFriend={friend} key={friend.userId} />
+        ))}
       </div>
       <Link className={style["see-all-link"]}>See All</Link>
     </div>

@@ -7,6 +7,7 @@ const postReducer = (state, action) => {
     bio,
     friendRequest,
     notifications,
+    friendList,
   } = action.payload;
   switch (action.type) {
     case "SET_INITIAL_STATE":
@@ -59,6 +60,13 @@ const postReducer = (state, action) => {
         ...state,
         users: state.users.map((user) =>
           user.userId === userId ? { ...user, notifications } : user
+        ),
+      };
+    case "ADD_FRIEND":
+      return {
+        ...state,
+        users: state.users.map((user) =>
+          user.userId === userId ? { ...user, friendList } : user
         ),
       };
     default:

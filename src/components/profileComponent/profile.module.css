@@ -99,6 +99,7 @@
 }
 
 .friends-profile a img,
+.friends-profile a svg,
 .profile-picture img,
 .profile-picture .profile-pic-placeholder {
     width: 100%;

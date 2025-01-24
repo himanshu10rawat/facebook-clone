@@ -48,20 +48,21 @@ const Signup = ({ setIsRegistered }) => {
       );
       return;
     }
-    const updatedformData = {
+    const updatedFormData = {
       ...formData,
       posts: [],
       userId:
         formData.firstName.toLocaleLowerCase() +
-        Math.floor(Math.random() * 90000 + 10000),
+        Math.floor(Math.random() * 90000) +
+        10000,
     };
     dispatch({
       type: "SIGN_UP",
-      payload: updatedformData,
+      payload: updatedFormData,
     });
     dispatch({
       type: "LOG_IN",
-      payload: updatedformData,
+      payload: updatedFormData,
     });
 
     setFormData({

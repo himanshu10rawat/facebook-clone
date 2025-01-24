@@ -46,7 +46,7 @@ const HeaderModal = ({ setHeaderModal, openModalFor }) => {
       {openModalFor === "notifications" ? (
         <div className={style["user-notifications"]}>
           <h1>Notifications</h1>
-          {state.user.friendRequest.length > 0 && (
+          {state.user.friendRequest?.length > 0 && (
             <>
               <h2>Friend requests</h2>
               <FriendRequestList setHeaderModal={setHeaderModal} />

@@ -26,6 +26,41 @@ const FriendRequestList = ({ setHeaderModal }) => {
       },
     });
   };
+
+  const handleRequestConfirm = (requestConfirmId, event) => {
+    event.stopPropagation();
+    event.preventDefault();
+    const newFriend = state.users.find(
+      (singleUser) => singleUser.userId === requestConfirmId
+    );
+
+    dispatch({
+      type: "ADD_FRIEND",
+      payload: {
+        userId: loginUser.userId,
+        friendList: [...(loginUser.friendList || []), newFriend],
+      },
+    });
+    dispatch({
+      type: "ADD_FRIEND",
+      payload: {
+        userId: newFriend.userId,
+        friendList: [...(newFriend.friendList || []), loginUser],
+      },
+    });
+
+    const remainingRequest = loginUser.friendRequest.filter(
+      (singleRequest) => singleRequest.userId !== requestConfirmId
+    );
+
+    dispatch({
+      type: "FRIEND_REQUEST",
+      payload: {
+        userId: loginUser.userId,
+        friendRequest: remainingRequest,
+      },
+    });
+  };
   return (
     <div className={style["friend-request-list"]}>
       {loginUser.friendRequest?.map((singleRequest) => (
@@ -51,7 +86,13 @@ const FriendRequestList = ({ setHeaderModal }) => {
             </span>
             <span className={style["request-time"]}>a day ago</span>
             <div className={style["action-button"]}>
-              <button type="button" className={style["confirm"]}>
+              <button
+                type="button"
+                className={style["confirm"]}
+                onClick={(event) =>
+                  handleRequestConfirm(singleRequest.userId, event)
+                }
+              >
                 Confirm
               </button>
               <button
