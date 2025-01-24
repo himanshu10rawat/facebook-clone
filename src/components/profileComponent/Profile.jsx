@@ -36,7 +36,7 @@ const Profile = ({ user }) => {
     );
   });
 
-  const isCurrentUserFriend = user.friendList.some(
+  const isCurrentUserFriend = user.friendList?.some(
     (singleFriendId) => singleFriendId === loginUser.userId
   );
 
