@@ -25,10 +25,20 @@ const Profile = ({ user }) => {
   const { state, dispatch } = usePostContext();
 
   const isRequestedSent = state.user.friendRequest?.some(
-    (singleRequest) => singleRequest.userId === user.userId
+    (singleRequest) => singleRequest === user.userId
   );
 
   const isLoginUser = state.user.userId === user.userId;
+
+  const friendList = state.users.filter((singleUser) => {
+    return user.friendList?.some(
+      (eachFriendId) => eachFriendId === singleUser.userId
+    );
+  });
+
+  const isCurrentUserFriend = user.friendList.some(
+    (singleFriendId) => singleFriendId === loginUser.userId
+  );
 
   useEffect(() => {
     const loginUserFind = state.users.find(
@@ -100,7 +110,10 @@ const Profile = ({ user }) => {
       type: "FRIEND_REQUEST",
       payload: {
         userId: currentProfileUser.userId,
-        friendRequest: [...(currentProfileUser.friendRequest || []), loginUser],
+        friendRequest: [
+          ...(currentProfileUser.friendRequest || []),
+          loginUser.userId,
+        ],
       },
     });
 
@@ -237,7 +250,7 @@ const Profile = ({ user }) => {
                   </p>
                   {user.friendList && (
                     <div className={style["friends-profile"]}>
-                      {user.friendList.map((friend) => (
+                      {friendList?.map((friend) => (
                         <Link key={friend.userId} to={`/${friend.userId}`}>
                           {friend.profilePic ? (
                             <img
@@ -267,7 +280,15 @@ const Profile = ({ user }) => {
                 </div>
               ) : (
                 <div className={style["connecting-with-others"]}>
-                  {isRequestedSent ? (
+                  {isCurrentUserFriend ? (
+                    <button
+                      type="button"
+                      className={`${style["isFriend-button"]} ${style["friend-request-respond"]}`}
+                    >
+                      <FaUserCheck />
+                      Friends
+                    </button>
+                  ) : isRequestedSent ? (
                     <button
                       type="button"
                       className={`${style["friend-request-btn"]} ${style["friend-request-respond"]}`}
@@ -297,7 +318,12 @@ const Profile = ({ user }) => {
                       )}
                     </>
                   )}
-                  <button type="button" className={style["message-btn"]}>
+                  <button
+                    type="button"
+                    className={`${style["message-btn"]} ${
+                      isCurrentUserFriend && style["messageEnable"]
+                    }`}
+                  >
                     <FaFacebookMessenger /> Message
                   </button>
                 </div>

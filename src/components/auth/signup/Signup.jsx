@@ -53,8 +53,7 @@ const Signup = ({ setIsRegistered }) => {
       posts: [],
       userId:
         formData.firstName.toLocaleLowerCase() +
-        Math.floor(Math.random() * 90000) +
-        10000,
+        (Math.floor(Math.random() * 90000) + 10000),
     };
     dispatch({
       type: "SIGN_UP",

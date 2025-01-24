@@ -17,10 +17,9 @@ const HeaderModal = ({ setHeaderModal, openModalFor }) => {
 
   const handleLogout = () => {
     dispatch({
-      type: "LOG_IN",
+      type: "LOG_OUT",
       payload: {},
     });
-    localStorage.removeItem("user");
     navigate("/");
   };
 

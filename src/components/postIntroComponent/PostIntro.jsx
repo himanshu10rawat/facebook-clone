@@ -16,7 +16,9 @@ const PostIntro = ({ user }) => {
     CHARACTER_LIMIT - (user.bio?.length || 0)
   );
   const textareaRef = useRef(null);
-  const { dispatch } = usePostContext();
+  const { state, dispatch } = usePostContext();
+
+  const isActiveUser = state.user.userId === user.userId;
 
   const setCursorToEnd = () => {
     if (textareaRef.current) {
@@ -65,47 +67,51 @@ const PostIntro = ({ user }) => {
         {user.bio && !bioEditActive && (
           <p className={style["bio"]}>{user.bio}</p>
         )}
-        {!bioEditActive && (
-          <div
-            onClick={() => {
-              setBioEditActive(true);
-              setBio(user.bio || "");
-            }}
-            role="button"
-            tabIndex={0}
-            aria-label="Edit bio"
-            className={style["edit-button"]}
-          >
-            Edit Bio
-          </div>
-        )}
-        {bioEditActive && (
-          <form onSubmit={handleBioSubmit}>
-            <textarea
-              ref={textareaRef}
-              autoFocus
-              onChange={handleTextareaChange}
-              value={bio}
-              aria-label="Describe who you are"
-              rows={3}
-              name="bio"
-              id="bio"
-              placeholder="Describe who you are"
-              className={style["user-bio"]}
-            ></textarea>
-            <div className={style["bio-input-character-remaining"]}>
-              {characterLimit} characters remaining
+        {isActiveUser &&
+          (!bioEditActive ? (
+            <div
+              onClick={() => {
+                setBioEditActive(true);
+                setBio(user.bio || "");
+              }}
+              role="button"
+              tabIndex={0}
+              aria-label="Edit bio"
+              className={style["edit-button"]}
+            >
+              Edit Bio
             </div>
-            <div className={style["action-button"]}>
-              <button aria-label="cancel" type="reset" onClick={handleCancel}>
-                Cancel
-              </button>
-              <button aria-label="save" type="submit" disabled={!isInputChange}>
-                Save
-              </button>
-            </div>
-          </form>
-        )}
+          ) : (
+            <form onSubmit={handleBioSubmit}>
+              <textarea
+                ref={textareaRef}
+                autoFocus
+                onChange={handleTextareaChange}
+                value={bio}
+                aria-label="Describe who you are"
+                rows={3}
+                name="bio"
+                id="bio"
+                placeholder="Describe who you are"
+                className={style["user-bio"]}
+              ></textarea>
+              <div className={style["bio-input-character-remaining"]}>
+                {characterLimit} characters remaining
+              </div>
+              <div className={style["action-button"]}>
+                <button aria-label="cancel" type="reset" onClick={handleCancel}>
+                  Cancel
+                </button>
+                <button
+                  aria-label="save"
+                  type="submit"
+                  disabled={!isInputChange}
+                >
+                  Save
+                </button>
+              </div>
+            </form>
+          ))}
       </div>
       <div className={style["personal-details"]}>
         <ul>
@@ -126,14 +132,16 @@ const PostIntro = ({ user }) => {
             Joined on November 2015
           </li>
         </ul>
-        <div
-          role="button"
-          tabIndex={0}
-          aria-label="Edit details"
-          className={style["edit-button"]}
-        >
-          Edit details
-        </div>
+        {isActiveUser && (
+          <div
+            role="button"
+            tabIndex={0}
+            aria-label="Edit details"
+            className={style["edit-button"]}
+          >
+            Edit details
+          </div>
+        )}
       </div>
     </div>
   );

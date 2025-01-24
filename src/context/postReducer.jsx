@@ -20,6 +20,8 @@ const postReducer = (state, action) => {
       return { ...state, users: [...state.users, action.payload] };
     case "LOG_IN":
       return { ...state, user: action.payload };
+    case "LOG_OUT":
+      return { ...state, user: action.payload };
     case "ADD_POST":
       return {
         ...state,

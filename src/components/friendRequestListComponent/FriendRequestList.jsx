@@ -11,11 +11,17 @@ const FriendRequestList = ({ setHeaderModal }) => {
     (userData) => userData.userId === state.user.userId
   );
 
+  const friendRequest = state.users.filter((singleUser) => {
+    return loginUser.friendRequest.some((eachRequestId) => {
+      return singleUser.userId === eachRequestId;
+    });
+  });
+
   const handleRequestDelete = (requestDeleteId, event) => {
     event.stopPropagation();
     event.preventDefault();
     const remainingRequest = loginUser.friendRequest.filter(
-      (singleRequest) => singleRequest.userId !== requestDeleteId
+      (singleRequest) => singleRequest !== requestDeleteId
     );
 
     dispatch({
@@ -38,19 +44,19 @@ const FriendRequestList = ({ setHeaderModal }) => {
       type: "ADD_FRIEND",
       payload: {
         userId: loginUser.userId,
-        friendList: [...(loginUser.friendList || []), newFriend],
+        friendList: [...(loginUser.friendList || []), newFriend.userId],
       },
     });
     dispatch({
       type: "ADD_FRIEND",
       payload: {
         userId: newFriend.userId,
-        friendList: [...(newFriend.friendList || []), loginUser],
+        friendList: [...(newFriend.friendList || []), loginUser.userId],
       },
     });
 
     const remainingRequest = loginUser.friendRequest.filter(
-      (singleRequest) => singleRequest.userId !== requestConfirmId
+      (singleRequest) => singleRequest !== requestConfirmId
     );
 
     dispatch({
@@ -63,7 +69,7 @@ const FriendRequestList = ({ setHeaderModal }) => {
   };
   return (
     <div className={style["friend-request-list"]}>
-      {loginUser.friendRequest?.map((singleRequest) => (
+      {friendRequest?.map((singleRequest) => (
         <Link
           to={`/${singleRequest.userId}`}
           className={style["friend-request-item"]}

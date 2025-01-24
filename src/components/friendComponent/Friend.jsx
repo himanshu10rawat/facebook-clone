@@ -3,9 +3,18 @@ import style from "./friend.module.css";
 import { BsThreeDots } from "react-icons/bs";
 import { FaUser } from "react-icons/fa";
 import { Link } from "react-router";
+import { usePostContext } from "../../context/postContext";
 
 const Friend = ({ singleFriend }) => {
-  console.log("singleFriend", singleFriend);
+  const { state } = usePostContext();
+
+  const isLoginUser = state.user.userId === singleFriend.userId;
+
+  const mutualFriends = singleFriend.friendList.filter((singleFriendId) => {
+    return state.user.friendList?.some(
+      (eachFriendId) => eachFriendId === singleFriendId
+    );
+  });
 
   return (
     <>
@@ -23,7 +32,9 @@ const Friend = ({ singleFriend }) => {
           </div>
           <div className={style["profile-details"]}>
             <h3>{singleFriend.firstName + " " + singleFriend.lastName}</h3>
-            <p>3 mutual friends</p>
+            {!isLoginUser && (
+              <p>{mutualFriends && mutualFriends.length} mutual friends</p>
+            )}
           </div>
         </div>
         <div

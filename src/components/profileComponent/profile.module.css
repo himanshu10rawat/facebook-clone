@@ -309,3 +309,12 @@
 .connecting-with-others button svg {
     font-size: 18px;
 }
+
+.connecting-with-others button.isFriend-button {
+    background-color: var(--mediumLightColor);
+}
+
+.connecting-with-others button.messageEnable {
+    background-color: var(--blueColor);
+    color: var(--whiteColor);
+}

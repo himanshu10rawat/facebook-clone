@@ -10,7 +10,12 @@ const FriendsList = () => {
   const { state } = usePostContext();
 
   const currentProfileUser = state.users.find((user) => user.userId === userId);
-  const { friendList } = currentProfileUser;
+
+  const friendList = state.users.filter((singleUser) => {
+    return currentProfileUser.friendList.some(
+      (eachFriendId) => eachFriendId === singleUser.userId
+    );
+  });
 
   return (
     <div className={style["friends-section"]}>

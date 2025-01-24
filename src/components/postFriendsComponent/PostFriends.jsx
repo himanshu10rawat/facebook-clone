@@ -11,6 +11,12 @@ const PostFriends = () => {
 
   const currentProfileUser = state.users.find((user) => user.userId === userId);
 
+  const friendList = state.users.filter((user) => {
+    return currentProfileUser.friendList?.some(
+      (eachFriendId) => eachFriendId === user.userId
+    );
+  });
+
   return (
     <div className={style["post-friends"]}>
       <div className={style["friends-header"]}>
@@ -32,7 +38,7 @@ const PostFriends = () => {
         </p>
       </div>
       <div className={style["friends-body"]}>
-        {currentProfileUser.friendList?.map((friend) => (
+        {friendList?.map((friend) => (
           <Link to={`/${friend.userId}`} key={friend.userId}>
             <span className={style["user-image"]}>
               {friend.profilePic ? (

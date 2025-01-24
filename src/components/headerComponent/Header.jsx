@@ -1,17 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link, NavLink, useParams } from "react-router";
+import { Link, NavLink, useLocation } from "react-router";
 import { FaFacebook, FaFacebookMessenger } from "react-icons/fa";
 import { MdKeyboardBackspace, MdOutlineOndemandVideo } from "react-icons/md";
 import { IoMdNotifications, IoIosSearch, IoMdClose } from "react-icons/io";
-import { CgMenuGridR } from "react-icons/cg";
 import { BiHomeAlt } from "react-icons/bi";
-import { AiOutlineShop } from "react-icons/ai";
-import { HiOutlineUserGroup } from "react-icons/hi";
-import { RiGamepadLine } from "react-icons/ri";
 import { FaUserCircle } from "react-icons/fa";
 import style from "./header.module.css";
 import { usePostContext } from "../../context/postContext";
 import HeaderModal from "../headerModalComponent/HeaderModal";
+import { GoHomeFill } from "react-icons/go";
+import { BsFillPlayBtnFill } from "react-icons/bs";
 
 const Header = () => {
   const [headerModal, setHeaderModal] = useState(false);
@@ -19,6 +17,7 @@ const Header = () => {
   const [searchUsersList, setSearchUsersList] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const [openModalFor, setOpenModalFor] = useState("");
+  const [activeNav, setActiveNav] = useState("");
 
   const { state, dispatch } = usePostContext();
   const loginUser = state.users.find(
@@ -27,18 +26,17 @@ const Header = () => {
 
   const searchModal = useRef(null);
 
-  const handleClickOutside = (event) => {
+  document.addEventListener("mousedown", (event) => {
     if (searchModal.current && !searchModal.current.contains(event.target)) {
       setSearchBarActive(false);
     }
-  };
+  });
+
+  const location = useLocation();
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+    setActiveNav(location.pathname);
+  }, [location.pathname]);
 
   const handleSearchChange = (event) => {
     const searchInput = event.target.value;
@@ -188,39 +186,39 @@ const Header = () => {
         <nav className={style["navbar-items"]}>
           <ul>
             <li>
-              <NavLink to={"/"} role="link" tabIndex={0} aria-label="Home">
-                <BiHomeAlt />
+              <NavLink
+                to={"/"}
+                role="link"
+                tabIndex={0}
+                aria-label="Home"
+                className={({ isActive }) => {
+                  return isActive ? style["link-active"] : "";
+                }}
+              >
+                {activeNav === "/" ? <GoHomeFill /> : <BiHomeAlt />}
               </NavLink>
             </li>
             <li>
-              <NavLink role="link" tabIndex={0} aria-label="Video">
-                <MdOutlineOndemandVideo />
-              </NavLink>
-            </li>
-            <li>
-              <NavLink role="link" tabIndex={0} aria-label="Marketplace">
-                <AiOutlineShop />
-              </NavLink>
-            </li>
-            <li>
-              <NavLink role="link" tabIndex={0} aria-label="Groups">
-                <HiOutlineUserGroup />
-              </NavLink>
-            </li>
-            <li>
-              <NavLink role="link" tabIndex={0} aria-label="Gamming">
-                <RiGamepadLine />
+              <NavLink
+                to={"/watch"}
+                role="link"
+                tabIndex={0}
+                aria-label="Video"
+                className={({ isActive }) => {
+                  return isActive ? style["link-active"] : "";
+                }}
+              >
+                {activeNav === "/watch" ? (
+                  <BsFillPlayBtnFill />
+                ) : (
+                  <MdOutlineOndemandVideo />
+                )}
               </NavLink>
             </li>
           </ul>
         </nav>
         <div className={style["right-side"]}>
           <ul>
-            <li>
-              <div aria-label="Menu" role="button" tabIndex={0}>
-                <CgMenuGridR />
-              </div>
-            </li>
             <li>
               <div aria-label="Messenger" role="button" tabIndex={0}>
                 <FaFacebookMessenger />

@@ -5,6 +5,7 @@
 
 .home-page main {
     padding-block: 1rem;
-    max-width: 700px;
-    width: 700px;
+    max-width: 50%;
+    width: 50%;
+    padding-inline: 5rem;
 }
