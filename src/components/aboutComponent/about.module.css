@@ -1,55 +1,157 @@
 .about {
-    background-color: var(--whiteColor);
-    box-shadow: 0 0 2px 1px var(--mediumLightColor);
-    border-radius: 10px;
-    display: flex;
+  background-color: var(--whiteColor);
+  box-shadow: 0 0 2px 1px var(--mediumLightColor);
+  border-radius: 10px;
+  display: flex;
 }
 
 .about-left {
-    border-right: 1px solid var(--mediumLightColor);
-    padding: 1rem 0.5rem;
-    width: 30%;
+  border-right: 1px solid var(--mediumLightColor);
+  padding: 1rem 0.5rem;
+  width: 30%;
 }
 
 .about-left h2 {
-    font-size: 19px;
-    color: var(--blackColor);
-    margin-bottom: 0.75rem;
-    margin-left: 0.75rem;
+  font-size: 19px;
+  color: var(--blackColor);
+  margin-bottom: 0.75rem;
+  margin-left: 0.75rem;
 }
 
 .about-left ul {
-    list-style-type: none;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .about-left ul li {
-
-    font-size: 15px;
-    color: var(--greyColor);
-    font-weight: 500;
+  font-size: 15px;
+  color: var(--greyColor);
+  font-weight: 500;
 }
 
 .about-left ul li a {
-    padding: 0.5rem 0.75rem;
-    display: block;
-    background-color: transparent;
-    border-radius: 0.3rem;
-    transition: all ease-in-out 0.3s;
+  padding: 0.5rem 0.75rem;
+  display: block;
+  background-color: transparent;
+  border-radius: 0.3rem;
+  transition: all ease-in-out 0.3s;
 }
 
 .about-left ul li a:hover {
-    background-color: var(--lightColor);
+  background-color: var(--lightColor);
 }
 
 .about-left ul li a.active-tab {
-    color: var(--blueColor);
-    background-color: rgba(8, 102, 255, 0.1);
+  color: var(--blueColor);
+  background-color: rgba(8, 102, 255, 0.1);
 }
 
 .about-right {
-    padding: 2rem 1rem;
-    width: 70%;
+  padding: 2rem 1rem;
+  width: 70%;
+}
+
+@media screen and (max-width: 992px) {
+  .about {
+    flex-direction: column;
+  }
+
+  .about-left {
+    border-right: none;
+    border-bottom: 1px solid var(--mediumLightColor);
+    width: 100%;
+    padding: 0.75rem 0.5rem;
+  }
+
+  .about-left h2 {
+    font-size: 17px;
+    margin-bottom: 0.5rem;
+  }
+
+  .about-left ul {
+    gap: 8px;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .about-left ul li {
+    font-size: 14px;
+  }
+
+  .about-left ul li a {
+    padding: 0.4rem 0.6rem;
+  }
+
+  .about-right {
+    padding: 1.5rem 1rem;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .about {
+    border-radius: 5px;
+  }
+
+  .about-left {
+    padding: 0.6rem 0.4rem;
+  }
+
+  .about-left h2 {
+    font-size: 15px;
+    margin-bottom: 0.4rem;
+    margin-left: 0.5rem;
+  }
+
+  .about-left ul {
+    gap: 6px;
+  }
+
+  .about-left ul li {
+    font-size: 13px;
+  }
+
+  .about-left ul li a {
+    padding: 0.35rem 0.5rem;
+    border-radius: 0.25rem;
+  }
+
+  .about-right {
+    padding: 1rem 0.75rem;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .about {
+    border-radius: 3px;
+  }
+
+  .about-left {
+    padding: 0.5rem 0.3rem;
+  }
+
+  .about-left h2 {
+    font-size: 13px;
+    margin-bottom: 0.3rem;
+    margin-left: 0.4rem;
+  }
+
+  .about-left ul {
+    gap: 4px;
+  }
+
+  .about-left ul li {
+    font-size: 12px;
+  }
+
+  .about-left ul li a {
+    padding: 0.3rem 0.4rem;
+    border-radius: 0.2rem;
+  }
+
+  .about-right {
+    padding: 0.75rem 0.5rem;
+  }
 }

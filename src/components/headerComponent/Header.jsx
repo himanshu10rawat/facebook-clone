@@ -17,7 +17,6 @@ const Header = () => {
   const [searchUsersList, setSearchUsersList] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const [openModalFor, setOpenModalFor] = useState("");
-  const [activeNav, setActiveNav] = useState("");
 
   const { state, dispatch } = usePostContext();
   const loginUser = state.users.find(
@@ -25,18 +24,20 @@ const Header = () => {
   );
 
   const searchModal = useRef(null);
-
-  document.addEventListener("mousedown", (event) => {
-    if (searchModal.current && !searchModal.current.contains(event.target)) {
-      setSearchBarActive(false);
-    }
-  });
-
   const location = useLocation();
+  const isVideoActive =
+    location.pathname === "/watch" || location.pathname.endsWith("/videos");
 
   useEffect(() => {
-    setActiveNav(location.pathname);
-  }, [location.pathname]);
+    const handleOutsideClick = (event) => {
+      if (searchModal.current && !searchModal.current.contains(event.target)) {
+        setSearchBarActive(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
+  }, []);
 
   const handleSearchChange = (event) => {
     const searchInput = event.target.value;
@@ -70,6 +71,19 @@ const Header = () => {
     });
   };
 
+  const handleOpenModal = (modalFor) => {
+    setHeaderModal((prev) => (openModalFor === modalFor ? !prev : true));
+    setOpenModalFor(modalFor);
+    if (modalFor === "notifications") {
+      handleNotificationSeen();
+    }
+  };
+
+  const handleSearchClose = () => {
+    setSearchBarActive(false);
+    setSearchUsersList([]);
+  };
+
   return (
     <>
       <header className={style["header-section"]}>
@@ -86,20 +100,17 @@ const Header = () => {
                 aria-label="close search bar"
                 tabIndex={0}
                 className={style["back-button"]}
-                onClick={() => {
-                  setSearchBarActive(false);
-                  setSearchUsersList([]);
-                }}
+                onClick={handleSearchClose}
                 onKeyDown={(e) => {
                   if (e.key === " " || e.key === "Enter") {
-                    setSearchBarActive(false);
+                    handleSearchClose();
                   }
                 }}
               >
                 <MdKeyboardBackspace />
               </div>
             ) : (
-              <Link to={"/"}>
+              <Link to={"/"} aria-label="Go to home page">
                 <FaFacebook />
               </Link>
             )}
@@ -183,11 +194,13 @@ const Header = () => {
             </div>
           )}
         </div>
+
         <nav className={style["navbar-items"]}>
           <ul>
             <li>
               <NavLink
                 to={"/"}
+                end
                 role="link"
                 tabIndex={0}
                 aria-label="Home"
@@ -195,7 +208,7 @@ const Header = () => {
                   return isActive ? style["link-active"] : "";
                 }}
               >
-                {activeNav === "/" ? <GoHomeFill /> : <BiHomeAlt />}
+                {location.pathname === "/" ? <GoHomeFill /> : <BiHomeAlt />}
               </NavLink>
             </li>
             <li>
@@ -208,15 +221,12 @@ const Header = () => {
                   return isActive ? style["link-active"] : "";
                 }}
               >
-                {activeNav === "/watch" ? (
-                  <BsFillPlayBtnFill />
-                ) : (
-                  <MdOutlineOndemandVideo />
-                )}
+                {isVideoActive ? <BsFillPlayBtnFill /> : <MdOutlineOndemandVideo />}
               </NavLink>
             </li>
           </ul>
         </nav>
+
         <div className={style["right-side"]}>
           <ul>
             <li>
@@ -230,11 +240,7 @@ const Header = () => {
                 aria-label="Notifications"
                 role="button"
                 tabIndex={0}
-                onClick={() => {
-                  setHeaderModal((prev) => !prev);
-                  setOpenModalFor("notifications");
-                  handleNotificationSeen();
-                }}
+                onClick={() => handleOpenModal("notifications")}
               >
                 {loginUser?.notifications > 0 && (
                   <span className={style["notification-count"]}>
@@ -250,10 +256,7 @@ const Header = () => {
                 aria-label="Your profile"
                 role="button"
                 tabIndex={0}
-                onClick={() => {
-                  setHeaderModal((prev) => !prev);
-                  setOpenModalFor("profile");
-                }}
+                onClick={() => handleOpenModal("profile")}
               >
                 {loginUser?.profilePic ? (
                   <img
@@ -262,8 +265,7 @@ const Header = () => {
                       loginUser.firstName +
                       " " +
                       loginUser.lastName +
-                      " " +
-                      "profile pic"
+                      " profile pic"
                     }
                   />
                 ) : (
@@ -274,6 +276,36 @@ const Header = () => {
           </ul>
         </div>
       </header>
+
+      <nav className={style["mobile-bottom-nav"]} aria-label="Mobile navigation">
+        <NavLink
+          to="/"
+          end
+          className={({ isActive }) => (isActive ? style["mobile-link-active"] : "")}
+        >
+          {location.pathname === "/" ? <GoHomeFill /> : <BiHomeAlt />}
+          <span>Home</span>
+        </NavLink>
+        <NavLink
+          to="/watch"
+          className={({ isActive }) => (isActive ? style["mobile-link-active"] : "")}
+        >
+          {isVideoActive ? <BsFillPlayBtnFill /> : <MdOutlineOndemandVideo />}
+          <span>Watch</span>
+        </NavLink>
+        <NavLink
+          to={`/${state.user.userId}`}
+          className={({ isActive }) => (isActive ? style["mobile-link-active"] : "")}
+        >
+          {loginUser?.profilePic ? (
+            <img src={loginUser.profilePic} alt={loginUser.firstName + " profile pic"} />
+          ) : (
+            <FaUserCircle />
+          )}
+          <span>Profile</span>
+        </NavLink>
+      </nav>
+
       {headerModal && (
         <HeaderModal
           setHeaderModal={setHeaderModal}

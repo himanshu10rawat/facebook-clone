@@ -1,61 +1,129 @@
 .modal-body {
-    padding: 2rem 1rem 1rem;
+  padding: 2rem 1rem 1rem;
 }
 
 .modal-body h2 {
-    text-align: center;
-    font-weight: 400;
-    font-size: 1.25rem;
-    margin-bottom: 1rem;
-    color: var(--blackColor);
+  text-align: center;
+  font-weight: 400;
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: var(--blackColor);
 }
 
 .modal-body form {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
 .modal-body form .input-group input {
-    width: 100%;
-    padding: 1rem;
-    border: 1px solid var(--lightColor);
-    border-radius: 0.5rem;
-    font-size: 1rem;
-    color: var(--blackColor);
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid var(--lightColor);
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  color: var(--blackColor);
 }
 
 .modal-body form button {
-    background-color: var(--blueColor);
-    color: var(--whiteColor);
-    border: none;
-    padding: 0.6rem;
-    font-size: 1.25rem;
-    font-weight: 500;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    transition: all ease-in-out 0.3s;
+  background-color: var(--blueColor);
+  color: var(--whiteColor);
+  border: none;
+  padding: 0.6rem;
+  font-size: 1.25rem;
+  font-weight: 500;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all ease-in-out 0.3s;
 }
 
 .modal-footer {
-    border-top: 1px solid var(--lightColor);
-    text-align: center;
-    padding: 1rem;
+  border-top: 1px solid var(--lightColor);
+  text-align: center;
+  padding: 1rem;
 }
 
 .modal-footer button {
-    background-color: var(--greenColor);
-    color: var(--whiteColor);
-    border: none;
-    padding: 0.6rem;
-    border-radius: 0.5rem;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all ease-in-out 0.3s;
+  background-color: var(--greenColor);
+  color: var(--whiteColor);
+  border: none;
+  padding: 0.6rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all ease-in-out 0.3s;
 }
 
 .modal-body form button:hover,
 .modal-footer button:hover {
-    box-shadow: 0 1px 4px 0 var(--mediumGreyColor);
+  box-shadow: 0 1px 4px 0 var(--mediumGreyColor);
+}
+
+@media screen and (max-width: 768px) {
+  .modal-body {
+    padding: 1.5rem 1rem 1rem;
+  }
+
+  .modal-body h2 {
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .modal-body form {
+    gap: 0.65rem;
+  }
+
+  .modal-body form .input-group input {
+    padding: 0.75rem;
+    font-size: 0.95rem;
+  }
+
+  .modal-body form button {
+    padding: 0.5rem;
+    font-size: 1.1rem;
+  }
+
+  .modal-footer {
+    padding: 0.75rem;
+  }
+
+  .modal-footer button {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .modal-body {
+    padding: 1rem 0.75rem 0.75rem;
+  }
+
+  .modal-body h2 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .modal-body form {
+    gap: 0.5rem;
+  }
+
+  .modal-body form .input-group input {
+    padding: 0.65rem;
+    font-size: 0.9rem;
+  }
+
+  .modal-body form button {
+    padding: 0.45rem;
+    font-size: 1rem;
+  }
+
+  .modal-footer {
+    padding: 0.65rem;
+  }
+
+  .modal-footer button {
+    padding: 0.45rem;
+    font-size: 0.85rem;
+  }
 }

@@ -3,26 +3,32 @@ import style from "./editProfileModal.module.css";
 import { IoMdClose } from "react-icons/io";
 import { FaCloudUploadAlt, FaUser } from "react-icons/fa";
 import { usePostContext } from "../../context/postContext";
+import { getImagePreviewFromFile, IMAGE_INPUT_ACCEPT } from "../../utils/imageUpload";
 
 const EditProfileModal = ({ setEditProfile, profilePic }) => {
   const [previewImage, setPreviewImage] = useState(null);
   const [isImageLoading, setIsImageLoading] = useState(false);
+  const [uploadMessage, setUploadMessage] = useState("");
   const { state, dispatch } = usePostContext();
 
   const currentUser = state.users.find(
     (loginUser) => loginUser.userId === state.user.userId
   );
 
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreviewImage(reader.result);
-        setIsImageLoading(true);
-      };
-      reader.readAsDataURL(file);
+    const result = await getImagePreviewFromFile(file);
+
+    if (!result.success) {
+      setPreviewImage(null);
+      setUploadMessage(result.error);
+      setIsImageLoading(false);
+      return;
     }
+
+    setPreviewImage(result.preview);
+    setUploadMessage(result.warning || "");
+    setIsImageLoading(true);
   };
 
   const handleSubmit = (e) => {
@@ -34,6 +40,7 @@ const EditProfileModal = ({ setEditProfile, profilePic }) => {
     });
     setEditProfile(false);
     setPreviewImage(null);
+    setUploadMessage("");
   };
 
   return (
@@ -64,8 +71,12 @@ const EditProfileModal = ({ setEditProfile, profilePic }) => {
                 src={previewImage || profilePic}
                 alt="Preview picture"
                 onLoad={() => setIsImageLoading(false)}
-                onError={() => setIsImageLoading(false)}
                 style={{ display: isImageLoading ? "none" : "block" }}
+                onError={() => {
+                  setIsImageLoading(false);
+                  setUploadMessage("This image format cannot be previewed in this browser. Please convert it to JPG or PNG.");
+                  setPreviewImage(null);
+                }}
               />
             ) : (
               <FaUser className={style["profile-pic-placeholder"]} />
@@ -81,15 +92,17 @@ const EditProfileModal = ({ setEditProfile, profilePic }) => {
                 type="file"
                 name="profilePic"
                 id="profilePic"
-                accept="image/*"
+                accept={IMAGE_INPUT_ACCEPT}
               />
             </div>
+            {uploadMessage && <p className={style["upload-message"]}>{uploadMessage}</p>}
             <div className={style["action-button"]}>
               <button
                 type="reset"
                 onClick={() => {
                   setEditProfile(false);
                   setPreviewImage(null);
+                  setUploadMessage("");
                 }}
               >
                 Cancel

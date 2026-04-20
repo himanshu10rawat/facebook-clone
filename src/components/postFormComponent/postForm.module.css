@@ -1,340 +1,573 @@
 .modal-wrapper {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100vh;
-    z-index: 9;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .modal-wrapper::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: var(--whiteColor);
-    opacity: 0.75;
-    z-index: -1;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--whiteColor);
+  opacity: 0.75;
+  z-index: -1;
 }
 
 .post-modal {
-    min-width: 500px;
-    width: 500px;
-    max-width: 500px;
-    max-height: calc(100vh - 50px);
-    background-color: var(--whiteColor);
-    box-shadow: 0 0 30px 1px var(--mediumLightColor);
-    border-radius: 0.5rem;
+  min-width: 500px;
+  width: 500px;
+  max-width: 500px;
+  max-height: calc(100vh - 50px);
+  background-color: var(--whiteColor);
+  box-shadow: 0 0 30px 1px var(--mediumLightColor);
+  border-radius: 0.5rem;
 }
 
 .modal-header {
-    display: flex;
-    justify-content: center;
-    padding-block: 1rem;
-    position: relative;
-    border-bottom: 1px solid var(--mediumLightColor);
+  display: flex;
+  justify-content: center;
+  padding-block: 1rem;
+  position: relative;
+  border-bottom: 1px solid var(--mediumLightColor);
 }
 
 .modal-header h2 {
-    font-size: larger;
-    font-weight: 600;
-    text-transform: capitalize;
+  font-size: larger;
+  font-weight: 600;
+  text-transform: capitalize;
 }
 
 .modal-close {
-    position: absolute;
-    right: 0.75rem;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: var(--lightColor);
-    border-radius: 50%;
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    color: var(--greyColor);
-    cursor: pointer;
-    transition: ease-in-out 0.3s;
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: var(--lightColor);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: var(--greyColor);
+  cursor: pointer;
+  transition: ease-in-out 0.3s;
 }
 
 .modal-close:hover {
-    background-color: var(--mediumLightColor);
+  background-color: var(--mediumLightColor);
 }
 
 .modal-body {
-    padding: 1rem;
+  padding: 1rem;
 }
 
 .profile-section {
-    display: flex;
-    gap: 0.75rem;
-    align-items: center;
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
 }
 
 .profile-image {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    overflow: hidden;
-    background-color: var(--lightColor);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: var(--lightColor);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .profile-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
 }
 
 .profile-image svg {
-    font-size: 21px;
+  font-size: 21px;
 }
 
 .profile-details {
-    display: flex;
-    flex-direction: column;
-    align-items: self-start;
+  display: flex;
+  flex-direction: column;
+  align-items: self-start;
 }
 
 .profile-details .username {
-    font-weight: 500;
-    font-size: 1rem;
+  font-weight: 500;
+  font-size: 1rem;
 }
 
 .profile-details .share-with {
-    background-color: var(--lightColor);
-    padding: 0.25rem 0.5rem;
-    border-radius: 0.35rem;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 14px;
+  background-color: var(--lightColor);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.35rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 14px;
 }
 
 .post-form {
-    margin-top: 1rem;
+  margin-top: 1rem;
 }
 
 .post-form form {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
 .form-input-section {
-    overflow-x: hidden;
-    overflow-y: auto;
-    overscroll-behavior-y: contain;
-    /* scrollbar-width: none; */
-    max-height: calc(100vh - 400px);
-    padding-right: 3px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  /* scrollbar-width: none; */
+  max-height: calc(100vh - 400px);
+  padding-right: 3px;
 }
 
 .form-input-section::-webkit-scrollbar {
-    width: 8px;
-    scroll-behavior: smooth;
+  width: 8px;
+  scroll-behavior: smooth;
 }
 
 .form-input-section::-webkit-scrollbar-thumb {
-    background-color: var(--lightgreyColor);
-    border-radius: 8px;
+  background-color: var(--lightgreyColor);
+  border-radius: 8px;
 }
 
 .input-group {
-    display: flex;
-    align-items: flex-end;
-    margin-bottom: 1.5rem;
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 1.5rem;
 }
 
 .input-group textarea {
-    width: 100%;
-    border: none;
-    outline: none;
-    padding: 0.25rem;
-    resize: none;
-    color: var(--blackColor);
+  width: 100%;
+  border: none;
+  outline: none;
+  padding: 0.25rem;
+  resize: none;
+  color: var(--blackColor);
 }
 
 .emoji-button {
-    font-size: 24px;
-    cursor: pointer;
-    color: var(--greyColor);
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--greyColor);
 }
 
 .emoji-button svg {
-    display: block;
+  display: block;
 }
 
 .image-section {
-    position: relative;
-    display: flex;
-    flex-direction: column;
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .image-remove-button {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    width: 35px;
-    height: 35px;
-    background-color: var(--whiteColor);
-    border-radius: 50%;
-    border: 1px solid var(--mediumLightColor);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    color: var(--greyColor);
-    cursor: pointer;
-    transition: ease-in-out 0.3s;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 35px;
+  height: 35px;
+  background-color: var(--whiteColor);
+  border-radius: 50%;
+  border: 1px solid var(--mediumLightColor);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: var(--greyColor);
+  cursor: pointer;
+  transition: ease-in-out 0.3s;
 }
 
 .image-remove-button:hover {
-    background-color: var(--lightColor);
+  background-color: var(--lightColor);
 }
 
 .dummy-image {
-    border: 1px solid var(--mediumLightColor);
-    padding: 0.5rem;
-    border-radius: 0.5rem;
+  border: 1px solid var(--mediumLightColor);
+  padding: 0.5rem;
+  border-radius: 0.5rem;
 }
 
 .dummy-image label {
-    background-color: var(--lowLightColor);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 250px;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    transition: ease-in-out 0.3s;
+  background-color: var(--lowLightColor);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 250px;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: ease-in-out 0.3s;
 }
 
 .dummy-image label:hover {
-    background-color: var(--lightColor);
+  background-color: var(--lightColor);
 }
 
 .dummy-image input {
-    display: none;
+  display: none;
 }
 
 .add-images-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: var(--mediumLightColor);
-    font-size: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--mediumLightColor);
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .dummy-image label h2 {
-    font-size: 16px;
-    font-weight: 500;
+  font-size: 16px;
+  font-weight: 500;
 }
 
 .dummy-image label p {
-    font-size: 12px;
-    color: var(--greyColor);
+  font-size: 12px;
+  color: var(--greyColor);
 }
 
 .add-more-section {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border: 1px solid var(--mediumLightColor);
-    padding: 0.5rem 0.75rem;
-    border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--mediumLightColor);
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
 }
 
 .add-more-section .add-more-text {
-    font-size: 14px;
-    font-weight: 500;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .add-more-options {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .add-more-options .add-more-item {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    font-size: 24px;
-    cursor: pointer;
-    transition: ease-in-out 0.3s;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+  transition: ease-in-out 0.3s;
 }
 
 .add-more-options .add-more-item:nth-child(1) {
-    color: var(--greenColor);
+  color: var(--greenColor);
 }
 
 .add-more-options .add-more-item:nth-child(2) {
-    color: var(--blueColor);
+  color: var(--blueColor);
 }
 
 .add-more-options .add-more-item:nth-child(3) {
-    color: var(--yellowColor);
+  color: var(--yellowColor);
 }
 
 .add-more-options .add-more-item:nth-child(4) {
-    color: var(--redColor);
+  color: var(--redColor);
 }
 
 .add-more-options .add-more-item:hover {
-    background-color: var(--lightColor);
+  background-color: var(--lightColor);
 }
 
 .post-button {
-    background-color: var(--blueColor);
-    color: var(--whiteColor);
-    border: none;
-    padding: 0.5rem;
-    font-weight: 500;
-    font-size: 16px;
-    border-radius: 0.5rem;
-    cursor: pointer;
+  background-color: var(--blueColor);
+  color: var(--whiteColor);
+  border: none;
+  padding: 0.5rem;
+  font-weight: 500;
+  font-size: 16px;
+  border-radius: 0.5rem;
+  cursor: pointer;
 }
 
 .post-button:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
 .image-list {
-    border: 1px solid var(--mediumLightColor);
-    padding: 0.5rem;
-    border-radius: 0.5rem;
+  border: 1px solid var(--mediumLightColor);
+  padding: 0.5rem;
+  border-radius: 0.5rem;
 }
 
 .image-list .image {
-    width: 100%;
-    border-radius: 0.5rem;
-    overflow: hidden;
-    background-color: var(--lightColor);
+  width: 100%;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  background-color: var(--lightColor);
 }
 
 .image-list .image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+@media screen and (max-width: 768px) {
+  .post-modal {
+    min-width: 90vw;
+    width: 90vw;
+    max-width: 90vw;
+  }
+
+  .modal-header {
+    padding-block: 0.75rem;
+  }
+
+  .modal-header h2 {
+    font-size: 1.1rem;
+  }
+
+  .modal-close {
+    width: 32px;
+    height: 32px;
+    font-size: 20px;
+  }
+
+  .modal-body {
+    padding: 0.75rem;
+  }
+
+  .profile-section {
+    gap: 0.5rem;
+  }
+
+  .profile-image {
+    width: 36px;
+    height: 36px;
+  }
+
+  .profile-image svg {
+    font-size: 18px;
+  }
+
+  .profile-details .username {
+    font-size: 0.9rem;
+  }
+
+  .profile-details .share-with {
+    padding: 0.2rem 0.4rem;
+    font-size: 12px;
+  }
+
+  .post-form {
+    margin-top: 0.75rem;
+  }
+
+  .input-group {
+    margin-bottom: 1rem;
+  }
+
+  .form-input-section {
+    max-height: calc(100vh - 450px);
+  }
+
+  .emoji-button {
+    font-size: 20px;
+  }
+
+  .image-remove-button {
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 32px;
+    height: 32px;
+    font-size: 20px;
+  }
+
+  .dummy-image label {
+    height: 200px;
+  }
+
+  .add-images-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 20px;
+  }
+
+  .dummy-image label h2 {
+    font-size: 14px;
+  }
+
+  .dummy-image label p {
+    font-size: 11px;
+  }
+
+  .add-more-section {
+    padding: 0.4rem 0.6rem;
+  }
+
+  .add-more-section .add-more-text {
+    font-size: 13px;
+  }
+
+  .add-more-options .add-more-item {
+    width: 36px;
+    height: 36px;
+    font-size: 20px;
+  }
+
+  .post-button {
+    padding: 0.4rem;
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .post-modal {
+    min-width: 95vw;
+    width: 95vw;
+    max-width: 95vw;
+    border-radius: 0.3rem;
+  }
+
+  .modal-header {
+    padding-block: 0.5rem;
+  }
+
+  .modal-header h2 {
+    font-size: 1rem;
+  }
+
+  .modal-close {
+    width: 28px;
+    height: 28px;
+    font-size: 18px;
+    right: 0.5rem;
+  }
+
+  .modal-body {
+    padding: 0.5rem;
+  }
+
+  .profile-section {
+    gap: 0.4rem;
+  }
+
+  .profile-image {
+    width: 32px;
+    height: 32px;
+  }
+
+  .profile-image svg {
+    font-size: 16px;
+  }
+
+  .profile-details .username {
+    font-size: 0.85rem;
+  }
+
+  .profile-details .share-with {
+    padding: 0.15rem 0.35rem;
+    font-size: 11px;
+  }
+
+  .post-form {
+    margin-top: 0.5rem;
+  }
+
+  .input-group {
+    margin-bottom: 0.75rem;
+  }
+
+  .form-input-section {
+    max-height: calc(100vh - 500px);
+    padding-right: 2px;
+  }
+
+  .emoji-button {
+    font-size: 18px;
+  }
+
+  .image-remove-button {
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 28px;
+    height: 28px;
+    font-size: 18px;
+  }
+
+  .dummy-image {
+    padding: 0.4rem;
+  }
+
+  .dummy-image label {
+    height: 150px;
+  }
+
+  .add-images-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 18px;
+  }
+
+  .dummy-image label h2 {
+    font-size: 12px;
+  }
+
+  .dummy-image label p {
+    font-size: 10px;
+  }
+
+  .add-more-section {
+    padding: 0.35rem 0.5rem;
+  }
+
+  .add-more-section .add-more-text {
+    font-size: 12px;
+  }
+
+  .add-more-options .add-more-item {
+    width: 32px;
+    height: 32px;
+    font-size: 18px;
+  }
+
+  .post-button {
+    padding: 0.35rem;
+    font-size: 13px;
+  }
+}
+
+
+.upload-message {
+  margin-top: 0.75rem;
+  font-size: 13px;
+  color: var(--greyColor);
+  line-height: 1.4;
 }

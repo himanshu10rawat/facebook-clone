@@ -1,11 +1,45 @@
 .home-page {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .home-page main {
-    padding-block: 1rem;
-    max-width: 50%;
-    width: 50%;
-    padding-inline: 5rem;
+  padding-block: 1rem;
+  max-width: 50%;
+  width: 50%;
+  padding-inline: 5rem;
+}
+
+@media screen and (max-width: 1200px) {
+  .home-page main {
+    max-width: 65%;
+    width: 65%;
+    padding-inline: 3rem;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .home-page main {
+    max-width: 75%;
+    width: 75%;
+    padding-inline: 2rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .home-page main {
+    max-width: 100%;
+    width: 100%;
+    padding-inline: 1rem;
+    margin-bottom: 4rem;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .home-page main {
+    max-width: 100%;
+    width: 100%;
+    padding-inline: 0.5rem;
+    padding-block: 0.5rem;
+  }
 }

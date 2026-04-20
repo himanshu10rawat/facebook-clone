@@ -1,376 +1,660 @@
 .fb-post {
-    border-radius: 10px;
-    box-shadow: 0 0 2px 1px var(--mediumLightColor);
-    background-color: var(--whiteColor);
+  border-radius: 10px;
+  box-shadow: 0 0 2px 1px var(--mediumLightColor);
+  background-color: var(--whiteColor);
 }
 
 .post-header {
-    padding: 0.85rem;
+  padding: 0.85rem;
 }
 
 .profile-details-and-controls {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .profile-details {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .profile-image {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--lightColor);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--lightColor);
 }
 
 .profile-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
 }
 
 .profile-image svg {
-    font-size: 21px;
+  font-size: 21px;
 }
 
 .profile-other-details {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .profile-name {
-    font-weight: 500;
-    font-size: 16px;
+  font-weight: 500;
+  font-size: 16px;
 }
 
 .cover-image-title {
-    font-weight: normal;
-    margin-left: 5px;
-    color: var(--greyColor);
-    font-size: 14px;
+  font-weight: normal;
+  margin-left: 5px;
+  color: var(--greyColor);
+  font-size: 14px;
 }
 
 .profile-date {
-    color: var(--greyColor);
-    display: flex;
-    gap: 5px;
-    font-size: 14px;
+  color: var(--greyColor);
+  display: flex;
+  gap: 5px;
+  font-size: 14px;
 }
 
 .controls {
-    display: flex;
+  display: flex;
 }
 
 .controls svg {
-    font-size: 24px;
-    color: var(--greyColor);
-    border-radius: 50%;
-    height: 36px;
-    width: 36px;
-    padding: 0.4rem;
-    cursor: pointer;
-    transition: ease-in-out 0.3s;
+  font-size: 24px;
+  color: var(--greyColor);
+  border-radius: 50%;
+  height: 36px;
+  width: 36px;
+  padding: 0.4rem;
+  cursor: pointer;
+  transition: ease-in-out 0.3s;
 }
 
 .controls svg:hover {
-    background-color: var(--lightColor);
+  background-color: var(--lightColor);
 }
 
 .post-quotes {
-    font-size: 16px;
-    padding-top: 0.85rem;
+  font-size: 16px;
+  padding-top: 0.85rem;
 }
 
 .post-quotes-single {
-    font-size: 28px;
-    font-weight: 500;
-    padding-top: 0.85rem;
+  font-size: 28px;
+  font-weight: 500;
+  padding-top: 0.85rem;
 }
 
 .post-body {
-    width: 100%;
-    height: 700px;
-    border-top: 1px solid var(--mediumLightColor);
-    border-bottom: 1px solid var(--mediumLightColor);
+  width: 100%;
+  height: 700px;
+  border-top: 1px solid var(--mediumLightColor);
+  border-bottom: 1px solid var(--mediumLightColor);
 }
 
 .post-body img {
-    width: 100%;
-    height: 100%;
-    aspect-ratio: 1/1;
-    object-fit: cover;
-    object-position: top;
-    display: block;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  object-position: top;
+  display: block;
 }
 
 .post-footer {
-    padding-inline: 0.85rem;
+  padding-inline: 0.85rem;
 }
 
 .total-likes-comments-shares-view {
-    padding-block: 10px;
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid var(--mediumLightColor);
+  padding-block: 10px;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--mediumLightColor);
 }
 
 .footer-actions {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-block: 5px;
-    border-bottom: 1px solid var(--mediumLightColor);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 5px;
+  border-bottom: 1px solid var(--mediumLightColor);
 }
 
 .likes-view-part {
-    display: flex;
-    align-items: center;
-    gap: 5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
 .like-emoji-section {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .likes-view-part .likes-emoji {
-    color: var(--whiteColor);
-    width: 25px;
-    height: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    font-size: 14px;
-    border: 1px solid var(--whiteColor);
-    margin-left: -4px;
+  color: var(--whiteColor);
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 14px;
+  border: 1px solid var(--whiteColor);
+  margin-left: -4px;
 }
 
 .likes-view-part .likes-emoji svg {
-    display: block;
+  display: block;
 }
 
 .likes-view-part .likes-emoji:nth-child(1) {
-    background-color: var(--blueColor);
+  background-color: var(--blueColor);
 }
 
 .likes-view-part .likes-emoji:nth-child(2) {
-    background-color: var(--redColor);
+  background-color: var(--redColor);
 }
 
 .likes-view-part .likes-emoji:nth-child(3) {
-    background-color: var(--greenColor);
+  background-color: var(--greenColor);
 }
 
 .likes-view-part .likes-count,
 .comments-and-share-view-part {
-    color: var(--greyColor);
+  color: var(--greyColor);
 }
 
 .comments-and-share-view-part {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .footer-actions .footer-action {
-    width: 25%;
-    text-align: center;
-    color: var(--greyColor);
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-    padding-block: 6px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: ease-in-out 0.3s;
+  width: 25%;
+  text-align: center;
+  color: var(--greyColor);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding-block: 6px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: ease-in-out 0.3s;
 }
 
 .footer-actions .footer-action .comment-icon {
-    transform: scaleX(-1);
+  transform: scaleX(-1);
 }
 
 .footer-actions .footer-action:hover {
-    background-color: var(--lightColor);
+  background-color: var(--lightColor);
 }
 
 .footer-actions .footer-action svg {
-    display: block;
-    font-size: 24px;
+  display: block;
+  font-size: 24px;
 }
 
 .comment-section {
-    padding-block: 0.75rem;
+  padding-block: 0.75rem;
 }
 
 .comment-section .view-more-comment {
-    display: inline-block;
-    font-weight: 500;
-    color: var(--greyColor);
+  display: inline-block;
+  font-weight: 500;
+  color: var(--greyColor);
 }
 
 .first-comment {
-    display: flex;
-    gap: 8px;
-    padding-bottom: 10px;
+  display: flex;
+  gap: 8px;
+  padding-bottom: 10px;
 }
 
 .profile-picture {
-    width: 35px;
-    height: 35px;
-    flex-shrink: 0;
-    border-radius: 50%;
-    overflow: hidden;
-    background-color: var(--lightColor);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
+  width: 35px;
+  height: 35px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: var(--lightColor);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 .profile-picture img {
-    display: block;
-    object-fit: cover;
-    object-position: top;
-    width: 100%;
-    height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: top;
+  width: 100%;
+  height: 100%;
 }
 
 .profile-picture svg {
-    font-size: 21px;
+  font-size: 21px;
 }
 
 .comment-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
 .user-comment-section {
-    font-size: 14px;
+  font-size: 14px;
 }
 
 .user-comment-box {
-    background-color: var(--lightColor);
-    display: flex;
-    flex-direction: column;
-    padding: 0.75rem;
-    border-radius: 1rem;
+  background-color: var(--lightColor);
+  display: flex;
+  flex-direction: column;
+  padding: 0.75rem;
+  border-radius: 1rem;
 }
 
 .user-name {
-    font-weight: 500;
+  font-weight: 500;
 }
 
 .comment-other-option {
-    display: flex;
-    justify-content: space-evenly;
-    padding-top: 3px;
-    color: var(--greyColor);
-    max-width: 180px;
+  display: flex;
+  justify-content: space-evenly;
+  padding-top: 3px;
+  color: var(--greyColor);
+  max-width: 180px;
 }
 
 .reply-comments {
-    padding-left: 2.25rem;
+  padding-left: 2.25rem;
 }
 
 .mention-comment-owner {
-    font-weight: 500;
-    font-size: 17px;
+  font-weight: 500;
+  font-size: 17px;
 }
 
 .reply-comments .profile-picture,
 .reply-comment-section .profile-picture {
-    width: 25px;
-    height: 25px;
+  width: 25px;
+  height: 25px;
 }
 
 .reply-comment-section {
-    padding-left: 2.25rem;
-    display: flex;
-    gap: 8px;
+  padding-left: 2.25rem;
+  display: flex;
+  gap: 8px;
 }
 
 .reply-comment-box {
-    padding: 0 0 0 0.75rem;
-    border-radius: 1.5rem;
-    background-color: var(--lightColor);
-    width: 100%;
+  padding: 0 0 0 0.75rem;
+  border-radius: 1.5rem;
+  background-color: var(--lightColor);
+  width: 100%;
 }
 
 .reply-comment-box form textarea {
-    width: 100%;
-    resize: none;
-    border: none;
-    outline: none;
-    background-color: transparent;
-    font-size: 15px;
+  width: 100%;
+  resize: none;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-size: 15px;
 }
 
 .reply-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: var(--greyColor);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--greyColor);
 }
 
 .reply-footer span,
 .reply-footer button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    color: inherit;
-    cursor: pointer;
-    font-size: 20px;
-    transition: ease-in-out 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  color: inherit;
+  cursor: pointer;
+  font-size: 20px;
+  transition: ease-in-out 0.3s;
 }
 
 .reply-footer span:hover,
 .reply-footer button:hover {
-    background-color: var(--mediumLightColor);
+  background-color: var(--mediumLightColor);
 }
 
 .reply-footer span label {
-    display: block;
-    cursor: pointer;
+  display: block;
+  cursor: pointer;
 }
 
 .attachment-option input {
-    display: none;
+  display: none;
 }
 
 .attachment-option label svg,
 .reply-footer button svg {
-    display: block;
+  display: block;
 }
 
 .attachment-options {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .write-comment {
-    display: flex;
-    gap: 8px;
-    margin-top: 10px;
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
 }
 
 .write-comment form {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
+}
+
+@media screen and (max-width: 768px) {
+  .fb-post {
+    border-radius: 5px;
+    margin-bottom: 0.5rem;
+  }
+
+  .post-header {
+    padding: 0.65rem;
+  }
+
+  .profile-image {
+    width: 36px;
+    height: 36px;
+  }
+
+  .profile-image svg {
+    font-size: 18px;
+  }
+
+  .profile-name {
+    font-size: 14px;
+  }
+
+  .cover-image-title {
+    font-size: 12px;
+  }
+
+  .profile-date {
+    font-size: 12px;
+  }
+
+  .controls svg {
+    font-size: 20px;
+    height: 32px;
+    width: 32px;
+    padding: 0.3rem;
+  }
+
+  .post-quotes {
+    font-size: 14px;
+  }
+
+  .post-quotes-single {
+    font-size: 22px;
+  }
+
+  .post-body {
+    height: 400px;
+  }
+
+  .post-footer {
+    padding-inline: 0.65rem;
+  }
+
+  .total-likes-comments-shares-view {
+    padding-block: 8px;
+    font-size: 13px;
+  }
+
+  .likes-view-part .likes-emoji {
+    width: 22px;
+    height: 22px;
+    font-size: 12px;
+  }
+
+  .footer-actions .footer-action {
+    font-size: 12px;
+    gap: 3px;
+    padding-block: 5px;
+  }
+
+  .footer-actions .footer-action svg {
+    font-size: 20px;
+  }
+
+  .comments-and-share-view-part {
+    gap: 0.5rem;
+    font-size: 12px;
+  }
+
+  .comment-section {
+    padding-block: 0.5rem;
+  }
+
+  .first-comment {
+    gap: 6px;
+    padding-bottom: 8px;
+  }
+
+  .profile-picture {
+    width: 32px;
+    height: 32px;
+  }
+
+  .profile-picture svg {
+    font-size: 18px;
+  }
+
+  .user-comment-section {
+    font-size: 13px;
+  }
+
+  .user-comment-box {
+    padding: 0.5rem;
+    border-radius: 0.8rem;
+  }
+
+  .mention-comment-owner {
+    font-size: 15px;
+  }
+
+  .reply-comments {
+    padding-left: 1.5rem;
+  }
+
+  .reply-comments .profile-picture,
+  .reply-comment-section .profile-picture {
+    width: 24px;
+    height: 24px;
+  }
+
+  .reply-comment-section {
+    padding-left: 1.5rem;
+    gap: 6px;
+  }
+
+  .reply-comment-box form textarea {
+    font-size: 14px;
+  }
+
+  .reply-footer span,
+  .reply-footer button {
+    width: 32px;
+    height: 32px;
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .post-header {
+    padding: 0.5rem;
+  }
+
+  .profile-image {
+    width: 32px;
+    height: 32px;
+  }
+
+  .profile-image svg {
+    font-size: 16px;
+  }
+
+  .profile-name {
+    font-size: 13px;
+  }
+
+  .cover-image-title {
+    font-size: 11px;
+    margin-left: 3px;
+  }
+
+  .profile-date {
+    font-size: 11px;
+  }
+
+  .controls svg {
+    font-size: 18px;
+    height: 28px;
+    width: 28px;
+    padding: 0.25rem;
+  }
+
+  .post-quotes {
+    font-size: 13px;
+    padding-top: 0.5rem;
+  }
+
+  .post-quotes-single {
+    font-size: 20px;
+    padding-top: 0.5rem;
+  }
+
+  .post-body {
+    height: 250px;
+  }
+
+  .post-footer {
+    padding-inline: 0.5rem;
+  }
+
+  .total-likes-comments-shares-view {
+    padding-block: 6px;
+    font-size: 11px;
+  }
+
+  .likes-view-part .likes-emoji {
+    width: 20px;
+    height: 20px;
+    font-size: 10px;
+    margin-left: -2px;
+  }
+
+  .footer-actions {
+    padding-block: 3px;
+  }
+
+  .footer-actions .footer-action {
+    font-size: 11px;
+    gap: 2px;
+    padding-block: 4px;
+  }
+
+  .footer-actions .footer-action svg {
+    font-size: 16px;
+  }
+
+  .comments-and-share-view-part {
+    gap: 0.25rem;
+    font-size: 11px;
+  }
+
+  .comment-section {
+    padding-block: 0.35rem;
+  }
+
+  .first-comment {
+    gap: 4px;
+    padding-bottom: 6px;
+  }
+
+  .profile-picture {
+    width: 28px;
+    height: 28px;
+  }
+
+  .profile-picture svg {
+    font-size: 16px;
+  }
+
+  .user-comment-section {
+    font-size: 12px;
+  }
+
+  .user-comment-box {
+    padding: 0.4rem;
+    border-radius: 0.7rem;
+  }
+
+  .mention-comment-owner {
+    font-size: 13px;
+  }
+
+  .reply-comments {
+    padding-left: 1rem;
+  }
+
+  .reply-comments .profile-picture,
+  .reply-comment-section .profile-picture {
+    width: 22px;
+    height: 22px;
+  }
+
+  .reply-comment-section {
+    padding-left: 1rem;
+    gap: 4px;
+  }
+
+  .reply-comment-box form textarea {
+    font-size: 13px;
+  }
+
+  .reply-footer span,
+  .reply-footer button {
+    width: 28px;
+    height: 28px;
+    font-size: 16px;
+  }
+
+  .write-comment {
+    gap: 6px;
+    margin-top: 6px;
+  }
 }

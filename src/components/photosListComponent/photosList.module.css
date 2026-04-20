@@ -1,77 +1,148 @@
 .photos-section {
-    background-color: var(--whiteColor);
-    box-shadow: 0 0 2px 1px var(--mediumLightColor);
-    border-radius: 10px;
-    padding: 1rem;
+  background-color: var(--whiteColor);
+  box-shadow: 0 0 2px 1px var(--mediumLightColor);
+  border-radius: 10px;
+  padding: 1rem;
 }
 
 .photos-section h2 {
-    font-size: 19px;
-    color: var(--blackColor);
-    margin-bottom: 0.75rem;
+  font-size: 19px;
+  color: var(--blackColor);
+  margin-bottom: 0.75rem;
 }
 
 .shorting {
-    display: flex;
-    list-style-type: none;
-    align-items: center;
-    margin-bottom: 1rem;
+  display: flex;
+  list-style-type: none;
+  align-items: center;
+  margin-bottom: 1rem;
 }
 
 .shorting li {
-    position: relative;
-    padding: 1rem;
-    color: var(--greyColor);
-    font-weight: 500;
-    border-radius: 0.5rem;
-    font-size: 15px;
-    cursor: pointer;
-    transition: all ease-in-out 0.3s;
+  position: relative;
+  padding: 1rem;
+  color: var(--greyColor);
+  font-weight: 500;
+  border-radius: 0.5rem;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all ease-in-out 0.3s;
 }
 
 .shorting li::after {
-    content: "";
-    position: absolute;
-    width: 100%;
-    bottom: -4px;
-    left: 0;
-    height: 4px;
-    background-color: transparent;
+  content: "";
+  position: absolute;
+  width: 100%;
+  bottom: -4px;
+  left: 0;
+  height: 4px;
+  background-color: transparent;
 }
 
 .shorting li:hover {
-    background-color: var(--lightColor);
+  background-color: var(--lightColor);
 }
 
 .shorting li.activeBtn {
-    border-radius: 0;
-    background-color: transparent;
-    color: var(--blueColor);
+  border-radius: 0;
+  background-color: transparent;
+  color: var(--blueColor);
 }
 
 .shorting li.activeBtn::after {
-    background-color: var(--blueColor);
+  background-color: var(--blueColor);
 }
 
 .photos-list {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 0.5rem;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.5rem;
 }
 
 .see-all-link {
-    display: block;
-    text-align: center;
-    background-color: var(--lightColor);
-    color: var(--blackColor);
-    font-size: 1rem;
-    font-weight: 500;
-    padding: 0.5rem;
-    border-radius: 0.5rem;
-    margin-top: 1rem;
-    transition: all ease-in-out 0.3s;
+  display: block;
+  text-align: center;
+  background-color: var(--lightColor);
+  color: var(--blackColor);
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  margin-top: 1rem;
+  transition: all ease-in-out 0.3s;
 }
 
 .see-all-link:hover {
-    background-color: var(--mediumLightColor);
+  background-color: var(--mediumLightColor);
+}
+
+@media screen and (max-width: 992px) {
+  .photos-list {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .photos-section {
+    border-radius: 5px;
+    padding: 0.75rem;
+  }
+
+  .photos-section h2 {
+    font-size: 17px;
+    margin-bottom: 0.5rem;
+  }
+
+  .shorting {
+    margin-bottom: 0.75rem;
+  }
+
+  .shorting li {
+    padding: 0.75rem;
+    font-size: 13px;
+  }
+
+  .photos-list {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.4rem;
+  }
+
+  .see-all-link {
+    font-size: 0.9rem;
+    padding: 0.4rem;
+    margin-top: 0.75rem;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .photos-section {
+    border-radius: 3px;
+    padding: 0.5rem;
+  }
+
+  .photos-section h2 {
+    font-size: 15px;
+    margin-bottom: 0.4rem;
+  }
+
+  .shorting {
+    margin-bottom: 0.5rem;
+    gap: 0.25rem;
+  }
+
+  .shorting li {
+    padding: 0.5rem;
+    font-size: 12px;
+  }
+
+  .photos-list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.3rem;
+  }
+
+  .see-all-link {
+    font-size: 0.85rem;
+    padding: 0.35rem;
+    margin-top: 0.5rem;
+  }
 }

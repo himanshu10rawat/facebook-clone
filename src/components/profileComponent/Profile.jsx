@@ -12,12 +12,14 @@ import EditProfileModal from "../editProfileModalComponent/EditProfileModal";
 import { usePostContext } from "../../context/postContext";
 import { IoPersonAdd, IoPersonRemove } from "react-icons/io5";
 import { FaUserCheck } from "react-icons/fa6";
+import { getImagePreviewFromFile, IMAGE_INPUT_ACCEPT } from "../../utils/imageUpload";
 
 const Profile = ({ user }) => {
   const [editProfile, setEditProfile] = useState(false);
   const [previewBgImage, setPreviewBgImage] = useState(null);
   const [isImageLoading, setIsImageLoading] = useState(false);
   const [isRequestSend, setIsRequestSend] = useState(false);
+  const [coverUploadMessage, setCoverUploadMessage] = useState("");
   const [loginUser, setLoginUser] = useState({});
   const locationUrl = useLocation();
   const currentUrl = locationUrl.pathname;
@@ -60,17 +62,22 @@ const Profile = ({ user }) => {
     }
   }, [loginUser, user.userId]);
 
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreviewBgImage(reader.result);
-        if (reader.result === user.bgImage) return;
-        setIsImageLoading(true);
-      };
-      reader.readAsDataURL(file);
+    const result = await getImagePreviewFromFile(file);
+
+    if (!result.success) {
+      setPreviewBgImage(null);
+      setCoverUploadMessage("");
+      setCoverUploadMessage(result.error);
+      setIsImageLoading(false);
+      return;
     }
+
+    setPreviewBgImage(result.preview);
+    setCoverUploadMessage(result.warning || "");
+    if (result.preview === user.bgImage) return;
+    setIsImageLoading(true);
   };
 
   const handleSubmit = (e) => {
@@ -98,6 +105,7 @@ const Profile = ({ user }) => {
         },
       });
       setPreviewBgImage(null);
+      setCoverUploadMessage("");
     }
   };
 
@@ -172,15 +180,21 @@ const Profile = ({ user }) => {
                     type="file"
                     name="bgImage"
                     id="bgImage"
-                    accept="image/*"
+                    accept={IMAGE_INPUT_ACCEPT}
                     onChange={handleChange}
                   />
                 </label>
+                {coverUploadMessage && (
+                  <p className={style["upload-message"]}>{coverUploadMessage}</p>
+                )}
                 {previewBgImage && (
                   <div className={style["action-buttons"]}>
                     <button
                       type="reset"
-                      onClick={() => setPreviewBgImage(null)}
+                      onClick={() => {
+                        setPreviewBgImage(null);
+                        setCoverUploadMessage("");
+                      }}
                     >
                       Cancel
                     </button>
@@ -196,10 +210,12 @@ const Profile = ({ user }) => {
               onLoad={() => {
                 setIsImageLoading(false);
               }}
+              style={{ display: isImageLoading ? "none" : "block" }}
               onError={() => {
                 setIsImageLoading(false);
+                setCoverUploadMessage("This image format cannot be previewed in this browser. Please convert it to JPG or PNG.");
+                setPreviewBgImage(null);
               }}
-              style={{ display: isImageLoading ? "none" : "block" }}
             />
           </div>
           <div className={style["other-details"]}>

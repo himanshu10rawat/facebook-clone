@@ -145,3 +145,10 @@
     color: var(--blueColor);
     background-color: transparent;
 }
+
+.upload-message {
+  margin-top: 0.75rem;
+  font-size: 13px;
+  color: var(--greyColor);
+  line-height: 1.4;
+}

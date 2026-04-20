@@ -16,6 +16,7 @@ import { AiFillLike } from "react-icons/ai";
 import { CiCamera, CiFaceSmile } from "react-icons/ci";
 import { Link } from "react-router";
 import { usePostContext } from "../../context/postContext";
+import { IMAGE_INPUT_ACCEPT } from "../../utils/imageUpload";
 
 const Post = ({ postList, user }) => {
   const { state } = usePostContext();
@@ -249,10 +250,10 @@ const Post = ({ postList, user }) => {
                           <div className={style["reply-footer"]}>
                             <div className={style["attachment-options"]}>
                               <span className={style["attachment-option"]}>
-                                <label htmlFor="camera">
+                                <label htmlFor={`camera-${index}`}>
                                   <CiCamera />
                                 </label>
-                                <input type="file" name="camera" id="camera" />
+                                <input type="file" name="camera" id={`camera-${index}`} accept={IMAGE_INPUT_ACCEPT} />
                               </span>
                               <span className={style["attachment-option"]}>
                                 <CiFaceSmile />
@@ -309,6 +310,7 @@ const Post = ({ postList, user }) => {
                         type="file"
                         name="commentcamera"
                         id="commentcamera"
+                        accept={IMAGE_INPUT_ACCEPT}
                       />
                     </span>
                     <span

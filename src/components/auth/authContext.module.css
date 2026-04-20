@@ -1,32 +1,86 @@
 .auth-context {
-    background-color: var(--lightColor);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  background-color: var(--lightColor);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .auth-context h1 {
-    color: var(--blueColor);
-    font-size: 3rem;
-    margin-bottom: 0.5rem;
+  color: var(--blueColor);
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
 }
 
 .auth-modal {
-    background-color: var(--whiteColor);
-    box-shadow: 0 2px 8px 2px var(--lightgreyColor);
-    border-radius: 0.5rem;
+  background-color: var(--whiteColor);
+  box-shadow: 0 2px 8px 2px var(--lightgreyColor);
+  border-radius: 0.5rem;
 }
 
 .auth-modal.login {
-    max-width: 400px;
-    width: 400px;
-    min-width: 400px;
+  max-width: 400px;
+  width: 400px;
+  min-width: 400px;
 }
 
 .auth-modal.signup {
-    max-width: 500px;
-    width: 500px;
-    min-width: 500px;
+  max-width: 500px;
+  width: 500px;
+  min-width: 500px;
+}
+
+@media screen and (max-width: 992px) {
+  .auth-context h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .auth-modal.login {
+    max-width: 90%;
+    width: 90%;
+    min-width: unset;
+  }
+
+  .auth-modal.signup {
+    max-width: 90%;
+    width: 90%;
+    min-width: unset;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .auth-context h1 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .auth-modal.login,
+  .auth-modal.signup {
+    max-width: 95%;
+    width: 95%;
+    min-width: unset;
+    border-radius: 0.3rem;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .auth-context {
+    padding-inline: 0.5rem;
+  }
+
+  .auth-context h1 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .auth-modal.login,
+  .auth-modal.signup {
+    max-width: 100%;
+    width: 100%;
+    min-width: unset;
+    border-radius: 0.2rem;
+    box-shadow: none;
+  }
 }

@@ -1,7 +1,21 @@
 .post-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    padding-top: 1rem;
-    margin-bottom: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-top: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+@media screen and (max-width: 768px) {
+  .post-list {
+    gap: 0.75rem;
+    padding-top: 0.75rem;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .post-list {
+    gap: 0.5rem;
+    padding-top: 0.5rem;
+  }
 }

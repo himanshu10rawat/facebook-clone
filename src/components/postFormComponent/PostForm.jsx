@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import style from "./postForm.module.css";
 import { IoMdClose } from "react-icons/io";
 import {
@@ -13,6 +13,7 @@ import { MdAddToPhotos, MdPhotoLibrary } from "react-icons/md";
 import { FaLocationDot } from "react-icons/fa6";
 import { usePostContext } from "../../context/postContext";
 import { Link } from "react-router";
+import { getImagePreviewFromFile, IMAGE_INPUT_ACCEPT } from "../../utils/imageUpload";
 
 const PostForm = ({ setOpenPostModal, mediaOpen, setMediaOpen }) => {
   const { state, dispatch } = usePostContext();
@@ -21,24 +22,29 @@ const PostForm = ({ setOpenPostModal, mediaOpen, setMediaOpen }) => {
     postCaption: "",
   });
   const [previewImage, setPreviewImage] = useState("");
+  const [imageMessage, setImageMessage] = useState("");
 
   const loginUser = state.users.find(
     (user) => user.userId === state.user.userId
   );
 
-  const imageHandleChange = (e) => {
+  const imageHandleChange = async (e) => {
     const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreviewImage(reader.result);
-      };
-      reader.readAsDataURL(file);
+    const result = await getImagePreviewFromFile(file);
+
+    if (!result.success) {
+      setPreviewImage("");
+      setImageMessage(result.error);
+      return;
     }
+
+    setPreviewImage(result.preview);
+    setImageMessage(result.warning || "");
   };
 
   const handleRemoveImage = () => {
     setPreviewImage("");
+    setImageMessage("");
     setMediaOpen(false);
   };
 
@@ -75,6 +81,7 @@ const PostForm = ({ setOpenPostModal, mediaOpen, setMediaOpen }) => {
 
     setFormData({ postCaption: "" });
     setPreviewImage("");
+    setImageMessage("");
     setMediaOpen(false);
     setOpenPostModal(false);
     console.log("post", post);
@@ -178,16 +185,26 @@ const PostForm = ({ setOpenPostModal, mediaOpen, setMediaOpen }) => {
                           type="file"
                           name="media"
                           id="media"
-                          accept="image/*"
+                          accept={IMAGE_INPUT_ACCEPT}
                           onChange={imageHandleChange}
                         />
                       </div>
                     ) : (
                       <div className={style["image-list"]}>
                         <div className={style["image"]}>
-                          <img src={previewImage} alt="" />
+                          <img
+                            src={previewImage}
+                            alt="Selected post media"
+                            onError={() => {
+                              setImageMessage("This image format cannot be previewed in this browser. Please convert it to JPG or PNG.");
+                              setPreviewImage("");
+                            }}
+                          />
                         </div>
                       </div>
+                    )}
+                    {imageMessage && (
+                      <p className={style["upload-message"]}>{imageMessage}</p>
                     )}
                   </div>
                 )}
