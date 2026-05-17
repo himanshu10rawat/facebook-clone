@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import style from "./signup.module.css";
 import {
   currentDate,
@@ -54,6 +54,12 @@ const Signup = ({ setIsRegistered }) => {
       userId:
         formData.firstName.toLocaleLowerCase() +
         (Math.floor(Math.random() * 90000) + 10000),
+      friendList: [],
+      friendRequest: [],
+      notifications: 0,
+      currentCity: "",
+      hometown: "",
+      relationship: "",
     };
     dispatch({
       type: "SIGN_UP",
@@ -80,7 +86,7 @@ const Signup = ({ setIsRegistered }) => {
       <div className={style["modal-header"]}>
         {error && <p style={{ color: "red", fontSize: "14px" }}>{error}</p>}
         <h2>Create a new account</h2>
-        <p>It's quick and easy.</p>
+        <p>It&apos;s quick and easy.</p>
       </div>
       <div className={style["modal-body"]}>
         <form onSubmit={handleFormSubmit}>
@@ -235,7 +241,7 @@ const Signup = ({ setIsRegistered }) => {
             (e.key === "Enter" || e.key === " ") && handleAlreadyHaveAccount()
           }
         >
-          Already have and account?
+          Already have an account?
         </span>
       </div>
     </>

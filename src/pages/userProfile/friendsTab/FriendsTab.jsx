@@ -1,4 +1,4 @@
-import React from "react";
+
 import FriendsList from "../../../components/friendsListComponent/FriendsList";
 
 const FriendsTab = () => {

@@ -17,7 +17,7 @@ import {
   WorkAndEducation,
 } from "./components/aboutDetailsComponent/AboutDetails";
 import FriendsTab from "./pages/userProfile/friendsTab/FriendsTab";
-import VideosTab from "./pages/userProfile/videosTab/videosTab";
+import VideosTab from "./pages/userProfile/videosTab/VideosTab";
 import PhotosTab from "./pages/userProfile/photosTab/PhotosTab";
 import NotFound404 from "./components/notFound404Component/NotFound404";
 
@@ -27,6 +27,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <Routes>
         <Route path="/" element={<App />}>
           <Route index element={<Home />} />
+          <Route path="watch" element={<VideosTab />} />
           <Route path=":userId" element={<UserProfile />}>
             <Route index element={<PostTab />} />
             <Route path="about" element={<AboutTab />}>

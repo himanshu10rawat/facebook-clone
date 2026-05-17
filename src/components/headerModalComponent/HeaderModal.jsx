@@ -1,15 +1,16 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import style from "./headerModal.module.css";
 import { IoLogOut } from "react-icons/io5";
 import { usePostContext } from "../../context/postContext";
 import { FaUserCircle } from "react-icons/fa";
 import { Link, useNavigate } from "react-router";
-import FriendRequestList from "../friendRequestListComponent/friendRequestList";
+import FriendRequestList from "../friendRequestListComponent/FriendRequestList";
+import { showToast } from "../../utils/feedback";
 
 const HeaderModal = ({ setHeaderModal, openModalFor }) => {
   const navigate = useNavigate();
   const { state, dispatch } = usePostContext();
-  const modalRef = useRef(null); // Reference for the modal
+  const modalRef = useRef(null);
 
   const loginUser = state.users.find(
     (userData) => userData.userId === state.user.userId
@@ -22,6 +23,22 @@ const HeaderModal = ({ setHeaderModal, openModalFor }) => {
     });
     navigate("/");
   };
+
+  const handleMessage = (friend) => {
+    const message = window.prompt(
+      `Message ${friend.firstName} ${friend.lastName}`,
+      ""
+    );
+
+    if (message?.trim()) {
+      showToast(`Message sent to ${friend.firstName}`);
+      setHeaderModal(false);
+    }
+  };
+
+  const friendList = state.users.filter((singleUser) =>
+    loginUser?.friendList?.includes(singleUser.userId)
+  );
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -38,7 +55,7 @@ const HeaderModal = ({ setHeaderModal, openModalFor }) => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [setHeaderModal]);
+  }, [openModalFor, setHeaderModal]);
 
   return (
     <div ref={modalRef} className={style["header-modal"]}>
@@ -51,11 +68,44 @@ const HeaderModal = ({ setHeaderModal, openModalFor }) => {
               <FriendRequestList setHeaderModal={setHeaderModal} />
             </>
           )}
+          {!state.user.friendRequest?.length && (
+            <p className={style["empty-state"]}>No new notifications</p>
+          )}
+        </div>
+      ) : openModalFor === "messenger" ? (
+        <div className={style["messenger-section"]}>
+          <h1>Messenger</h1>
+          {friendList.length ? (
+            friendList.map((friend) => (
+              <button
+                type="button"
+                className={style["message-row"]}
+                key={friend.userId}
+                onClick={() => handleMessage(friend)}
+              >
+                <span className={style["user-image"]}>
+                  {friend.profilePic ? (
+                    <img
+                      src={friend.profilePic}
+                      alt={`${friend.firstName} profile picture`}
+                    />
+                  ) : (
+                    <FaUserCircle />
+                  )}
+                </span>
+                <span>{friend.firstName + " " + friend.lastName}</span>
+              </button>
+            ))
+          ) : (
+            <p className={style["empty-state"]}>
+              Add friends to start messaging.
+            </p>
+          )}
         </div>
       ) : (
         <div className={style["user-profile-section"]}>
           <Link
-            to={loginUser.userId}
+            to={`/${loginUser.userId}`}
             className={style["user-profile"]}
             onClick={() => {
               setHeaderModal(false);

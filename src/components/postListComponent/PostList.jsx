@@ -1,16 +1,21 @@
-import React from "react";
+
 import Post from "../PostComponent/Post";
 import style from "./postList.module.css";
 
 const PostList = ({ user }) => {
+  const posts = user?.posts || [];
+
   return (
     <>
       <div className={style["post-list"]}>
-        {user?.posts
+        {posts
           .map((list, index) => {
-            return <Post postList={list} key={index} user={user} />;
+            return { list, index };
           })
-          .reverse()}
+          .reverse()
+          .map(({ list, index }) => (
+            <Post postList={list} key={list.postId || index} user={user} postIndex={index} />
+          ))}
       </div>
     </>
   );

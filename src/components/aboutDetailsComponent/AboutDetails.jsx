@@ -1,4 +1,4 @@
-import React from "react";
+
 import style from "./aboutDetails.module.css";
 import {
   FaEarthAfrica,
@@ -22,10 +22,36 @@ import { FiPlus } from "react-icons/fi";
 import { IoIosMail } from "react-icons/io";
 import { RiChatVoiceFill } from "react-icons/ri";
 import { TfiWrite } from "react-icons/tfi";
+import { runOnKeyboardAction, showToast } from "../../utils/feedback";
+
+const getActionLabel = (target) => {
+  const actionElement = target.closest('[role="button"]');
+  return actionElement?.getAttribute("aria-label") || actionElement?.innerText;
+};
+
+const handleAboutAction = (event) => {
+  const label = getActionLabel(event.target);
+  if (label) {
+    showToast(`${label} selected`);
+  }
+};
+
+const handleAboutKeyDown = (event) => {
+  runOnKeyboardAction(event, () => {
+    const label = getActionLabel(event.target);
+    if (label) {
+      showToast(`${label} selected`);
+    }
+  });
+};
 
 export const Overview = () => {
   return (
-    <div className={style["overview-section"]}>
+    <div
+      className={style["overview-section"]}
+      onClick={handleAboutAction}
+      onKeyDown={handleAboutKeyDown}
+    >
       <ul>
         <li>
           <div className={style["overview-detail"]}>
@@ -158,7 +184,11 @@ export const Overview = () => {
 };
 export const WorkAndEducation = () => {
   return (
-    <div className={style["work-and-education-list"]}>
+    <div
+      className={style["work-and-education-list"]}
+      onClick={handleAboutAction}
+      onKeyDown={handleAboutKeyDown}
+    >
       <div className={style["list-item"]}>
         <h3>Work</h3>
         <div
@@ -303,7 +333,11 @@ export const WorkAndEducation = () => {
 };
 export const PlacedLived = () => {
   return (
-    <div className={style["placed-lived"]}>
+    <div
+      className={style["placed-lived"]}
+      onClick={handleAboutAction}
+      onKeyDown={handleAboutKeyDown}
+    >
       <div className={style["list-item"]}>
         <h3>Places lived</h3>
         <div
@@ -385,7 +419,11 @@ export const PlacedLived = () => {
 };
 export const ContactAndBasicInfo = () => {
   return (
-    <div className={style["contact-basic-info"]}>
+    <div
+      className={style["contact-basic-info"]}
+      onClick={handleAboutAction}
+      onKeyDown={handleAboutKeyDown}
+    >
       <div className={style["list-item"]}>
         <h3>Contact info</h3>
         <div className={style["work"]}>
@@ -629,7 +667,11 @@ export const ContactAndBasicInfo = () => {
 };
 export const FamilyAndRelationships = () => {
   return (
-    <div className={style["family-and-relationships"]}>
+    <div
+      className={style["family-and-relationships"]}
+      onClick={handleAboutAction}
+      onKeyDown={handleAboutKeyDown}
+    >
       <div className={style["list-item"]}>
         <h3>Relationship</h3>
         <div className={style["work"]}>
@@ -742,7 +784,11 @@ export const FamilyAndRelationships = () => {
 };
 export const DetailsAboutYou = () => {
   return (
-    <div className={style["details-about-you"]}>
+    <div
+      className={style["details-about-you"]}
+      onClick={handleAboutAction}
+      onKeyDown={handleAboutKeyDown}
+    >
       <div className={style["list-item"]}>
         <h3>About you</h3>
         <div
@@ -856,7 +902,11 @@ export const DetailsAboutYou = () => {
 };
 export const LifeEventa = () => {
   return (
-    <div className={style["life-events"]}>
+    <div
+      className={style["life-events"]}
+      onClick={handleAboutAction}
+      onKeyDown={handleAboutKeyDown}
+    >
       <div className={style["list-item"]}>
         <h3>Life events</h3>
         <div

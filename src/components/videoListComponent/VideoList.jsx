@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import style from "./videoList.module.css";
-import { Link } from "react-router";
+import { Link, useParams } from "react-router";
 import Video from "../videoComponent/Video";
 
 const VideoList = () => {
   const [activeTab, setActiveTab] = useState(0);
+  const { userId } = useParams();
 
   return (
     <div className={style["videos-section"]}>
@@ -26,7 +27,9 @@ const VideoList = () => {
       <div className={style["videos-list"]}>
         <Video />
       </div>
-      <Link className={style["see-all-link"]}>See All</Link>
+      <Link to={userId ? `/${userId}/videos` : "/watch"} className={style["see-all-link"]}>
+        See All
+      </Link>
     </div>
   );
 };

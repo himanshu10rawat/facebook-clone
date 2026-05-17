@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router";
 import { FaFacebook, FaFacebookMessenger } from "react-icons/fa";
 import { MdKeyboardBackspace, MdOutlineOndemandVideo } from "react-icons/md";
@@ -10,6 +10,7 @@ import { usePostContext } from "../../context/postContext";
 import HeaderModal from "../headerModalComponent/HeaderModal";
 import { GoHomeFill } from "react-icons/go";
 import { BsFillPlayBtnFill } from "react-icons/bs";
+import { runOnKeyboardAction } from "../../utils/feedback";
 
 const Header = () => {
   const [headerModal, setHeaderModal] = useState(false);
@@ -41,23 +42,25 @@ const Header = () => {
 
   const handleSearchChange = (event) => {
     const searchInput = event.target.value;
+    const normalizedSearchInput = searchInput.trim().toLowerCase();
     setSearchValue(searchInput);
 
-    const searchUsers = state.users.filter((user) =>
-      user.firstName
-        .toLowerCase()
-        .startsWith(searchInput.length !== 0 && searchInput.toLowerCase())
-    );
+    const searchUsers = normalizedSearchInput
+      ? state.users.filter((user) =>
+          user.firstName.toLowerCase().startsWith(normalizedSearchInput)
+        )
+      : [];
 
     setSearchUsersList(searchUsers);
   };
 
   const editSearchList = () => {
-    const searchUsers = state.users.filter((user) =>
-      user.firstName
-        .toLowerCase()
-        .startsWith(searchValue.length !== 0 && searchValue.toLowerCase())
-    );
+    const normalizedSearchInput = searchValue.trim().toLowerCase();
+    const searchUsers = normalizedSearchInput
+      ? state.users.filter((user) =>
+          user.firstName.toLowerCase().startsWith(normalizedSearchInput)
+        )
+      : [];
     setSearchUsersList(searchUsers);
   };
 
@@ -230,7 +233,16 @@ const Header = () => {
         <div className={style["right-side"]}>
           <ul>
             <li>
-              <div aria-label="Messenger" role="button" tabIndex={0}>
+              <div
+                id="messenger"
+                aria-label="Messenger"
+                role="button"
+                tabIndex={0}
+                onClick={() => handleOpenModal("messenger")}
+                onKeyDown={(event) =>
+                  runOnKeyboardAction(event, () => handleOpenModal("messenger"))
+                }
+              >
                 <FaFacebookMessenger />
               </div>
             </li>

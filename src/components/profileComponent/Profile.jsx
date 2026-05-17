@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import style from "./profile.module.css";
 import { Link, NavLink, useLocation } from "react-router";
 import { MdEdit } from "react-icons/md";
@@ -13,6 +13,7 @@ import { usePostContext } from "../../context/postContext";
 import { IoPersonAdd, IoPersonRemove } from "react-icons/io5";
 import { FaUserCheck } from "react-icons/fa6";
 import { getImagePreviewFromFile, IMAGE_INPUT_ACCEPT } from "../../utils/imageUpload";
+import { runOnKeyboardAction, showToast } from "../../utils/feedback";
 
 const Profile = ({ user }) => {
   const [editProfile, setEditProfile] = useState(false);
@@ -47,20 +48,18 @@ const Profile = ({ user }) => {
       (singleUser) => singleUser.userId === state.user.userId
     );
 
-    setLoginUser(loginUserFind);
-  }, []);
+    setLoginUser(loginUserFind || {});
+  }, [state.user.userId, state.users]);
 
   useEffect(() => {
-    const friendRequestSend = user.friendRequest?.find(
-      (singleUser) => singleUser.userId === loginUser.userId
-    );
+    const friendRequestSend = user.friendRequest?.includes(loginUser.userId);
 
-    if (friendRequestSend?.userId) {
+    if (friendRequestSend) {
       setIsRequestSend(true);
     } else {
       setIsRequestSend(false);
     }
-  }, [loginUser, user.userId]);
+  }, [loginUser.userId, user.friendRequest]);
 
   const handleChange = async (e) => {
     const file = e.target.files[0];
@@ -86,10 +85,15 @@ const Profile = ({ user }) => {
     if (previewBgImage) {
       const updatedLoginUser = { ...loginUser, bgImage: previewBgImage };
       const post = {
+        postId: `${loginUser.userId}-${Date.now()}`,
         coverPhoto: "updated his cover photo.",
         title: "",
         postImage: previewBgImage && previewBgImage,
         date: new Date().toLocaleDateString(),
+        likes: 0,
+        likedBy: [],
+        share: 0,
+        postComments: [],
       };
 
       dispatch({
@@ -100,8 +104,8 @@ const Profile = ({ user }) => {
       dispatch({
         type: "ADD_POST",
         payload: {
-          userId: loginUser.userId, // User identify karne ke liye
-          posts: [...(loginUser.posts || []), post], // Updated posts array
+          userId: loginUser.userId,
+          posts: [...(loginUser.posts || []), post],
         },
       });
       setPreviewBgImage(null);
@@ -143,8 +147,8 @@ const Profile = ({ user }) => {
       (singleUser) => singleUser.userId === requestId
     );
 
-    const remainingRequest = currentProfileUser.friendRequest.filter(
-      (singleRequest) => singleRequest.userId !== loginUser.userId
+    const remainingRequest = (currentProfileUser.friendRequest || []).filter(
+      (singleRequest) => singleRequest !== loginUser.userId
     );
 
     dispatch({
@@ -159,12 +163,83 @@ const Profile = ({ user }) => {
       type: "NOTIFICATION",
       payload: {
         userId: currentProfileUser.userId,
-        notifications: currentProfileUser.notifications
-          ? currentProfileUser.notifications - 1
-          : 0,
+        notifications: Math.max((currentProfileUser.notifications || 0) - 1, 0),
       },
     });
     setIsRequestSend(false);
+  };
+
+  const handleRequestConfirm = () => {
+    if (!loginUser.userId) return;
+
+    dispatch({
+      type: "ADD_FRIEND",
+      payload: {
+        userId: loginUser.userId,
+        friendList: [...new Set([...(loginUser.friendList || []), user.userId])],
+      },
+    });
+
+    dispatch({
+      type: "ADD_FRIEND",
+      payload: {
+        userId: user.userId,
+        friendList: [...new Set([...(user.friendList || []), loginUser.userId])],
+      },
+    });
+
+    dispatch({
+      type: "FRIEND_REQUEST",
+      payload: {
+        userId: loginUser.userId,
+        friendRequest: (loginUser.friendRequest || []).filter(
+          (requestUserId) => requestUserId !== user.userId
+        ),
+      },
+    });
+
+    showToast(`${user.firstName} is now your friend`);
+  };
+
+  const handleUnfriend = () => {
+    const shouldRemove = window.confirm(
+      `Remove ${user.firstName} ${user.lastName} from your friends?`
+    );
+
+    if (!shouldRemove) return;
+
+    dispatch({
+      type: "ADD_FRIEND",
+      payload: {
+        userId: loginUser.userId,
+        friendList: (loginUser.friendList || []).filter(
+          (friendId) => friendId !== user.userId
+        ),
+      },
+    });
+
+    dispatch({
+      type: "ADD_FRIEND",
+      payload: {
+        userId: user.userId,
+        friendList: (user.friendList || []).filter(
+          (friendId) => friendId !== loginUser.userId
+        ),
+      },
+    });
+
+    showToast("Friend removed");
+  };
+
+  const handleMessage = () => {
+    const message = window.prompt(
+      `Message ${user.firstName} ${user.lastName}`,
+      ""
+    );
+
+    if (message?.trim()) {
+      showToast(`Message sent to ${user.firstName}`);
+    }
   };
 
   return (
@@ -289,6 +364,10 @@ const Profile = ({ user }) => {
                     tabIndex={0}
                     aria-label="Edit profile"
                     className={style["button"]}
+                    onClick={() => setEditProfile(true)}
+                    onKeyDown={(event) =>
+                      runOnKeyboardAction(event, () => setEditProfile(true))
+                    }
                   >
                     <MdEdit />
                     Edit profile
@@ -300,6 +379,7 @@ const Profile = ({ user }) => {
                     <button
                       type="button"
                       className={`${style["isFriend-button"]} ${style["friend-request-respond"]}`}
+                      onClick={handleUnfriend}
                     >
                       <FaUserCheck />
                       Friends
@@ -308,6 +388,7 @@ const Profile = ({ user }) => {
                     <button
                       type="button"
                       className={`${style["friend-request-btn"]} ${style["friend-request-respond"]}`}
+                      onClick={handleRequestConfirm}
                     >
                       <FaUserCheck />
                       Respond
@@ -339,6 +420,7 @@ const Profile = ({ user }) => {
                     className={`${style["message-btn"]} ${
                       isCurrentUserFriend && style["messageEnable"]
                     }`}
+                    onClick={handleMessage}
                   >
                     <FaFacebookMessenger /> Message
                   </button>
@@ -363,14 +445,7 @@ const Profile = ({ user }) => {
                     to="about"
                     className={({ isActive }) =>
                       isActive ||
-                      currentUrl === "/profile/about_overview" ||
-                      currentUrl === "/profile/about_work_and_education" ||
-                      currentUrl === "/profile/about_places" ||
-                      currentUrl === "/profile/about_contact_and_basic_info" ||
-                      currentUrl ===
-                        "/profile/about_family_and_relationships" ||
-                      currentUrl === "/profile/about_details" ||
-                      currentUrl === "/profile/about_life_events"
+                      currentUrl.includes(`/${user.userId}/about`)
                         ? style["active-tab"]
                         : ""
                     }

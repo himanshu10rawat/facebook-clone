@@ -1,4 +1,5 @@
 const postReducer = (state, action) => {
+  const payload = action.payload || {};
   const {
     userId,
     posts,
@@ -8,7 +9,18 @@ const postReducer = (state, action) => {
     friendRequest,
     notifications,
     friendList,
-  } = action.payload;
+    postIndex,
+    post,
+  } = payload;
+  const updateUser = (updates) => ({
+    ...state,
+    users: state.users.map((user) =>
+      user.userId === userId ? { ...user, ...updates } : user
+    ),
+    user:
+      state.user.userId === userId ? { ...state.user, ...updates } : state.user,
+  });
+
   switch (action.type) {
     case "SET_INITIAL_STATE":
       return {
@@ -23,54 +35,35 @@ const postReducer = (state, action) => {
     case "LOG_OUT":
       return { ...state, user: action.payload };
     case "ADD_POST":
+      return updateUser({ posts });
+    case "UPDATE_POST":
       return {
         ...state,
         users: state.users.map((user) =>
-          user.userId === userId ? { ...user, posts } : user
+          user.userId === userId
+            ? {
+                ...user,
+                posts: (user.posts || []).map((currentPost, index) =>
+                  index === postIndex ? post : currentPost
+                ),
+              }
+            : user
         ),
       };
     case "ADD_PROFILE_PIC":
-      return {
-        ...state,
-        users: state.users.map((user) =>
-          user.userId === userId ? { ...user, profilePic } : user
-        ),
-      };
+      return updateUser({ profilePic });
     case "ADD_BG_IMAGE":
-      return {
-        ...state,
-        users: state.users.map((user) =>
-          user.userId === userId ? { ...user, bgImage } : user
-        ),
-      };
+      return updateUser({ bgImage });
     case "BIO_ADD":
-      return {
-        ...state,
-        users: state.users.map((user) =>
-          user.userId === userId ? { ...user, bio: bio } : user
-        ),
-      };
+      return updateUser({ bio });
+    case "UPDATE_PROFILE_DETAILS":
+      return updateUser(payload);
     case "FRIEND_REQUEST":
-      return {
-        ...state,
-        users: state.users.map((user) =>
-          user.userId === userId ? { ...user, friendRequest } : user
-        ),
-      };
+      return updateUser({ friendRequest });
     case "NOTIFICATION":
-      return {
-        ...state,
-        users: state.users.map((user) =>
-          user.userId === userId ? { ...user, notifications } : user
-        ),
-      };
+      return updateUser({ notifications });
     case "ADD_FRIEND":
-      return {
-        ...state,
-        users: state.users.map((user) =>
-          user.userId === userId ? { ...user, friendList } : user
-        ),
-      };
+      return updateUser({ friendList });
     default:
       return state;
   }

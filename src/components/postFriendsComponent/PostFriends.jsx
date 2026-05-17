@@ -1,4 +1,4 @@
-import React from "react";
+
 import style from "./postFriends.module.css";
 import { Link, useParams } from "react-router";
 import { usePostContext } from "../../context/postContext";

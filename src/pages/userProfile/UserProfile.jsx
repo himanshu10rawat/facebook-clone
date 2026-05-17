@@ -1,4 +1,4 @@
-import React from "react";
+
 import Profile from "../../components/profileComponent/Profile";
 import style from "./userProfile.module.css";
 import { Outlet, useParams } from "react-router";

@@ -1,4 +1,4 @@
-import React from "react";
+
 import style from "./postTab.module.css";
 import CreatePost from "../../../components/createPostComponent/CreatePost";
 import PostList from "../../../components/postListComponent/PostList";

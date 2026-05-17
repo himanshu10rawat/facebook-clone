@@ -1,4 +1,4 @@
-import React from "react";
+
 import { usePostContext } from "../../context/postContext";
 import style from "./friendRequestList.module.css";
 import { FaUserCircle } from "react-icons/fa";

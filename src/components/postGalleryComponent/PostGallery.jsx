@@ -1,4 +1,4 @@
-import React from "react";
+
 import style from "./postGallery.module.css";
 import { Link, useParams } from "react-router";
 import { usePostContext } from "../../context/postContext";
@@ -20,10 +20,10 @@ const PostGallery = () => {
         </p>
       </div>
       <div className={style["photos-body"]}>
-        {user.posts.map((post, index) => {
+        {(user?.posts || []).map((post, index) => {
           return (
             post.postImage && (
-              <Link key={index}>
+              <Link key={index} to="photos">
                 <img src={post.postImage} alt={post.title} />
               </Link>
             )

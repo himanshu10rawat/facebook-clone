@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import style from "./postForm.module.css";
 import { IoMdClose } from "react-icons/io";
 import {
@@ -14,8 +14,17 @@ import { FaLocationDot } from "react-icons/fa6";
 import { usePostContext } from "../../context/postContext";
 import { Link } from "react-router";
 import { getImagePreviewFromFile, IMAGE_INPUT_ACCEPT } from "../../utils/imageUpload";
+import { runOnKeyboardAction, showToast } from "../../utils/feedback";
 
-const PostForm = ({ setOpenPostModal, mediaOpen, setMediaOpen }) => {
+const FEELINGS = ["Happy", "Excited", "Grateful", "Relaxed", "Motivated"];
+const PRIVACY_OPTIONS = ["Friends", "Public", "Only me"];
+
+const PostForm = ({
+  setOpenPostModal,
+  mediaOpen,
+  setMediaOpen,
+  initialMode = "post",
+}) => {
   const { state, dispatch } = usePostContext();
 
   const [formData, setFormData] = useState({
@@ -23,9 +32,22 @@ const PostForm = ({ setOpenPostModal, mediaOpen, setMediaOpen }) => {
   });
   const [previewImage, setPreviewImage] = useState("");
   const [imageMessage, setImageMessage] = useState("");
+  const [activeTool, setActiveTool] = useState(
+    initialMode === "feeling" ? "feeling" : ""
+  );
+  const [privacy, setPrivacy] = useState("Friends");
+  const [feeling, setFeeling] = useState("");
+  const [location, setLocation] = useState("");
+  const [taggedFriendId, setTaggedFriendId] = useState("");
 
   const loginUser = state.users.find(
     (user) => user.userId === state.user.userId
+  );
+  const friendList = state.users.filter((singleUser) =>
+    loginUser?.friendList?.includes(singleUser.userId)
+  );
+  const taggedFriend = state.users.find(
+    (singleUser) => singleUser.userId === taggedFriendId
   );
 
   const imageHandleChange = async (e) => {
@@ -54,6 +76,24 @@ const PostForm = ({ setOpenPostModal, mediaOpen, setMediaOpen }) => {
 
   const handleOpenMedia = () => {
     setMediaOpen(true);
+    setActiveTool("");
+  };
+
+  const handleToolToggle = (toolName) => {
+    setActiveTool((currentTool) => (currentTool === toolName ? "" : toolName));
+  };
+
+  const handleEmojiInsert = () => {
+    setFormData((currentFormData) => ({
+      ...currentFormData,
+      postCaption: `${currentFormData.postCaption}:)`,
+    }));
+  };
+
+  const handlePrivacyCycle = () => {
+    const currentIndex = PRIVACY_OPTIONS.indexOf(privacy);
+    setPrivacy(PRIVACY_OPTIONS[(currentIndex + 1) % PRIVACY_OPTIONS.length]);
+    showToast(`Post privacy set to ${PRIVACY_OPTIONS[(currentIndex + 1) % PRIVACY_OPTIONS.length]}`);
   };
 
   const handleInputChange = (e) => {
@@ -66,25 +106,43 @@ const PostForm = ({ setOpenPostModal, mediaOpen, setMediaOpen }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const post = {
+      postId: `${loginUser.userId}-${Date.now()}`,
       title: formData.postCaption,
       postImage: previewImage && previewImage,
       date: new Date().toLocaleDateString(),
+      privacy,
+      feeling,
+      location,
+      taggedFriendId,
+      taggedFriendName: taggedFriend
+        ? `${taggedFriend.firstName} ${taggedFriend.lastName}`
+        : "",
+      postType: initialMode === "live" ? "live" : "post",
+      likes: 0,
+      likedBy: [],
+      share: 0,
+      postComments: [],
     };
 
     dispatch({
       type: "ADD_POST",
       payload: {
-        userId: loginUser.userId, // User identify karne ke liye
-        posts: [...(loginUser.posts || []), post], // Updated posts array
+        userId: loginUser.userId,
+        posts: [...(loginUser.posts || []), post],
       },
     });
 
     setFormData({ postCaption: "" });
     setPreviewImage("");
     setImageMessage("");
+    setActiveTool("");
+    setPrivacy("Friends");
+    setFeeling("");
+    setLocation("");
+    setTaggedFriendId("");
     setMediaOpen(false);
     setOpenPostModal(false);
-    console.log("post", post);
+    showToast("Post created");
   };
   return (
     <div className={style["modal-wrapper"]}>
@@ -108,7 +166,7 @@ const PostForm = ({ setOpenPostModal, mediaOpen, setMediaOpen }) => {
         </div>
         <div className={style["modal-body"]}>
           <div className={style["profile-section"]}>
-            <Link to={state.user.userId} className={style["profile-image"]}>
+            <Link to={`/${state.user.userId}`} className={style["profile-image"]}>
               {state.user.profilePic ? (
                 <img
                   src={state.user.profilePic}
@@ -127,9 +185,13 @@ const PostForm = ({ setOpenPostModal, mediaOpen, setMediaOpen }) => {
                 role="button"
                 tabIndex={0}
                 aria-label="Share with options"
+                onClick={handlePrivacyCycle}
+                onKeyDown={(event) =>
+                  runOnKeyboardAction(event, handlePrivacyCycle)
+                }
               >
                 <FaUserFriends />
-                Friends <TiArrowSortedDown />
+                {privacy} <TiArrowSortedDown />
               </span>
             </div>
           </div>
@@ -152,10 +214,65 @@ const PostForm = ({ setOpenPostModal, mediaOpen, setMediaOpen }) => {
                     role="button"
                     tabIndex={0}
                     aria-label="Emoji"
+                    onClick={handleEmojiInsert}
+                    onKeyDown={(event) =>
+                      runOnKeyboardAction(event, handleEmojiInsert)
+                    }
                   >
                     <CiFaceSmile />
                   </span>
                 </div>
+                {activeTool === "tag" && (
+                  <div className={style["tool-panel"]}>
+                    <label htmlFor="taggedFriend">Tag a friend</label>
+                    <select
+                      id="taggedFriend"
+                      value={taggedFriendId}
+                      onChange={(event) => setTaggedFriendId(event.target.value)}
+                    >
+                      <option value="">Select friend</option>
+                      {friendList.map((friend) => (
+                        <option key={friend.userId} value={friend.userId}>
+                          {friend.firstName} {friend.lastName}
+                        </option>
+                      ))}
+                    </select>
+                    {!friendList.length && (
+                      <p>You can tag friends after adding them.</p>
+                    )}
+                  </div>
+                )}
+                {activeTool === "feeling" && (
+                  <div className={style["tool-panel"]}>
+                    <span>How are you feeling?</span>
+                    <div className={style["feeling-options"]}>
+                      {FEELINGS.map((feelingOption) => (
+                        <button
+                          type="button"
+                          key={feelingOption}
+                          className={
+                            feeling === feelingOption ? style["active"] : ""
+                          }
+                          onClick={() => setFeeling(feelingOption)}
+                        >
+                          {feelingOption}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                {activeTool === "location" && (
+                  <div className={style["tool-panel"]}>
+                    <label htmlFor="postLocation">Add location</label>
+                    <input
+                      id="postLocation"
+                      type="text"
+                      value={location}
+                      onChange={(event) => setLocation(event.target.value)}
+                      placeholder="Where are you?"
+                    />
+                  </div>
+                )}
                 {mediaOpen && (
                   <div className={style["image-section"]}>
                     <span
@@ -214,6 +331,9 @@ const PostForm = ({ setOpenPostModal, mediaOpen, setMediaOpen }) => {
                 <div className={style["add-more-options"]}>
                   <span
                     className={style["add-more-item"]}
+                    role="button"
+                    tabIndex={0}
+                    aria-label="Add media"
                     onClick={handleOpenMedia}
                     onKeyDown={(e) => {
                       if (e.key === "Enter" || e.key === " ") {
@@ -224,18 +344,60 @@ const PostForm = ({ setOpenPostModal, mediaOpen, setMediaOpen }) => {
                     <MdPhotoLibrary />
                   </span>
                   <span className={style["add-more-item"]}>
-                    <FaUserTag />
+                    <span
+                      role="button"
+                      tabIndex={0}
+                      aria-label="Tag friends"
+                      onClick={() => handleToolToggle("tag")}
+                      onKeyDown={(event) =>
+                        runOnKeyboardAction(event, () => handleToolToggle("tag"))
+                      }
+                    >
+                      <FaUserTag />
+                    </span>
                   </span>
                   <span className={style["add-more-item"]}>
-                    <FaRegSmile />
+                    <span
+                      role="button"
+                      tabIndex={0}
+                      aria-label="Feeling"
+                      onClick={() => handleToolToggle("feeling")}
+                      onKeyDown={(event) =>
+                        runOnKeyboardAction(event, () =>
+                          handleToolToggle("feeling")
+                        )
+                      }
+                    >
+                      <FaRegSmile />
+                    </span>
                   </span>
                   <span className={style["add-more-item"]}>
-                    <FaLocationDot />
+                    <span
+                      role="button"
+                      tabIndex={0}
+                      aria-label="Location"
+                      onClick={() => handleToolToggle("location")}
+                      onKeyDown={(event) =>
+                        runOnKeyboardAction(event, () =>
+                          handleToolToggle("location")
+                        )
+                      }
+                    >
+                      <FaLocationDot />
+                    </span>
                   </span>
                 </div>
               </div>
               <button
-                disabled={formData.postCaption || previewImage ? false : true}
+                disabled={
+                  !(
+                    formData.postCaption.trim() ||
+                    previewImage ||
+                    feeling ||
+                    location.trim() ||
+                    taggedFriendId
+                  )
+                }
                 type="submit"
                 className={style["post-button"]}
               >

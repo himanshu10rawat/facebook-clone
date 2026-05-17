@@ -59,3 +59,56 @@
     padding: 0.15rem 0.5rem;
     border-radius: 0.25rem;
 }
+
+.video-modal {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.72);
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.video-player {
+    background-color: var(--whiteColor);
+    width: min(90vw, 600px);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    padding-bottom: 1rem;
+}
+
+.video-player button {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 34px;
+    height: 34px;
+    border: none;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.55);
+    color: var(--whiteColor);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.video-player img {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    object-position: top;
+}
+
+.video-player h2 {
+    font-size: 20px;
+    margin-top: 0.75rem;
+}
+
+.video-player p {
+    color: var(--greyColor);
+}

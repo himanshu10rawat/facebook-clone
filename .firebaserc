@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "fakebook-7060c"
-  }
+    "default": "fakebook-7060c",
+    "Production": "fakebook-7060c"
+  },
+  "targets": {},
+  "etags": {}
 }

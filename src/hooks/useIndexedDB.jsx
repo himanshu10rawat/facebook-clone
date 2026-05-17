@@ -1,132 +1,214 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
-const useIndexedDB = (storeName, initialValue) => {
-  const [value, setValue] = useState(initialValue);
-  const [userObjectStoreUserId, setUserObjectStoreUserId] = useState(null);
+const DATABASE_NAME = "fakebook";
+const DB_OPEN_TIMEOUT_MS = 4000;
+const REQUIRED_STORES = ["user", "users"];
 
-  const initializeDatabase = () => {
-    return new Promise((resolve, reject) => {
-      const request = indexedDB.open("fakebook");
+let databasePromise;
+
+const createMissingStores = (database) => {
+  REQUIRED_STORES.forEach((requiredStoreName) => {
+    if (!database.objectStoreNames.contains(requiredStoreName)) {
+      database.createObjectStore(requiredStoreName, { keyPath: "userId" });
+    }
+  });
+};
+
+const prepareDatabase = (database) => {
+  database.onversionchange = () => {
+    database.close();
+    databasePromise = null;
+  };
+  return database;
+};
+
+const openDatabase = () => {
+  if (!databasePromise) {
+    databasePromise = new Promise((resolve, reject) => {
+      let isSettled = false;
+      const settle = (callback, value) => {
+        if (isSettled) return;
+        isSettled = true;
+        clearTimeout(timeoutId);
+        callback(value);
+      };
+      const timeoutId = setTimeout(() => {
+        settle(
+          reject,
+          new Error("IndexedDB initialization timed out. Using empty state.")
+        );
+      }, DB_OPEN_TIMEOUT_MS);
+
+      const request = indexedDB.open(DATABASE_NAME);
+
+      request.onupgradeneeded = (event) => {
+        createMissingStores(event.target.result);
+      };
 
       request.onsuccess = (event) => {
         const database = event.target.result;
+        const hasAllStores = REQUIRED_STORES.every((requiredStoreName) =>
+          database.objectStoreNames.contains(requiredStoreName)
+        );
 
-        if (!database.objectStoreNames.contains(storeName)) {
-          // If the store doesn't exist, close the database and upgrade its version
-          database.close();
-          const newRequest = indexedDB.open("fakebook", database.version + 1);
-
-          newRequest.onupgradeneeded = (upgradeEvent) => {
-            const upgradeDb = upgradeEvent.target.result;
-
-            // Create the missing store
-            upgradeDb.createObjectStore(storeName, { keyPath: "userId" });
-            console.log(`Object store '${storeName}' created.`);
-          };
-
-          newRequest.onsuccess = (newEvent) => {
-            resolve(newEvent.target.result);
-          };
-
-          newRequest.onerror = (errorEvent) => {
-            reject(errorEvent.target.error);
-          };
-        } else {
-          resolve(database);
+        if (hasAllStores) {
+          if (isSettled) {
+            database.close();
+            return;
+          }
+          settle(resolve, prepareDatabase(database));
+          return;
         }
-      };
 
-      request.onupgradeneeded = (event) => {
-        const database = event.target.result;
+        const nextVersion = database.version + 1;
+        database.close();
 
-        // Create the object store during the initial setup if it doesn't exist
-        if (!database.objectStoreNames.contains(storeName)) {
-          database.createObjectStore(storeName, { keyPath: "userId" });
-          console.log(
-            `Object store '${storeName}' created during initial setup.`
+        const upgradeRequest = indexedDB.open(DATABASE_NAME, nextVersion);
+
+        upgradeRequest.onupgradeneeded = (upgradeEvent) => {
+          createMissingStores(upgradeEvent.target.result);
+        };
+
+        upgradeRequest.onsuccess = (upgradeEvent) => {
+          const upgradedDatabase = upgradeEvent.target.result;
+          if (isSettled) {
+            upgradedDatabase.close();
+            return;
+          }
+          settle(resolve, prepareDatabase(upgradedDatabase));
+        };
+
+        upgradeRequest.onerror = (errorEvent) => {
+          settle(reject, errorEvent.target.error);
+        };
+
+        upgradeRequest.onblocked = () => {
+          settle(
+            reject,
+            new Error("IndexedDB upgrade was blocked by another tab.")
           );
-        }
+        };
       };
 
       request.onerror = (event) => {
-        reject(event.target.error);
+        settle(reject, event.target.error);
       };
+
+      request.onblocked = () => {
+        settle(reject, new Error("IndexedDB open was blocked by another tab."));
+      };
+    }).catch((error) => {
+      databasePromise = null;
+      throw error;
     });
-  };
+  }
 
-  const setStoredValue = async (newValue) => {
-    try {
-      const database = await initializeDatabase();
+  return databasePromise;
+};
 
-      const transaction = database.transaction(storeName, "readwrite");
-      const store = transaction.objectStore(storeName);
+const readStore = (database, storeName) =>
+  new Promise((resolve, reject) => {
+    const transaction = database.transaction(storeName, "readonly");
+    const store = transaction.objectStore(storeName);
+    const request = store.getAll();
 
-      if (newValue?.userId || newValue?.length) {
-        if (Array.isArray(newValue)) {
-          newValue.forEach((item) => store.put(item));
-        } else {
-          store.put(newValue);
+    request.onsuccess = (event) => {
+      resolve(event.target.result);
+    };
+
+    request.onerror = (event) => {
+      reject(event.target.error);
+    };
+
+    transaction.onerror = () => {
+      reject(transaction.error);
+    };
+  });
+
+const writeStore = (database, storeName, newValue) =>
+  new Promise((resolve, reject) => {
+    const transaction = database.transaction(storeName, "readwrite");
+    const store = transaction.objectStore(storeName);
+
+    if (Array.isArray(newValue)) {
+      store.clear();
+      newValue.forEach((item) => {
+        if (item?.userId) {
+          store.put(item);
         }
-      } else {
-        if (userObjectStoreUserId) {
-          const deleteRequest = store.delete(userObjectStoreUserId);
-
-          deleteRequest.onsuccess = function () {
-            console.log("Record deleted successfully!");
-          };
-
-          deleteRequest.onerror = function () {
-            console.error("Error deleting record:", deleteRequest.error);
-          };
-        }
-      }
-
-      transaction.oncomplete = () => {
-        console.log("Transaction completed!");
-      };
-
-      transaction.onerror = (event) => {
-        console.error("Transaction error:", event.target.error);
-      };
-    } catch (error) {
-      console.error("Error initializing database:", error);
+      });
+    } else if (newValue?.userId) {
+      store.clear();
+      store.put(newValue);
+    } else {
+      store.clear();
     }
-  };
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const database = await initializeDatabase();
+    transaction.oncomplete = () => {
+      resolve();
+    };
 
-        const transaction = database.transaction(storeName, "readonly");
-        const store = transaction.objectStore(storeName);
+    transaction.onerror = () => {
+      reject(transaction.error);
+    };
 
-        const getAllRequest = store.getAll();
+    transaction.onabort = () => {
+      reject(transaction.error);
+    };
+  });
 
-        getAllRequest.onsuccess = (e) => {
-          if (e.target.source.name === "user") {
-            const [userData] = e.target.result;
-            setValue(userData);
-            setUserObjectStoreUserId(userData?.userId);
-          } else {
-            setValue(e.target.result);
-          }
-        };
+const useIndexedDB = (storeName, initialValue) => {
+  const [value, setValue] = useState(initialValue);
+  const [isReady, setIsReady] = useState(false);
 
-        getAllRequest.onerror = (e) => {
-          console.error("Error fetching data:", e.target.error);
-        };
+  const getFallbackValue = useCallback(() => {
+    if (storeName === "users") return [];
+    return initialValue || {};
+  }, [initialValue, storeName]);
 
-        transaction.oncomplete = () => {
-          console.log("Transaction completed successfully!");
-        };
-      } catch (error) {
-        console.error("Error initializing database:", error);
-      }
-    })();
+  const setStoredValue = useCallback(async (newValue) => {
+    try {
+      const database = await openDatabase();
+      await writeStore(database, storeName, newValue);
+    } catch (error) {
+      console.error("Error saving data:", error);
+    }
   }, [storeName]);
 
-  return [value, setStoredValue];
+  useEffect(() => {
+    let isMounted = true;
+
+    (async () => {
+      try {
+        const database = await openDatabase();
+        const storedRecords = await readStore(database, storeName);
+
+        if (!isMounted) return;
+
+        if (storeName === "user") {
+          const [userData] = storedRecords;
+          setValue(userData || getFallbackValue());
+        } else {
+          setValue(storedRecords || getFallbackValue());
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        if (isMounted) {
+          setValue(getFallbackValue());
+        }
+      } finally {
+        if (isMounted) {
+          setIsReady(true);
+        }
+      }
+    })();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [getFallbackValue, storeName]);
+
+  return [value, setStoredValue, isReady];
 };
 
 export default useIndexedDB;

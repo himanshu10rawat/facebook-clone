@@ -1,4 +1,4 @@
-import React from "react";
+
 import About from "../../../components/aboutComponent/About";
 import FriendsList from "../../../components/friendsListComponent/FriendsList";
 import PhotosList from "../../../components/photosListComponent/PhotosList";

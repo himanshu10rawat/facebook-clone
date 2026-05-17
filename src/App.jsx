@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Header from "./components/headerComponent/Header";
 import { Outlet } from "react-router";
 import AuthContext from "./components/auth/AuthContext";
 import { usePostContext } from "./context/postContext";
+import Toast from "./components/toastComponent/Toast";
 
 const App = () => {
   const { state, dispatch } = usePostContext();
@@ -28,9 +29,13 @@ const App = () => {
         <>
           <Header />
           <Outlet />
+          <Toast />
         </>
       ) : (
-        <AuthContext />
+        <>
+          <AuthContext />
+          <Toast />
+        </>
       )}
     </>
   );

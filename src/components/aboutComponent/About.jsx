@@ -1,4 +1,4 @@
-import React from "react";
+
 import style from "./about.module.css";
 import { NavLink, Outlet, useLocation, useParams } from "react-router";
 

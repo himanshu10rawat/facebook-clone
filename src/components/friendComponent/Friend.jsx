@@ -1,12 +1,13 @@
-import React from "react";
+
 import style from "./friend.module.css";
 import { BsThreeDots } from "react-icons/bs";
 import { FaUser } from "react-icons/fa";
 import { Link } from "react-router";
 import { usePostContext } from "../../context/postContext";
+import { runOnKeyboardAction, showToast } from "../../utils/feedback";
 
 const Friend = ({ singleFriend }) => {
-  const { state } = usePostContext();
+  const { state, dispatch } = usePostContext();
 
   const isLoginUser = state.user.userId === singleFriend.userId;
 
@@ -15,6 +16,44 @@ const Friend = ({ singleFriend }) => {
       (eachFriendId) => eachFriendId === singleFriendId
     );
   });
+
+  const handleFriendOptions = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (isLoginUser) {
+      showToast("This is your profile");
+      return;
+    }
+
+    const shouldRemove = window.confirm(
+      `Remove ${singleFriend.firstName} ${singleFriend.lastName} from friends?`
+    );
+
+    if (!shouldRemove) return;
+
+    dispatch({
+      type: "ADD_FRIEND",
+      payload: {
+        userId: state.user.userId,
+        friendList: (state.user.friendList || []).filter(
+          (friendId) => friendId !== singleFriend.userId
+        ),
+      },
+    });
+
+    dispatch({
+      type: "ADD_FRIEND",
+      payload: {
+        userId: singleFriend.userId,
+        friendList: (singleFriend.friendList || []).filter(
+          (friendId) => friendId !== state.user.userId
+        ),
+      },
+    });
+
+    showToast("Friend removed");
+  };
 
   return (
     <>
@@ -42,6 +81,10 @@ const Friend = ({ singleFriend }) => {
           tabIndex={0}
           aria-label="Edit friend"
           className={style["edit-button"]}
+          onClick={handleFriendOptions}
+          onKeyDown={(event) =>
+            runOnKeyboardAction(event, () => handleFriendOptions(event))
+          }
         >
           <BsThreeDots />
         </div>

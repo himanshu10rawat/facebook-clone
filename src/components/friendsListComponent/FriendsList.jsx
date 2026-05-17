@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import style from "./friendsList.module.css";
 import Friend from "../friendComponent/Friend";
 import { Link, useParams } from "react-router";
@@ -75,7 +75,9 @@ const FriendsList = () => {
           <Friend singleFriend={friend} key={friend.userId} />
         ))}
       </div>
-      <Link className={style["see-all-link"]}>See All</Link>
+      <Link to={`/${userId}/friends`} className={style["see-all-link"]}>
+        See All
+      </Link>
     </div>
   );
 };

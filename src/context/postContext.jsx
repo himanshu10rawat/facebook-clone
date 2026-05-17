@@ -10,11 +10,19 @@ import useIndexedDB from "../hooks/useIndexedDB";
 
 // Create Context
 const PostContext = createContext();
+const EMPTY_USER = {};
+const EMPTY_USERS = [];
 
 // Provider Component
 export const PostProvider = ({ children }) => {
-  const [storedUser, setStoredUser] = useIndexedDB("user", null); // Start with null
-  const [storedUsers, setStoredUsers] = useIndexedDB("users", null); // Start with null
+  const [storedUser, setStoredUser, isStoredUserReady] = useIndexedDB(
+    "user",
+    EMPTY_USER
+  );
+  const [storedUsers, setStoredUsers, isStoredUsersReady] = useIndexedDB(
+    "users",
+    EMPTY_USERS
+  );
   const [isInitialized, setIsInitialized] = useState(false);
 
   const initialState = {
@@ -26,27 +34,36 @@ export const PostProvider = ({ children }) => {
 
   // Effect to initialize state after IndexedDB data is ready
   useEffect(() => {
-    if (storedUser !== null && storedUsers !== null) {
+    if (!isInitialized && isStoredUserReady && isStoredUsersReady) {
       dispatch({
         type: "SET_INITIAL_STATE",
-        payload: { user: storedUser, users: storedUsers },
+        payload: {
+          user: storedUser || EMPTY_USER,
+          users: Array.isArray(storedUsers) ? storedUsers : EMPTY_USERS,
+        },
       });
       setIsInitialized(true);
     }
-  }, [storedUser, storedUsers]);
+  }, [
+    isInitialized,
+    isStoredUserReady,
+    isStoredUsersReady,
+    storedUser,
+    storedUsers,
+  ]);
 
   // Sync with IndexedDB when state changes
   useEffect(() => {
     if (isInitialized) {
       setStoredUsers(state.users);
     }
-  }, [state.users, isInitialized]);
+  }, [state.users, isInitialized, setStoredUsers]);
 
   useEffect(() => {
     if (isInitialized) {
       setStoredUser(state.user);
     }
-  }, [state.user, isInitialized]);
+  }, [state.user, isInitialized, setStoredUser]);
 
   // Show a loading state until IndexedDB is ready
   if (!isInitialized) {

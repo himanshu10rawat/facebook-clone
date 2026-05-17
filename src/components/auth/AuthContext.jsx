@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Login from "./login/Login";
 import style from "./authContext.module.css";
 import Signup from "./signup/Signup";

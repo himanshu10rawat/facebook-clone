@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import style from "./editProfileModal.module.css";
 import { IoMdClose } from "react-icons/io";
 import { FaCloudUploadAlt, FaUser } from "react-icons/fa";

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import style from "./photosList.module.css";
 import { Link, useParams } from "react-router";
 import Photos from "../photoComponent/Photo";
@@ -36,11 +36,13 @@ const PhotosList = () => {
         </li>
       </ul>
       <div className={style["photos-list"]}>
-        {user.posts.map((post, index) => (
-          <Photos key={index} post={post} />
+        {(user?.posts || []).map((post, index) => (
+          <Photos key={post.postId || index} post={post} user={user} postIndex={index} />
         ))}
       </div>
-      <Link className={style["see-all-link"]}>See All</Link>
+      <Link to={`/${userId}/photos`} className={style["see-all-link"]}>
+        See All
+      </Link>
     </div>
   );
 };

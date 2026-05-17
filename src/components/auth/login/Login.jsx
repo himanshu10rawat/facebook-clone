@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import style from "./login.module.css";
 import { usePostContext } from "../../../context/postContext";
 
@@ -39,9 +39,7 @@ const Login = ({ setIsRegistered }) => {
         type: "LOG_IN",
         payload: userExists,
       });
-      console.log("Login successful");
     } else {
-      console.log("invalid login detail");
       setError("Please enter valid email address and password");
     }
   };

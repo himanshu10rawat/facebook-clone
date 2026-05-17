@@ -1,4 +1,4 @@
-import React from "react";
+
 import style from "./notFound404.module.css";
 import { Link } from "react-router";
 
