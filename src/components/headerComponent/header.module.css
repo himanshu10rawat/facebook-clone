@@ -70,6 +70,11 @@
   align-items: center;
   gap: 10px;
   transition: ease-in-out 0.5s;
+  border: 2px solid transparent;
+}
+
+.left-side .search-button:hover {
+  background-color: var(--mediumLightColor);
 }
 
 .left-side .search-button.setWidth {
@@ -270,10 +275,18 @@
 }
 
 .searchListStyle {
-  position: relative;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
   box-shadow: none;
   border-radius: 0 0 1rem 1rem;
   min-width: 0;
+  width: auto;
+  max-height: 0;
+  overflow: hidden;
+  z-index: 1000;
+  transition: max-height 0.3s ease-in-out;
 }
 
 .searchListStyleOpen {
@@ -281,6 +294,9 @@
   background-color: #ffffff;
   padding: 0.75rem 1rem;
   border-radius: 1rem;
+  max-height: calc(100vh - 100px);
+  overflow: auto;
+  width: auto;
 }
 
 .mobile-bottom-nav {
@@ -348,11 +364,27 @@
     gap: 0.5rem;
   }
 
-  .searchListStyleOpen {
-    position: absolute;
+  .searchListStyle {
+    position: fixed;
     left: 0;
     right: 0;
-    top: calc(100% + 0.35rem);
+    top: 100%;
+    width: 100%;
+    max-height: 0;
+    border-radius: 0;
+  }
+
+  .searchListStyleOpen {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: auto;
+    bottom: 0;
+    width: 100%;
+    max-height: calc(100vh - 56px);
+    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.08);
+    border-radius: 1rem 1rem 0 0;
+    padding: 0.75rem 1rem;
   }
 
   .mobile-bottom-nav {

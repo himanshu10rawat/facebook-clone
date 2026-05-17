@@ -207,6 +207,8 @@
 .likes-view-part .likes-count,
 .comments-and-share-view-part {
   color: var(--greyColor);
+  font-weight: 500;
+  font-size: 15px;
 }
 
 .comments-and-share-view-part {
@@ -228,6 +230,7 @@
   border-radius: 5px;
   cursor: pointer;
   transition: ease-in-out 0.3s;
+  user-select: none;
 }
 
 .footer-actions .footer-action .comment-icon {
@@ -236,10 +239,12 @@
 
 .footer-actions .footer-action:hover {
   background-color: var(--lightColor);
+  transform: scale(1.05);
 }
 
 .footer-actions .footer-action-active {
   color: var(--blueColor);
+  font-weight: 600;
 }
 
 .footer-actions .footer-action svg {

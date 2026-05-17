@@ -90,112 +90,59 @@ const Header = () => {
   return (
     <>
       <header className={style["header-section"]}>
-        <div
-          ref={searchModal}
-          className={`${style["searchListStyle"]} ${
-            searchBarActive && style["searchListStyleOpen"]
-          }`}
-        >
-          <div className={style["left-side"]}>
-            {searchBarActive ? (
-              <div
-                role="button"
-                aria-label="close search bar"
-                tabIndex={0}
-                className={style["back-button"]}
-                onClick={handleSearchClose}
-                onKeyDown={(e) => {
-                  if (e.key === " " || e.key === "Enter") {
-                    handleSearchClose();
-                  }
-                }}
-              >
-                <MdKeyboardBackspace />
-              </div>
-            ) : (
-              <Link to={"/"} aria-label="Go to home page">
-                <FaFacebook />
-              </Link>
-            )}
-
+        <div className={style["left-side"]}>
+          {searchBarActive ? (
             <div
-              onClick={() => {
+              role="button"
+              aria-label="close search bar"
+              tabIndex={0}
+              className={style["back-button"]}
+              onClick={handleSearchClose}
+              onKeyDown={(e) => {
+                if (e.key === " " || e.key === "Enter") {
+                  handleSearchClose();
+                }
+              }}
+            >
+              <MdKeyboardBackspace />
+            </div>
+          ) : (
+            <Link to={"/"} aria-label="Go to home page">
+              <FaFacebook />
+            </Link>
+          )}
+
+          <div
+            onClick={() => {
+              setSearchBarActive(true);
+              if (searchValue.length !== 0) {
+                editSearchList();
+              }
+            }}
+            onKeyDown={(event) => {
+              if (event.key === " " || event.key === "Enter") {
                 setSearchBarActive(true);
                 if (searchValue.length !== 0) {
                   editSearchList();
                 }
-              }}
-              onKeyDown={(event) => {
-                if (event.key === " " || event.key === "Enter") {
-                  setSearchBarActive(true);
-                  if (searchValue.length !== 0) {
-                    editSearchList();
-                  }
-                }
-              }}
-              role="button"
-              tabIndex={0}
-              aria-label="Search Fakebook"
-              className={`${style["search-button"]} ${style["setWidth"]}`}
-            >
-              {!searchBarActive && <IoIosSearch />}
-              <input
-                onChange={handleSearchChange}
-                value={searchValue}
-                type="search"
-                name="search"
-                id="search"
-                placeholder="Search Fakebook"
-                aria-label="Search option on facebook"
-              />
-            </div>
+              }
+            }}
+            role="button"
+            tabIndex={0}
+            aria-label="Search Fakebook"
+            className={`${style["search-button"]} ${style["setWidth"]}`}
+          >
+            {!searchBarActive && <IoIosSearch />}
+            <input
+              onChange={handleSearchChange}
+              value={searchValue}
+              type="search"
+              name="search"
+              id="search"
+              placeholder="Search Fakebook"
+              aria-label="Search option on facebook"
+            />
           </div>
-          {searchBarActive && (
-            <div className={style["search-list"]}>
-              {searchUsersList.length === 0 ? (
-                <div className={style["no-recent-searches"]}>
-                  No recent searches
-                </div>
-              ) : (
-                searchUsersList.map((searchUser) => {
-                  return (
-                    <Link
-                      to={`/${searchUser.userId}`}
-                      className={style["search-user"]}
-                      key={searchUser.userId}
-                      onClick={() => {
-                        setSearchBarActive(false);
-                        setSearchValue("");
-                        setSearchUsersList([]);
-                      }}
-                    >
-                      <div className={style["user-profile-pic"]}>
-                        {searchUser.profilePic ? (
-                          <img
-                            src={searchUser.profilePic}
-                            alt={
-                              searchUser.firstName +
-                              " " +
-                              searchUser.lastName +
-                              "profile pic"
-                            }
-                          />
-                        ) : (
-                          <FaUserCircle />
-                        )}
-                      </div>
-                      <div className={style["user-name"]}>
-                        {searchUser.firstName + " " + searchUser.lastName}
-                      </div>
-                      <div className={style["remove-search-user"]}>
-                        <IoMdClose />
-                      </div>
-                    </Link>
-                  );
-                })
-              )}
-            </div>
-          )}
         </div>
 
         <nav className={style["navbar-items"]}>
@@ -288,6 +235,60 @@ const Header = () => {
           </ul>
         </div>
       </header>
+
+      <div
+        ref={searchModal}
+        className={`${style["searchListStyle"]} ${
+          searchBarActive && style["searchListStyleOpen"]
+        }`}
+      >
+        {searchBarActive && (
+          <div className={style["search-list"]}>
+            {searchUsersList.length === 0 ? (
+              <div className={style["no-recent-searches"]}>
+                No recent searches
+              </div>
+            ) : (
+              searchUsersList.map((searchUser) => {
+                return (
+                  <Link
+                    to={`/${searchUser.userId}`}
+                    className={style["search-user"]}
+                    key={searchUser.userId}
+                    onClick={() => {
+                      setSearchBarActive(false);
+                      setSearchValue("");
+                      setSearchUsersList([]);
+                    }}
+                  >
+                    <div className={style["user-profile-pic"]}>
+                      {searchUser.profilePic ? (
+                        <img
+                          src={searchUser.profilePic}
+                          alt={
+                            searchUser.firstName +
+                            " " +
+                            searchUser.lastName +
+                            "profile pic"
+                          }
+                        />
+                      ) : (
+                        <FaUserCircle />
+                      )}
+                    </div>
+                    <div className={style["user-name"]}>
+                      {searchUser.firstName + " " + searchUser.lastName}
+                    </div>
+                    <div className={style["remove-search-user"]}>
+                      <IoMdClose />
+                    </div>
+                  </Link>
+                );
+              })
+            )}
+          </div>
+        )}
+      </div>
 
       <nav className={style["mobile-bottom-nav"]} aria-label="Mobile navigation">
         <NavLink
